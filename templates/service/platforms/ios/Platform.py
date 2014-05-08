@@ -1,9 +1,9 @@
 import sys
 import json
-from meta.MetaPlatform import MetaPlatform
+from meta.MetaProcessor import MetaProcessor
 from meta.utils import Utils
 
-class Platform(MetaPlatform):
+class Platform(MetaProcessor):
     """docstring for Platform"""
         
     def preprocessType(self,dic):

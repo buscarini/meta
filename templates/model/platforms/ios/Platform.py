@@ -2,9 +2,9 @@ import sys
 import os
 import json
 import meta
-from meta.MetaPlatform import MetaPlatform
+from meta.MetaProcessor import MetaProcessor
 
-class Platform(MetaPlatform):
+class Platform(MetaProcessor):
     """docstring for Platform"""
     # def __init__(self,stringUtils):
  #        super(Platform, self).__init__()

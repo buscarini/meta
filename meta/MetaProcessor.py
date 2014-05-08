@@ -1,7 +1,7 @@
-class MetaPlatform(object):
-    """docstring for MetaPlatform"""
+class MetaProcessor(object):
+    """docstring for MetaProcessor"""
     def __init__(self, config,stringUtils):
-        super(MetaPlatform, self).__init__()
+        super(MetaProcessor, self).__init__()
         self.config = config
         self.stringUtils = stringUtils
         

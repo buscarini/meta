@@ -1,1 +1,1 @@
-__all__ = [ "configuration", "stringutils", "utils", "MetaPlatform" ]
+__all__ = [ "configuration", "stringutils", "utils", "MetaProcessor" ]

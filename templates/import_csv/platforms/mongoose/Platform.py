@@ -1,9 +1,9 @@
 import sys
 import os
 import json
-from meta.MetaPlatform import MetaPlatform
+from meta.MetaProcessor import MetaProcessor
 
-class Platform(MetaPlatform):
+class Platform(MetaProcessor):
     """docstring for Platform"""
         
     def preprocess_property(self,property,index,hash,hashes):
