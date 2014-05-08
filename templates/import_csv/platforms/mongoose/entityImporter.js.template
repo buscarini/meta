@@ -1,0 +1,51 @@
+var fs = require('fs');
+var mongoose = require('mongoose');
+var csv = require('csv');
+var schema = require('./{{entityName}}Schema')
+var moment = require('moment');
+
+module.exports.importFile = function(filePath,callback) {
+	
+	var {{entityName}} = mongoose.model('{{entityName}}', schema.schema)
+	
+	csv()
+	.from.path(filePath, { delimiter: '{{delimiter}}', escape: '"' })
+	.on('record', function(row,index) {
+	
+		var properties = {}
+		{{#properties}}
+		{{#_has_default_}}
+		properties.{{name}} = {{default}}
+		{{/_has_default_}}
+		{{^type_date}}
+		if (row.length>{{index}}) properties.{{name}} = row[{{index}}]
+		{{/type_date}}
+		{{#type_date}}
+		if (row.length>{{index}}) properties.{{name}} = moment(row[{{index}}],"{{format}}")
+		{{/type_date}}
+		{{/properties}}
+	
+		{{entityName}}.update({ 
+			{{#primaryKeys}}
+			{{name}} : row[{{index}}]{{^_last_}},{{/_last_}}
+			{{/primaryKeys}}
+		}, properties,{ upsert: true, multi: true },function(err) {
+			if (err) {
+				console.log("Error updating {{entityName}}: " + err)
+			}
+		})
+	})
+	.on('end', function(count) {
+		
+		{{entityName}}.find(function (err, items) {
+			if (callback) {
+				callback(err,items);
+			}
+		})
+	})
+	.on('error', function(error){
+		console.log(error.message);
+		if (callback) callback(error);
+	});
+	
+}

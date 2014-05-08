@@ -1,0 +1,20 @@
+
+public class {{_globals_.fileBaseName}} {
+	//private variables
+	{{#properties}}
+	{{type}} _{{name}};
+	{{/properties}}
+	
+    // Empty constructor
+    public {{_globals_.fileBaseName}}(){
+
+    }
+    // constructor
+    public {{_globals_.fileBaseName}}({{#properties}}{{type}} {{name}}{{^_last_}},{{/_last_}}{{/properties}}){
+		{{#properties}}
+        this._{{name}} = {{name}};
+		{{/properties}}
+    }
+
+	{{> accessors}}
+}

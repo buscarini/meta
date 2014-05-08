@@ -1,0 +1,17 @@
+// Generated Automatically: Any changes will be overwritten
+
+#import "{{_globals_.fileBaseName}}.h"
+
+@implementation {{_globals_.fileBaseName}}
+
+{{> synthesize}}
+
+#pragma mark Encode - Decode
+
+{{> coder}}
+
+#pragma mark Accessors
+
+{{> accessors}}
+
+@end

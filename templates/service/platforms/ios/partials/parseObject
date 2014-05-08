@@ -1,0 +1,11 @@
+{{#object}}
+{{^type_date}}
+value = dic[@"{{name}}"];
+if ([value isKindOfClass:[{{type}} class]]) {
+	object.{{destination}} = value;
+}
+else {
+	{{> logError}}
+}
+{{/type_date}}
+{{/object}}

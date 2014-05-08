@@ -1,0 +1,9 @@
+{{#properties}}
+public {{type}} get{{_capitalized_}}(){
+    return this._{{name}};
+}
+
+public void set{{_capitalized_}}({{type}} {{name}}){
+	this._{{name}} = {{name}};
+}
+{{/properties}}

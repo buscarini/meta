@@ -1,0 +1,58 @@
+
+#import "{{_globals_.fileBaseName}}.h"
+
+#import <BMF/BMF.h>
+
+{{> entityImports}}
+	
+@implementation {{_globals_.fileBaseName}}
+
+- (void) parse:(NSDictionary *) rawObject completion:(BMFCompletionBlock) completionBlock {
+	
+	[self.progress start];
+	
+	@try {
+		
+		{{#resultValue}}
+		/// Check result
+		id result = rawObject[@"{{key}}"];
+		if (![result isEqual:{{{okValue}}}]) {
+			NSString *errorMessage = rawObject[@"{{errorMessage.key}}"];
+			if (!errorMessage) {
+				errorMessage = BMFLocalized(@"Unknown error",nil);
+			}
+		    NSError *error = [NSError errorWithDomain:@"Parse" code:BMFErrorData userInfo:@{ NSLocalizedDescriptionKey : errorMessage }];
+			[self.progress stop:error];
+			if (completionBlock) completionBlock(nil,error);
+			return;
+		}
+		{{/resultValue}}
+	
+		NSMutableArray *results = nil;
+	
+		{{#content}}
+		results = [NSMutableArray array];
+		
+		NSArray *dictionaries = rawObject[@"{{key}}"];
+		for (NSDictionary *dic in dictionaries) {
+			{{#model}}
+			{{> parseDictionary}}
+			{{/model}}
+		}
+		{{/content}}
+
+		[self.progress stop:nil];
+
+		if (completionBlock) completionBlock(results,nil);
+	}
+	@catch (NSException *exception) {
+		DDLogError(@"Exception in parse: %@",exception);
+	}
+}
+
+- (void) cancel {
+    NSError *error = [NSError errorWithDomain:@"Parse" code:BMFErrorCancelled userInfo:@{ NSLocalizedDescriptionKey : BMFLocalized(@"Parse Operation Cancelled",nil) }];
+	[self.progress stop:error];
+}
+
+@end

@@ -1,0 +1,8 @@
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+module.exports.schema = mongoose.Schema({
+	{{#properties}}
+	{{name}}: { type: {{type}}{{#_has_default_}},default: {{default}}{{/_has_default_}} }{{^_last_}},{{/_last_}}
+	{{/properties}}
+})

@@ -1,0 +1,19 @@
+<?php
+class {{_globals_.fileBaseName}}
+{
+	{{#properties}}
+	private ${{name}};
+	{{/properties}}
+
+	{{#properties}}
+	public function set{{_capitalized_}}(${{name}}) {
+		$this->{{name}} = ${{name}};
+	}
+
+	public function get{{_capitalized_}}() {
+		return $this->{{name}};
+	}
+	{{/properties}}
+	
+}
+

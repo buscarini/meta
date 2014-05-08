@@ -1,0 +1,36 @@
+{
+	"entityName" : "Book",
+	"primaryKeys" : [
+		{
+			"name" : "id"
+		}
+	],
+	"properties" : [
+		{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true
+		},
+		{
+			"name" : "title",
+			"type" : "string"
+		},
+		{
+			"name" : "author",
+			"type" : "string"
+		},
+		{
+			"name" : "numPages",
+			"type" : "integer"
+		},
+		{
+			"name" : "purchaseDate",
+			"type" : "date"
+		},
+		{
+			"name" : "deleted",
+			"type" : "bool",
+			"default" : "false"
+		}
+	]
+}

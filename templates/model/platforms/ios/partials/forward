@@ -1,0 +1,3 @@
+{{#forward_classes}}
+@class {{class}};
+{{/forward_classes}}

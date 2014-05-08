@@ -1,0 +1,35 @@
+{{#keys}}
+
+exports.findOne = function(req, res) {
+	res.setHeader('Content-Type', 'application/json');
+	
+	db.collection('{{name}}', function(err, coll) {
+		coll.findOne({ {{#primaryKeys}} {{name}} : req.body.{{name}}{{^_last_key_}},{{/_last_key_}} {{/primaryKeys}} },function(err, values) {
+			if (err) {
+				res.send({"result":1,"errorMessage":err.errmsg});
+			} else if (!values) {
+				res.send({"result":0,"content":{}});
+			} else {
+				res.send({'result':0,'{{name}}': values });
+			}
+		});
+	});
+};
+
+exports.findAll = function(req, res) {
+	res.setHeader('Content-Type', 'application/json');
+	
+	db.collection('{{name}}', function(err, coll) {
+		coll.find(function(err, values) {
+			if (err) {
+				res.send({"result":1,"errorMessage":err.errmsg});
+			} else if (!values) {
+				res.send({"result":0,"content":{}});
+			} else {
+				res.send({'result':0,'{{name}}': values });
+			}
+		});
+	});
+};
+
+{{/keys}}

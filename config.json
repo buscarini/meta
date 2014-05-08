@@ -1,0 +1,10 @@
+{
+	"projectPath" : "project",
+	"templatesPath" : "templates",
+	"outputPath" : "output",
+	"preprocessorFile" : "Preprocessor",
+	"platformFile" : "Platform",
+	"partialsPath" : "partials",
+	"verbose" : false,
+	"platforms" : [ "mongoose","ios" ]
+}
