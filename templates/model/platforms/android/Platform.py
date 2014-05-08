@@ -1,12 +1,10 @@
 import sys
 import os
 import json
+from meta.MetaPlatform import MetaPlatform
 
-class Platform(object):
+class Platform(MetaPlatform):
     """docstring for Platform"""
-    def __init__(self,stringUtils):
-        super(Platform, self).__init__()
-        self.stringUtils = stringUtils
         
     def preprocess_relationship(self,property,hash,hashes):
         """docstring for preprocess_relationship"""

@@ -1,10 +1,8 @@
 import sys
+from meta.MetaPlatform import MetaPlatform
 
-class Platform(object):
+class Platform(MetaPlatform):
     """docstring for Platform"""
-    def __init__(self,stringUtils):
-        super(Platform, self).__init__()
-        self.stringUtils = stringUtils
         
     def preprocessFilters(self,filters,hash):
         """docstring for preprocessFilters"""

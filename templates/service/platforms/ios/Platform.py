@@ -1,11 +1,10 @@
 import sys
 import json
+from meta.MetaPlatform import MetaPlatform
+from meta.utils import Utils
 
-class Platform(object):
+class Platform(MetaPlatform):
     """docstring for Platform"""
-    def __init__(self,stringUtils):
-        super(Platform, self).__init__()
-        self.stringUtils = stringUtils
         
     def preprocessType(self,dic):
         """docstring for preprocessType"""
@@ -49,7 +48,7 @@ class Platform(object):
                 
             property.update(self.preprocessRelationship(property,hash,hashes))
         else:
-            print("Error: unknown property type: " + type)
+            Utils.printError("Error: unknown property type: " + type)
             sys.exit()
             
     def preprocessHash(self,key,hashName,hash,hashes):
@@ -63,7 +62,7 @@ class Platform(object):
             
             return self.preprocessModel(hashObject,hash,hashes)
         else:
-            print("Error: hash: " + hashName + " not found in " + str(hashes))
+            Utils.printError("Error: hash: " + hashName + " not found in " + str(hashes))
             sys.exit()
         
     def preprocessModel(self,key,hash,hashes):

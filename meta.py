@@ -8,6 +8,7 @@ import shutil
 import argparse
 import sys
 
+import meta
 from meta import *
 
 config = configuration.MetaConfiguration()
@@ -143,7 +144,7 @@ def renderPlatform(product,platform,platformDir,hashes):
             if config.verbose:
                 print('Global Preprocessing')
                 
-            preprocessor = globalPreprocessorClass(stringUtils)
+            preprocessor = globalPreprocessorClass(config,stringUtils)
             preprocessor.preprocess(hash,hashes)
 
         if config.verbose:
@@ -152,7 +153,7 @@ def renderPlatform(product,platform,platformDir,hashes):
         # Preprocess product
         platformClass = utils.Utils.importClass(os.path.join(platformDir,config.platformFile))
         if platformClass!=None:
-            platformProcessor = platformClass(stringUtils)
+            platformProcessor = platformClass(config,stringUtils)
             platformProcessor.preprocess(hash,hashes)
         
         if config.verbose:

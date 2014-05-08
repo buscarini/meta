@@ -1,8 +1,7 @@
-class Platform(object):
+from meta.MetaPlatform import MetaPlatform
+
+class Platform(MetaPlatform):
     """docstring for Platform"""
-    def __init__(self,stringUtils):
-        super(Platform, self).__init__()
-        self.stringUtils = stringUtils
         
     def preprocess(self,hash,hashes):
         
