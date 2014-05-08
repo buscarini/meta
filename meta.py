@@ -118,8 +118,6 @@ def renderPlatform(product,platform,platformDir,hashes):
     assert platformDir
     assert hashes
     
-    print("platformDir: " + platformDir)
-    
     templates = platformTemplates(platformDir)
     # templates = templatesInDir(platformDir)
     log = "Templates: " + str(templates)
@@ -130,7 +128,8 @@ def renderPlatform(product,platform,platformDir,hashes):
     
     globalPlatformDir = os.path.join(config.globalPlatformsPath,platform)
 
-    print("Global platform dir: " + globalPlatformDir)
+    if config.verbose:
+        print("Global platform dir: " + globalPlatformDir)
 
     # Platform preprocess
     globalPreprocessorClass = utils.Utils.importClass(os.path.join(globalPlatformDir,config.preprocessorFile))
@@ -141,7 +140,9 @@ def renderPlatform(product,platform,platformDir,hashes):
         # Global Platform preprocess
         if globalPreprocessorClass!=None:
 
-            print('Global Preprocessing')
+            if config.verbose:
+                print('Global Preprocessing')
+                
             preprocessor = globalPreprocessorClass(stringUtils)
             preprocessor.preprocess(hash,hashes)
 
@@ -189,7 +190,7 @@ def renderPlatform(product,platform,platformDir,hashes):
             
             outputPath = outputDir(product,platform,fileName,entityName)
             
-            utils.Utils.printSection("Rendering to file: " + outputPath)
+            utils.Utils.printOutput("Rendering to file: " + outputPath)
             
             with open(outputPath, "w") as f:
                 f.write(rendered)
@@ -203,7 +204,7 @@ def renderProduct(product,productPath):
         utils.Utils.printError("No hashes for product: " + product)
         return
     
-    utils.Utils.printBold("Hashes:" + str(hashes))
+    utils.Utils.printSubSection("Hashes:" + str(hashes))
 
     productPlatformsPath = os.path.join(config.templatesPath,product,config.platformsPath)
     
@@ -216,15 +217,10 @@ def renderProduct(product,productPath):
         platform = os.path.basename(platformDir)
         
         if config.shouldRenderPlatform(platform):        
-            print("")
-            print("Rendering platform: "+platformDir)
-            print("-------------------")
-            print("")
+            utils.Utils.printSection("Rendering platform: "+platformDir)
             renderPlatform(product,platform,platformDir,hashes)
         elif config.verbose:
-            print("")
-            print("Skipping platform: " + platform)
-            print("")
+            utils.Utils.printSection("Skipping platform: " + platform)
                 
 def main():
     global config
@@ -240,26 +236,24 @@ def main():
     if config.verbose:
         print("")
         print("Verbose mode on")
-
-    print("")
         
-    print("Clear output")
-    print("------------")
-    print("")
+    utils.Utils.printSection("Clear output")
     if os.path.exists(config.outputPath):
         shutil.rmtree(config.outputPath)
         
     config.globalPlatformsPath = os.path.join(config.projectPath,config.platformsPath)
     
-    print("Render products")
-    print("---------------")
-    print("")
+    utils.Utils.printSection("Render products")
     for productDir in listDir(os.path.join(config.projectPath,config.productsPath)):
-        print("Rendering product: " + productDir)
-        print("------------------")
-        print("")
+        utils.Utils.printSection("Rendering product: " + productDir)
         renderProduct(os.path.basename(productDir),productDir)
 
+    print("")
+    if not utils.Utils.hasErrors:
+        utils.Utils.printBold("Done. No errors")
+    else:
+        utils.Utils.printError("Finished with some errors")
+    print("")
 
 if __name__ == '__main__':
     main()

@@ -3,6 +3,9 @@ import imp
 from termcolor import colored
 
 class Utils(object):
+    
+    hasErrors = False
+    
     """docstring for Utils"""
     @staticmethod
     def importClass(path):
@@ -21,16 +24,32 @@ class Utils(object):
     def printBold(message):
         """docstring for printEnphasis"""
         print(colored(message,'green'))
-        
+
+    @staticmethod
+    def printOutput(message):
+        """docstring for printEnphasis"""
+        print(colored(message,'cyan'))
+
     @staticmethod
     def printSection(message):
         """docstring for printEnphasis"""
-        print(colored(message,'blue'))
+        print('')
+        print(message)
+        print('-'*len(message))
+        print('')
+
+        
+    @staticmethod
+    def printSubSection(message):
+        """docstring for printEnphasis"""
+        print(colored("> ",'green') + message)
+        print('')
         
     @staticmethod
     def printWarning(message):
         print(colored(message,'magenta'))
         
-    @staticmethod
-    def printError(error):
+    @classmethod
+    def printError(cls,error):
          print(colored(error,'red'))
+         cls.hasErrors = True
