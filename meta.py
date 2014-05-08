@@ -210,14 +210,16 @@ def renderProduct(product,productPath):
     
     # productPlatformsPath = os.path.join(productPath,config.platformsPath)
     
-    print("product platforms path: " + productPlatformsPath)
+    if config.verbose:
+        print("product platforms path: " + productPlatformsPath)
     
     for platformDir in listDir(productPlatformsPath):
         
         platform = os.path.basename(platformDir)
         
         if config.shouldRenderPlatform(platform):        
-            utils.Utils.printSection("Rendering platform: "+platformDir)
+            utils.Utils.printSection("Rendering platform: " + platform)
+            utils.Utils.printBold("Path: " + platformDir)
             renderPlatform(product,platform,platformDir,hashes)
         elif config.verbose:
             utils.Utils.printSection("Skipping platform: " + platform)
@@ -236,17 +238,20 @@ def main():
     if config.verbose:
         print("")
         print("Verbose mode on")
-        
-    utils.Utils.printSection("Clear output")
+
+    print("")        
+    print("Clear output")
     if os.path.exists(config.outputPath):
         shutil.rmtree(config.outputPath)
         
     config.globalPlatformsPath = os.path.join(config.projectPath,config.platformsPath)
     
-    utils.Utils.printSection("Render products")
+    # utils.Utils.printSection("Render products")
     for productDir in listDir(os.path.join(config.projectPath,config.productsPath)):
-        utils.Utils.printSection("Rendering product: " + productDir)
-        renderProduct(os.path.basename(productDir),productDir)
+        productName = os.path.basename(productDir)
+        utils.Utils.printSection("Rendering product: " + productName)
+        utils.Utils.printBold("Path: " + productDir)
+        renderProduct(productName,productDir)
 
     print("")
     if not utils.Utils.hasErrors:

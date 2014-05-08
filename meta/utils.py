@@ -34,7 +34,7 @@ class Utils(object):
     def printSection(message):
         """docstring for printEnphasis"""
         print('')
-        print(message)
+        print(colored(message,'white',attrs=['bold']))
         print('-'*len(message))
         print('')
 
