@@ -7,12 +7,16 @@ from utils import Utils
 class MetaProcessor(object):
     """docstring for MetaProcessor"""
     def __init__(self, config,stringUtils):
+        assert config
+        assert stringUtils
+        
         super(MetaProcessor, self).__init__()
         self.config = config
         self.stringUtils = stringUtils
         
     def platformPartials(self,platformDir):
         """docstring for platformPartials"""
+        assert platformDir
 
         partials = {}
     
@@ -51,14 +55,19 @@ class MetaProcessor(object):
         return result
             
     def preprocess(self,hash,hashes):
+        assert hash
+        assert hashes
         pass
         
     def renderer(self,platformDir):
+        assert platformDir
+        
         partials = self.platformPartials(platformDir)
         return pystache.Renderer(partials=partials)
         
     def readHash(self,hashPath):
-    
+        assert hashPath
+        
         hashObject = Utils.readJSONFile(hashPath)
         if hashObject==None:
             print("Error reading json file: " + hashPath)
@@ -67,8 +76,10 @@ class MetaProcessor(object):
         return hashObject
     
     def process(self,hashes,templates,product,platform,platformDir):
-        
+        assert hashes
         assert templates
+        assert product
+        assert platform
         assert platformDir
         
         globalPlatformDir = os.path.join(self.config.globalPlatformsPath,platform)
@@ -105,6 +116,9 @@ class MetaProcessor(object):
 
 
     def finalFileName(self,fileName,hash):
+        assert fileName
+        assert hash
+        
         """docstring for finalFileName"""
         return fileName
         
