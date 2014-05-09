@@ -74,12 +74,14 @@ class Platform(MetaProcessor):
                 format = property['format']
                 formatIsUnique = True
                 for f in formats:
-                    if f.format==format:
+                    if f['format']==format:
+                        property['_format_name_'] = f['name']
                         formatIsUnique = False
                         break
 
                 if formatIsUnique:
                     formatObject = { "name" : property['name'], "format" : format }
+                    property['_format_name_'] = property['name']
                     formats.append(formatObject)
               
         key['_formats_'] = formats
