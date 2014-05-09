@@ -1,5 +1,6 @@
 import os
 import imp
+import glob
 from termcolor import colored
 
 class Utils(object):
@@ -53,3 +54,7 @@ class Utils(object):
     def printError(cls,error):
          print(colored(error,'red'))
          cls.hasErrors = True
+         
+    @staticmethod
+    def listDir(path):
+        return glob.glob(os.path.join(path, '*'))

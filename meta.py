@@ -10,21 +10,17 @@ import sys
 
 import meta
 from meta import *
+from meta.utils import Utils
 
 config = configuration.MetaConfiguration()
 stringUtils = stringutils.MetaStringUtils()
-
-renderer = pystache.Renderer()
-    
-def listDir(path):
-    return glob.glob(os.path.join(path, '*'))
     
 def hashesInDir(dir):
     """docstring for hashesInDir"""
     assert dir
     
     result = []
-    for f in listDir(dir):
+    for f in Utils.listDir(dir):
         filePath = f
         if os.path.isfile(filePath) and os.path.splitext(os.path.basename(f))[1]=='.json':
             result.append(filePath)
@@ -38,7 +34,7 @@ def templatesInDir(dir):
     # print("templates in dir: " + dir)
         
     result = []
-    for f in listDir(dir):
+    for f in Utils.listDir(dir):
         filePath = f
         if os.path.isfile(filePath) and os.path.splitext(os.path.basename(f))[1]=='.template':
             result.append(filePath)
@@ -51,47 +47,6 @@ def platformTemplates(platformDir):
     
     templatesDir = os.path.join(config.templatesPath,product,platformsDir,platform)
     return templatesInDir(templatesDir)
-    
-    
-def platformPartials(platformDir):
-    """docstring for platformPartials"""
-
-    partials = {}
-    
-    partialsDir = os.path.join(platformDir,config.partialsPath)
-    for f in listDir(partialsDir):
-        name = os.path.basename(f)
-        
-        with open (f, "r") as file:
-            partialString = file.read()
-            
-        partials[name] = partialString
-        
-    return partials
-    
-    
-def outputDir(product,platform,template,entityName):
-    """docstring for outputDir"""
-    assert product
-    assert platform
-    assert template
-        
-    if not os.path.exists(config.outputPath):
-        os.mkdir(config.outputPath)
-    
-    platformDir = os.path.join(config.outputPath,platform)
-    if not os.path.exists(platformDir):
-        os.mkdir(platformDir)
-    
-    productDir = os.path.join(platformDir,product)
-    if not os.path.exists(productDir):
-        os.mkdir(productDir)
-
-    templateName = os.path.splitext(template)[0]
-
-    result = os.path.join(productDir,templateName)
-    
-    return result
     
 def readHash(hashPath):
     assert hashPath
@@ -106,21 +61,13 @@ def readHash(hashPath):
     
     return hashObject
     
-def readTemplate(templatePath):
-    assert templatePath
-    
-    with open (templatePath, "r") as f:
-        templateString = f.read()
-
-    return templateString
-    
 def renderPlatform(product,platform,platformDir,hashes):
     """docstring for renderPlatform"""
     assert platformDir
     assert hashes
     
     templates = platformTemplates(platformDir)
-    # templates = templatesInDir(platformDir)
+
     log = "Templates: " + str(templates)
     if len(templates)==0:
         utils.Utils.printError(log)
@@ -154,47 +101,11 @@ def renderPlatform(product,platform,platformDir,hashes):
         platformClass = utils.Utils.importClass(os.path.join(platformDir,config.platformFile))
         if platformClass!=None:
             platformProcessor = platformClass(config,stringUtils)
-            platformProcessor.preprocess(hash,hashes)
-        
-        if config.verbose:
-            print("Hash after product preprocess: " + str(hash))
-        
-        partials = platformPartials(platformDir)
-        renderer = pystache.Renderer(partials=partials)
-        
-        for templateFile in templates:
-            # template = readTemplate(templateFile)
-            
-            fileName = os.path.basename(templateFile)
-            if (platformProcessor):
-                fileName = platformProcessor.finalFileName(fileName,hash)
 
-            if hash!=None and '_globals_' in hash:
-                # Remove .template
-                realFileName, extension = os.path.splitext(fileName)
-            
-                # Split final file name into components
-                baseName, extension = os.path.splitext(realFileName)
-                
-                hash['_globals_']['fileName'] = realFileName
-                hash['_globals_']['fileBaseName'] = baseName
-                hash['_globals_']['fileExtension'] = extension  
-                        
-            if config.verbose:
-                print('Hash: ' + str(hash))            
-            
-            rendered = renderer.render_path(templateFile,hash)
-            entityName = None
-            if hash!=None and 'entityName' in hash:
-                entityName = hash['entityName']
-            
-            
-            outputPath = outputDir(product,platform,fileName,entityName)
-            
-            utils.Utils.printOutput("Rendering to file: " + outputPath)
-            
-            with open(outputPath, "w") as f:
-                f.write(rendered)
+        else:
+            platformProcessor = MetaProcessor(config,stringUtils)
+
+        platformProcessor.process(hash,hashes,templates,product,platform,platformDir)        
                 
 def renderProduct(product,productPath):
     """docstring for renderProduct"""
@@ -214,7 +125,7 @@ def renderProduct(product,productPath):
     if config.verbose:
         print("product platforms path: " + productPlatformsPath)
     
-    for platformDir in listDir(productPlatformsPath):
+    for platformDir in Utils.listDir(productPlatformsPath):
         
         platform = os.path.basename(platformDir)
         
@@ -248,7 +159,7 @@ def main():
     config.globalPlatformsPath = os.path.join(config.projectPath,config.platformsPath)
     
     # utils.Utils.printSection("Render products")
-    for productDir in listDir(os.path.join(config.projectPath,config.productsPath)):
+    for productDir in Utils.listDir(os.path.join(config.projectPath,config.productsPath)):
         productName = os.path.basename(productDir)
         utils.Utils.printSection("Rendering product: " + productName)
         utils.Utils.printBold("Path: " + productDir)
@@ -263,3 +174,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
