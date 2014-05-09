@@ -5,7 +5,18 @@
 
 #import "TRNBook.h"
 	
-@implementation TRNParser
+@implementation TRNParser {
+	NSDateFormatter *purchaseDateDateFormatter;
+}
+
+- (id) init {
+	self = [super init];
+	if (self) {
+		purchaseDateDateFormatter = [[NSDateFormatter alloc] init];
+		purchaseDateDateFormatter.dateFormat = @"dd.MM.yyyy";
+	}
+	return self;
+}
 
 - (void) parse:(NSDictionary *) rawObject completion:(BMFCompletionBlock) completionBlock {
 	
@@ -71,9 +82,7 @@
 
 			value = dic[@"purchaseDate"];
 			if ([value isKindOfClass:[NSString class]]) {
-				NSDateFormatter *dateFormatter = [NSDateFormatter new];
-				dateFormatter.dateFormat = @"dd.MM.yyyy";
-				object.purchaseDate = [dateFormatter dateFromString:value];
+				object.purchaseDate = [purchaseDateDateFormatter dateFromString:value];
 			}
 			else {
 				DDLogWarn(@"Invalid type or missing key for property purchaseDate: %@",value);

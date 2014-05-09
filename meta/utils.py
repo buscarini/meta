@@ -1,6 +1,7 @@
 import os
 import imp
 import glob
+import json
 from termcolor import colored
 
 class Utils(object):
@@ -58,3 +59,17 @@ class Utils(object):
     @staticmethod
     def listDir(path):
         return glob.glob(os.path.join(path, '*'))
+    
+    @staticmethod
+    def readJSONFile(path):
+        assert path
+    
+        with open(path, "r") as f:
+            string = f.read()
+        try:
+            obj = json.loads(string)
+        except:
+            return None
+    
+        return obj
+    

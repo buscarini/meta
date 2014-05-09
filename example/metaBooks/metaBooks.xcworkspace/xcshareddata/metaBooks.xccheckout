@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8E2CE702-21D1-4D56-86A7-240213DDF414</string>
+	<key>IDESourceControlProjectName</key>
+	<string>metaBooks</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>932DBA00-6EEC-432D-90B9-A29C11453121</key>
+		<string>https://github.com/buscarini/meta.git</string>
+		<key>B9E6E322-0481-4B37-B54A-4F594A114E3C</key>
+		<string>ssh://bitbucket.org/buscarini/bmf.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>example/metaBooks/metaBooks.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>932DBA00-6EEC-432D-90B9-A29C11453121</key>
+		<string>../../..</string>
+		<key>B9E6E322-0481-4B37-B54A-4F594A114E3C</key>
+		<string>../../../../bmf</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/buscarini/meta.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>932DBA00-6EEC-432D-90B9-A29C11453121</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B9E6E322-0481-4B37-B54A-4F594A114E3C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>bmf</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>932DBA00-6EEC-432D-90B9-A29C11453121</string>
+			<key>IDESourceControlWCCName</key>
+			<string>meta</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
 	
+	{{#entities}}
 	
+    <entity name="{{entityName}}" representedClassName="Apartment" syncable="YES">
+        <attribute name="flatArea" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+	</entity>
+	
+	{{/entities}}
 	
     <entity name="Apartment" representedClassName="Apartment" syncable="YES">
         <attribute name="flatArea" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>

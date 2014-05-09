@@ -49,16 +49,12 @@ def platformTemplates(platformDir):
     return templatesInDir(templatesDir)
     
 def readHash(hashPath):
-    assert hashPath
     
-    with open (hashPath, "r") as f:
-        hashString = f.read()
-    try:
-        hashObject = json.loads(hashString)
-    except:
+    hashObject = Utils.readJSONFile(hashPath)
+    if hashObject==None:
         print("Error reading json file: " + hashPath)
         sys.exit()
-    
+        
     return hashObject
     
 def renderPlatform(product,platform,platformDir,hashes):
@@ -80,30 +76,29 @@ def renderPlatform(product,platform,platformDir,hashes):
         print("Global platform dir: " + globalPlatformDir)
 
     # Platform preprocess
+    globalPreprocessor = None
     globalPreprocessorClass = utils.Utils.importClass(os.path.join(globalPlatformDir,config.preprocessorFile))
-    
+    if globalPreprocessorClass!=None:
+        globalPreprocessor = globalPreprocessorClass(config,stringUtils)
+            
+    platformClass = utils.Utils.importClass(os.path.join(platformDir,config.platformFile))
+    if platformClass!=None:
+        platformProcessor = platformClass(config,stringUtils)
+    else:
+        platformProcessor = MetaProcessor(config,stringUtils)
+        
     for hashFile in hashes:
         hash = readHash(hashFile)
         
         # Global Platform preprocess
-        if globalPreprocessorClass!=None:
-
+        if globalPreprocessor!=None:
             if config.verbose:
                 print('Global Preprocessing')
                 
-            preprocessor = globalPreprocessorClass(config,stringUtils)
-            preprocessor.preprocess(hash,hashes)
+            globalPreprocessor.preprocess(hash,hashes)
 
         if config.verbose:
             print("Hash after global preprocess: " + str(hash))
-                
-        # Preprocess product
-        platformClass = utils.Utils.importClass(os.path.join(platformDir,config.platformFile))
-        if platformClass!=None:
-            platformProcessor = platformClass(config,stringUtils)
-
-        else:
-            platformProcessor = MetaProcessor(config,stringUtils)
 
         platformProcessor.process(hash,hashes,templates,product,platform,platformDir)        
                 
@@ -119,8 +114,6 @@ def renderProduct(product,productPath):
     utils.Utils.printSubSection("Hashes:" + str(hashes))
 
     productPlatformsPath = os.path.join(config.templatesPath,product,config.platformsPath)
-    
-    # productPlatformsPath = os.path.join(productPath,config.platformsPath)
     
     if config.verbose:
         print("product platforms path: " + productPlatformsPath)
@@ -158,7 +151,6 @@ def main():
         
     config.globalPlatformsPath = os.path.join(config.projectPath,config.platformsPath)
     
-    # utils.Utils.printSection("Render products")
     for productDir in Utils.listDir(os.path.join(config.projectPath,config.productsPath)):
         productName = os.path.basename(productDir)
         utils.Utils.printSection("Rendering product: " + productName)
