@@ -1,0 +1,290 @@
+
+// To check if a library is compiled with CocoaPods you
+// can use the `COCOAPODS` macro definition which is
+// defined in the xcconfigs so it is available in
+// headers also when they are imported in the client
+// project.
+
+
+// AFNetworking
+#define COCOAPODS_POD_AVAILABLE_AFNetworking
+#define COCOAPODS_VERSION_MAJOR_AFNetworking 2
+#define COCOAPODS_VERSION_MINOR_AFNetworking 2
+#define COCOAPODS_VERSION_PATCH_AFNetworking 3
+
+// AFNetworking/NSURLConnection
+#define COCOAPODS_POD_AVAILABLE_AFNetworking_NSURLConnection
+#define COCOAPODS_VERSION_MAJOR_AFNetworking_NSURLConnection 2
+#define COCOAPODS_VERSION_MINOR_AFNetworking_NSURLConnection 2
+#define COCOAPODS_VERSION_PATCH_AFNetworking_NSURLConnection 3
+
+// AFNetworking/NSURLSession
+#define COCOAPODS_POD_AVAILABLE_AFNetworking_NSURLSession
+#define COCOAPODS_VERSION_MAJOR_AFNetworking_NSURLSession 2
+#define COCOAPODS_VERSION_MINOR_AFNetworking_NSURLSession 2
+#define COCOAPODS_VERSION_PATCH_AFNetworking_NSURLSession 3
+
+// AFNetworking/Reachability
+#define COCOAPODS_POD_AVAILABLE_AFNetworking_Reachability
+#define COCOAPODS_VERSION_MAJOR_AFNetworking_Reachability 2
+#define COCOAPODS_VERSION_MINOR_AFNetworking_Reachability 2
+#define COCOAPODS_VERSION_PATCH_AFNetworking_Reachability 3
+
+// AFNetworking/Security
+#define COCOAPODS_POD_AVAILABLE_AFNetworking_Security
+#define COCOAPODS_VERSION_MAJOR_AFNetworking_Security 2
+#define COCOAPODS_VERSION_MINOR_AFNetworking_Security 2
+#define COCOAPODS_VERSION_PATCH_AFNetworking_Security 3
+
+// AFNetworking/Serialization
+#define COCOAPODS_POD_AVAILABLE_AFNetworking_Serialization
+#define COCOAPODS_VERSION_MAJOR_AFNetworking_Serialization 2
+#define COCOAPODS_VERSION_MINOR_AFNetworking_Serialization 2
+#define COCOAPODS_VERSION_PATCH_AFNetworking_Serialization 3
+
+// AFNetworking/UIKit
+#define COCOAPODS_POD_AVAILABLE_AFNetworking_UIKit
+#define COCOAPODS_VERSION_MAJOR_AFNetworking_UIKit 2
+#define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 2
+#define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 3
+
+// BMF/Core
+#define COCOAPODS_POD_AVAILABLE_BMF_Core
+#define COCOAPODS_VERSION_MAJOR_BMF_Core 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core 3
+
+// BMF/Core/Activities
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Activities
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Activities 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Activities 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Activities 3
+
+// BMF/Core/Aspects
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Aspects
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Aspects 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Aspects 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Aspects 3
+
+// BMF/Core/Base
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Base
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Base 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Base 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Base 3
+
+// BMF/Core/Behaviors
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Behaviors
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Behaviors 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Behaviors 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Behaviors 3
+
+// BMF/Core/Categories
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Categories
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Categories 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Categories 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Categories 3
+
+// BMF/Core/Cell configuration
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Cell_configuration
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Cell_configuration 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Cell_configuration 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Cell_configuration 3
+
+// BMF/Core/Cell factory
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Cell_factory
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Cell_factory 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Cell_factory 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Cell_factory 3
+
+// BMF/Core/Cells
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Cells
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Cells 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Cells 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Cells 3
+
+// BMF/Core/Conditions
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Conditions
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Conditions 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Conditions 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Conditions 3
+
+// BMF/Core/Configurations
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Configurations
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Configurations 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Configurations 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Configurations 3
+
+// BMF/Core/Data
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Data
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Data 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Data 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Data 3
+
+// BMF/Core/Data Sources
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Data_Sources
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Data_Sources 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Data_Sources 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Data_Sources 3
+
+// BMF/Core/Data Stores
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Data_Stores
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Data_Stores 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Data_Stores 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Data_Stores 3
+
+// BMF/Core/Events
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Events
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Events 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Events 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Events 3
+
+// BMF/Core/Factories
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Factories
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Factories 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Factories 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Factories 3
+
+// BMF/Core/ITOX
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_ITOX
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_ITOX 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_ITOX 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_ITOX 3
+
+// BMF/Core/Loaders
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Loaders
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Loaders 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Loaders 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Loaders 3
+
+// BMF/Core/Model
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Model
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Model 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Model 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Model 3
+
+// BMF/Core/Nodes
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Nodes
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Nodes 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Nodes 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Nodes 3
+
+// BMF/Core/Operations
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Operations
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Operations 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Operations 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Operations 3
+
+// BMF/Core/Parsers
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Parsers
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Parsers 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Parsers 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Parsers 3
+
+// BMF/Core/Serializers
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Serializers
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Serializers 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Serializers 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Serializers 3
+
+// BMF/Core/Utils
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Utils
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Utils 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Utils 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Utils 3
+
+// BMF/Core/Values
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Values
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Values 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Values 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Values 3
+
+// BMF/Core/View Controllers
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_View_Controllers
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_View_Controllers 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_View_Controllers 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_View_Controllers 3
+
+// BMF/Core/View register
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_View_register
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_View_register 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_View_register 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_View_register 3
+
+// BMF/Core/Views
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Views
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Views 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Views 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Views 3
+
+// BMF/Core/Writers
+#define COCOAPODS_POD_AVAILABLE_BMF_Core_Writers
+#define COCOAPODS_VERSION_MAJOR_BMF_Core_Writers 0
+#define COCOAPODS_VERSION_MINOR_BMF_Core_Writers 0
+#define COCOAPODS_VERSION_PATCH_BMF_Core_Writers 3
+
+// BMF/CoreData
+#define COCOAPODS_POD_AVAILABLE_BMF_CoreData
+#define COCOAPODS_VERSION_MAJOR_BMF_CoreData 0
+#define COCOAPODS_VERSION_MINOR_BMF_CoreData 0
+#define COCOAPODS_VERSION_PATCH_BMF_CoreData 3
+
+// Base32
+#define COCOAPODS_POD_AVAILABLE_Base32
+#define COCOAPODS_VERSION_MAJOR_Base32 1
+#define COCOAPODS_VERSION_MINOR_Base32 0
+#define COCOAPODS_VERSION_PATCH_Base32 2
+
+// Base64
+#define COCOAPODS_POD_AVAILABLE_Base64
+#define COCOAPODS_VERSION_MAJOR_Base64 1
+#define COCOAPODS_VERSION_MINOR_Base64 0
+#define COCOAPODS_VERSION_PATCH_Base64 1
+
+// CocoaLumberjack
+#define COCOAPODS_POD_AVAILABLE_CocoaLumberjack
+#define COCOAPODS_VERSION_MAJOR_CocoaLumberjack 1
+#define COCOAPODS_VERSION_MINOR_CocoaLumberjack 8
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack 1
+
+// CocoaLumberjack/Core
+#define COCOAPODS_POD_AVAILABLE_CocoaLumberjack_Core
+#define COCOAPODS_VERSION_MAJOR_CocoaLumberjack_Core 1
+#define COCOAPODS_VERSION_MINOR_CocoaLumberjack_Core 8
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Core 1
+
+// CocoaLumberjack/Extensions
+#define COCOAPODS_POD_AVAILABLE_CocoaLumberjack_Extensions
+#define COCOAPODS_VERSION_MAJOR_CocoaLumberjack_Extensions 1
+#define COCOAPODS_VERSION_MINOR_CocoaLumberjack_Extensions 8
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Extensions 1
+
+// MagicalRecord
+#define COCOAPODS_POD_AVAILABLE_MagicalRecord
+#define COCOAPODS_VERSION_MAJOR_MagicalRecord 2
+#define COCOAPODS_VERSION_MINOR_MagicalRecord 2
+#define COCOAPODS_VERSION_PATCH_MagicalRecord 0
+
+// MagicalRecord/Core
+#define COCOAPODS_POD_AVAILABLE_MagicalRecord_Core
+#define COCOAPODS_VERSION_MAJOR_MagicalRecord_Core 2
+#define COCOAPODS_VERSION_MINOR_MagicalRecord_Core 2
+#define COCOAPODS_VERSION_PATCH_MagicalRecord_Core 0
+
+// ReactiveCocoa
+#define COCOAPODS_POD_AVAILABLE_ReactiveCocoa
+#define COCOAPODS_VERSION_MAJOR_ReactiveCocoa 2
+#define COCOAPODS_VERSION_MINOR_ReactiveCocoa 2
+#define COCOAPODS_VERSION_PATCH_ReactiveCocoa 4
+
+// ReactiveCocoa/Core
+#define COCOAPODS_POD_AVAILABLE_ReactiveCocoa_Core
+#define COCOAPODS_VERSION_MAJOR_ReactiveCocoa_Core 2
+#define COCOAPODS_VERSION_MINOR_ReactiveCocoa_Core 2
+#define COCOAPODS_VERSION_PATCH_ReactiveCocoa_Core 4
+
+// ReactiveCocoa/no-arc
+#define COCOAPODS_POD_AVAILABLE_ReactiveCocoa_no_arc
+#define COCOAPODS_VERSION_MAJOR_ReactiveCocoa_no_arc 2
+#define COCOAPODS_VERSION_MINOR_ReactiveCocoa_no_arc 2
+#define COCOAPODS_VERSION_PATCH_ReactiveCocoa_no_arc 4
+

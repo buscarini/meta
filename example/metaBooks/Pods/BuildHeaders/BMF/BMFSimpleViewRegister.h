@@ -1,0 +1,1 @@
+../../../../../../bmf/bmf/ios/views/view register/BMFSimpleViewRegister.h

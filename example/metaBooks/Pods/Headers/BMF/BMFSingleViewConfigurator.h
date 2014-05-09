@@ -1,0 +1,1 @@
+../../../../../../bmf/bmf/ios/views/cell configuration/BMFSingleViewConfigurator.h

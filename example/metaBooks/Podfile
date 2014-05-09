@@ -1,0 +1,11 @@
+pod 'BMF/Core', :path => '~/prog/bmf'
+pod 'BMF/CoreData', :path => '~/prog/bmf'
+# pod 'BMF/Crashlytics', :path => '~/prog/bmf'
+# pod 'BMF/Flurry', :path => '~/prog/bmf'
+
+#pod 'BMF/Core', :git => 'git@bitbucket.org:buscarini/bmf.git'
+#pod 'BMF/CoreData', :git => 'git@bitbucket.org:buscarini/bmf.git'
+# pod 'BMF/Crashlytics', :git => 'git@bitbucket.org:buscarini/bmf.git'
+# pod 'BMF/Flurry', :git => 'git@bitbucket.org:buscarini/bmf.git'
+
+inhibit_all_warnings!

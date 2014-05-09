@@ -1,0 +1,1 @@
+../../../../../../bmf/bmf/ios/subspecs/coredata/BMFIOSCoreDataStoreFactory.h

@@ -1,0 +1,1 @@
+../../../../../../bmf/bmf/shared/configurations/modules/BMFMagicalRecordConfigurationModule.h
