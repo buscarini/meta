@@ -5,7 +5,22 @@
 
 {{> entityImports}}
 	
-@implementation {{_globals_.fileBaseName}}
+@implementation {{_globals_.fileBaseName}} {
+	{{#content.model._formats_}}
+	NSDateFormatter *{{name}}DateFormatter;
+	{{/content.model._formats_}}
+}
+
+- (id) init {
+	self = [super init];
+	if (self) {
+		{{#content.model._formats_}}
+		{{name}}DateFormatter = [[NSDateFormatter alloc] init];
+		{{name}}DateFormatter.dateFormat = @"{{format}}";
+		{{/content.model._formats_}}
+	}
+	return self;
+}
 
 - (void) parse:(NSDictionary *) rawObject completion:(BMFCompletionBlock) completionBlock {
 	

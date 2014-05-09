@@ -64,6 +64,25 @@ class Platform(MetaProcessor):
         else:
             Utils.printError("Error: hash: " + hashName + " not found in " + str(hashes))
             sys.exit()
+            
+    def preprocessDateFormats(self,key):
+        """docstring for preprocessDateFormats"""
+        
+        formats = []
+        for property in key['properties']:
+            if 'format' in property:
+                format = property['format']
+                formatIsUnique = True
+                for f in formats:
+                    if f.format==format:
+                        formatIsUnique = False
+                        break
+
+                if formatIsUnique:
+                    formatObject = { "name" : property['name'], "format" : format }
+                    formats.append(formatObject)
+              
+        key['_formats_'] = formats
         
     def preprocessModel(self,key,hash,hashes):
         """Preprocess entity"""
@@ -74,6 +93,9 @@ class Platform(MetaProcessor):
             hash['_entity_imports_'].append({ "name" : self.finalFileName(key['entityName'],hash) + '.h' })
             for property in key['properties']:
                 self.preprocessProperty(property,hash,hashes)
+
+            self.preprocessDateFormats(key)
+                
         return key
         
     def preprocessResultValue(self,resultValue):

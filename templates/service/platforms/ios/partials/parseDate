@@ -1,9 +1,7 @@
 {{#type_date}}
 value = dic[@"{{name}}"];
 if ([value isKindOfClass:[NSString class]]) {
-	NSDateFormatter *dateFormatter = [NSDateFormatter new];
-	dateFormatter.dateFormat = @"{{format}}";
-	object.{{destination}} = [dateFormatter dateFromString:value];
+	object.{{destination}} = [{{name}}DateFormatter dateFromString:value];
 }
 else {
 	{{> logError}}
