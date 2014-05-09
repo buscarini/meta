@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+	
+	
+	
+    <entity name="Apartment" representedClassName="Apartment" syncable="YES">
+        <attribute name="flatArea" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="floor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="free" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="htmlText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="icon" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="iconUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ident" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="keywords" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="posX" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="posY" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="shortHtmlText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sold" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="sortorder" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subtitle1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subtitle2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="svg" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="svgUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="total" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="building" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Building" inverseName="apartments" inverseEntity="Building" syncable="YES"/>
+        <relationship name="furniture" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="FurniturePiece" inverseName="apartment" inverseEntity="FurniturePiece" syncable="YES"/>
+        <relationship name="images" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ApartmentImage" inverseName="apartment" inverseEntity="ApartmentImage" syncable="YES"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Note" inverseName="apartment" inverseEntity="Note" syncable="YES"/>
+        <relationship name="texts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ApartmentInfoText" inverseName="apartment" inverseEntity="ApartmentInfoText" syncable="YES"/>
+        <relationship name="walls" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Wall" inverseName="apartment" inverseEntity="Wall" syncable="YES"/>
+    </entity>
+    <entity name="ApartmentImage" representedClassName="ApartmentImage" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="dataUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ident" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="preview" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="previewUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="apartment" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Apartment" inverseName="images" inverseEntity="Apartment" syncable="YES"/>
+    </entity>
+    <entity name="ApartmentInfoText" representedClassName="ApartmentInfoText" syncable="YES">
+        <attribute name="ident" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="posX" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="posY" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="apartment" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Apartment" inverseName="texts" inverseEntity="Apartment" syncable="YES"/>
+    </entity>
+    <entity name="Building" representedClassName="Building" syncable="YES">
+        <attribute name="ident" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="posX" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="posY" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="apartments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Apartment" inverseName="building" inverseEntity="Apartment" syncable="YES"/>
+        <relationship name="plan" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Plan" inverseName="buildings" inverseEntity="Plan" syncable="YES"/>
+    </entity>
+    <entity name="Furniture" representedClassName="Furniture" syncable="YES">
+        <attribute name="ident" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="previewImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="previewImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="producerUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="svg" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="svgUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="pieces" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FurniturePiece" inverseName="furniture" inverseEntity="FurniturePiece" syncable="YES"/>
+    </entity>
+    <entity name="FurniturePiece" representedClassName="FurniturePiece" syncable="YES">
+        <attribute name="angle" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="mirrorH" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="mirrorV" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="posX" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="posY" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="apartment" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Apartment" inverseName="furniture" inverseEntity="Apartment" syncable="YES"/>
+        <relationship name="furniture" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Furniture" inverseName="pieces" inverseEntity="Furniture" syncable="YES"/>
+    </entity>
+    <entity name="Note" representedClassName="Note" syncable="YES">
+        <attribute name="posX" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="posY" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="apartment" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Apartment" inverseName="notes" inverseEntity="Apartment" syncable="YES"/>
+    </entity>
+    <entity name="Person" representedClassName="Person" syncable="YES">
+        <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="projects" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="contact" inverseEntity="Project" syncable="YES"/>
+    </entity>
+    <entity name="Plan" representedClassName="Plan" syncable="YES">
+        <attribute name="ident" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortorder" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="buildings" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Building" inverseName="plan" inverseEntity="Building" syncable="YES"/>
+        <relationship name="project" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="plans" inverseEntity="Project" syncable="YES"/>
+    </entity>
+    <entity name="Project" representedClassName="Project" syncable="YES">
+        <attribute name="ident" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="keywords" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastChange" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="planImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="planImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="previewImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="previewImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortorder" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="website" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="projects" inverseEntity="Person" syncable="YES"/>
+        <relationship name="documents" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ProjectDocument" inverseName="project" inverseEntity="ProjectDocument" syncable="YES"/>
+        <relationship name="plans" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Plan" inverseName="project" inverseEntity="Plan" syncable="YES"/>
+    </entity>
+    <entity name="ProjectDocument" representedClassName="ProjectDocument" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="descriptionText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rowOrder" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="project" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="documents" inverseEntity="Project" syncable="YES"/>
+    </entity>
+    <entity name="Wall" representedClassName="Wall" syncable="YES">
+        <attribute name="angle" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="height" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="mirrorH" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="mirrorV" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="posX" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="posY" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="shape" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="width" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <relationship name="apartment" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Apartment" inverseName="walls" inverseEntity="Apartment" syncable="YES"/>
+    </entity>
+    <fetchRequest name="AllProjects" entity="Project" fetchBatchSize="50"/>
+    <fetchRequest name="ApartmentFR" entity="Apartment" predicateString="ident == $ident" fetchBatchSize="30"/>
+    <fetchRequest name="ApartmentImageFR" entity="ApartmentImage" predicateString="ident == $ident AND apartment == $apartment"/>
+    <fetchRequest name="BuildingFR" entity="Building" predicateString="ident == $ident"/>
+    <fetchRequest name="FurnitureFR" entity="Furniture" predicateString="ident == $ident"/>
+    <fetchRequest name="InfoTextFR" entity="ApartmentInfoText" predicateString="ident == $ident"/>
+    <fetchRequest name="PlanFR" entity="Plan" predicateString="ident == $ident"/>
+    <fetchRequest name="ProjectFR" entity="Project" predicateString="ident == $ident" fetchLimit="1" includePropertyValues="YES"/>
+    <elements>
+        <element name="Apartment" positionX="0" positionY="0" width="128" height="435"/>
+        <element name="ApartmentImage" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="ApartmentInfoText" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="Building" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="Furniture" positionX="0" positionY="0" width="128" height="195"/>
+        <element name="FurniturePiece" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="Note" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="Person" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="Plan" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="Project" positionX="0" positionY="0" width="128" height="313"/>
+        <element name="ProjectDocument" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="Wall" positionX="0" positionY="0" width="128" height="180"/>
+    </elements>
+</model>
