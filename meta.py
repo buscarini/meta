@@ -70,37 +70,46 @@ def renderPlatform(product,platform,platformDir,hashes):
     else:
         utils.Utils.printBold(log)
     
-    globalPlatformDir = os.path.join(config.globalPlatformsPath,platform)
-
-    if config.verbose:
-        print("Global platform dir: " + globalPlatformDir)
-
-    # Platform preprocess
-    globalPreprocessor = None
-    globalPreprocessorClass = utils.Utils.importClass(os.path.join(globalPlatformDir,config.preprocessorFile))
-    if globalPreprocessorClass!=None:
-        globalPreprocessor = globalPreprocessorClass(config,stringUtils)
-            
+    # globalPlatformDir = os.path.join(config.globalPlatformsPath,platform)
+ # 
+ #    if config.verbose:
+ #        print("Global platform dir: " + globalPlatformDir)
+        
     platformClass = utils.Utils.importClass(os.path.join(platformDir,config.platformFile))
     if platformClass!=None:
         platformProcessor = platformClass(config,stringUtils)
     else:
         platformProcessor = MetaProcessor(config,stringUtils)
-        
-    for hashFile in hashes:
-        hash = readHash(hashFile)
-        
-        # Global Platform preprocess
-        if globalPreprocessor!=None:
-            if config.verbose:
-                print('Global Preprocessing')
-                
-            globalPreprocessor.preprocess(hash,hashes)
+    
+    platformProcessor.process(hashes,templates,product,platform,platformDir)
+    
 
-        if config.verbose:
-            print("Hash after global preprocess: " + str(hash))
-
-        platformProcessor.process(hash,hashes,templates,product,platform,platformDir)        
+    # # Platform preprocess
+#     globalPreprocessor = None
+#     globalPreprocessorClass = utils.Utils.importClass(os.path.join(globalPlatformDir,config.preprocessorFile))
+#     if globalPreprocessorClass!=None:
+#         globalPreprocessor = globalPreprocessorClass(config,stringUtils)
+#             
+#     platformClass = utils.Utils.importClass(os.path.join(platformDir,config.platformFile))
+#     if platformClass!=None:
+#         platformProcessor = platformClass(config,stringUtils)
+#     else:
+#         platformProcessor = MetaProcessor(config,stringUtils)
+#         
+#     for hashFile in hashes:
+#         hash = readHash(hashFile)
+#         
+#         # Global Platform preprocess
+#         if globalPreprocessor!=None:
+#             if config.verbose:
+#                 print('Global Preprocessing')
+#                 
+#             globalPreprocessor.preprocess(hash,hashes)
+# 
+#         if config.verbose:
+#             print("Hash after global preprocess: " + str(hash))
+# 
+#         platformProcessor.process(hash,hashes,templates,product,platform,platformDir)        
                 
 def renderProduct(product,productPath):
     """docstring for renderProduct"""

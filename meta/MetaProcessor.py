@@ -56,22 +56,53 @@ class MetaProcessor(object):
     def renderer(self,platformDir):
         partials = self.platformPartials(platformDir)
         return pystache.Renderer(partials=partials)
-    
-    def process(self,hash,hashes,templates,product,platform,platformDir):
         
-        assert hash
+    def readHash(self,hashPath):
+    
+        hashObject = Utils.readJSONFile(hashPath)
+        if hashObject==None:
+            print("Error reading json file: " + hashPath)
+            sys.exit()
+        
+        return hashObject
+    
+    def process(self,hashes,templates,product,platform,platformDir):
+        
         assert templates
         assert platformDir
         
-        self.preprocess(hash,hashes)
+        globalPlatformDir = os.path.join(self.config.globalPlatformsPath,platform)
         
-        if self.config.verbose:
-            print("Hash after product preprocess: " + str(hash))
+        # Platform preprocess
+        globalPreprocessor = None
+        globalPreprocessorClass = Utils.importClass(os.path.join(globalPlatformDir,self.config.preprocessorFile))
+        if globalPreprocessorClass!=None:
+            globalPreprocessor = globalPreprocessorClass(self.config,self.stringUtils)
+            
+        for hashFile in hashes:
+            hash = self.readHash(hashFile)
+        
+            # Global Platform preprocess
+            if globalPreprocessor!=None:
+                if self.config.verbose:
+                    print('Global Preprocessing')
+                
+                globalPreprocessor.preprocess(hash,hashes)
+
+            if self.config.verbose:
+                print("Hash after global preprocess: " + str(hash))
+
+
+            self.preprocess(hash,hashes)
+            
+            if self.config.verbose:
+                print("Hash after product preprocess: " + str(hash))
     
-        renderer = self.renderer(platformDir)
+            renderer = self.renderer(platformDir)
         
-        for templateFile in templates:
-           self.renderTemplate(renderer,templateFile,hash,hashes,product,platform,platformDir) 
+            for templateFile in templates:
+               self.renderTemplate(renderer,templateFile,hash,hashes,product,platform,platformDir)
+
 
     def finalFileName(self,fileName,hash):
         """docstring for finalFileName"""
