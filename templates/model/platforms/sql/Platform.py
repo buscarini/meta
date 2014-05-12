@@ -12,6 +12,9 @@ class Platform(MetaProcessor):
         property['_camelcase_'] = self.stringUtils.camelcase(str(property['name']))
         property['_capitalized_'] = self.stringUtils.capitalize(str(property['name']))
         
+        if 'default' in property:
+            property['default'] = self.globalPlatform.platformValueForValue(property['default'])
+        
         type = property['type']
         property['type_' + type] = True
         

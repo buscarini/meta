@@ -41,3 +41,14 @@ class GlobalPlatform(MetaProcessor):
             return 'TIMESTAMP'
         else:
             return None
+            
+    def platformValueForValue(self,value):
+        """docstring for platformValueForValue"""
+        if value=='true':
+            return 'TRUE'
+        elif value=='false':
+            return 'FALSE'
+        elif value=='now':
+            return 'CURRENT_TIMESTAMP'
+        else:
+            return value
