@@ -2,9 +2,9 @@
 	"projectPath" : "example_spec",
 	"templatesPath" : "templates",
 	"outputPath" : "output",
-	"preprocessorFile" : "Preprocessor",
+	"preprocessorFile" : "GlobalPlatform",
 	"platformFile" : "Platform",
 	"partialsPath" : "partials",
 	"verbose" : false,
-	"platforms" : [ "ios", "mongoose" ]
+	"platforms" : [ "ios", "mongoose","android" ]
 }

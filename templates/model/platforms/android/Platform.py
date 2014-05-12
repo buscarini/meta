@@ -46,22 +46,12 @@ class Platform(MetaProcessor):
         
         type = property['type']
         property['type_' + type] = True
-     
-        if type=='string':
-            property['type'] = 'String'
-        elif type=='integer':
-            property['type'] = 'int'
-        elif type=='float':
-            property['type'] = 'float'
-        elif type=='double':
-            property['type'] = 'double'
-        elif type=='bool':
-            property['type'] = 'boolean'
-        elif type=='date':
-            property['type'] = 'java.util.Date'
+        
+        platformType = self.globalPlatform.platformTypeForType(type)
+        if platformType!=None:
+            property['type'] = platformType
         elif type=='relationship':
-            self.preprocess_relationship(property,hash,hashes)
-            
+            self.preprocess_relationship(property,hash,hashes)            
         else:
             print("Error: unknown property type: " + type)
             sys.exit()
@@ -73,8 +63,9 @@ class Platform(MetaProcessor):
             for property in properties:
                 self.preprocess_property(property,hash,hashes)
                 i=i+1
-                
-            properties[len(properties)-1]['_last_'] = True            
+            
+            self.preprocessList(properties)
+            # properties[len(properties)-1]['_last_'] = True            
             
     def finalFileName(self,fileName,hash):
         """docstring for finalFileName"""

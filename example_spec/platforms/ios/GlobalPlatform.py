@@ -1,12 +1,14 @@
 import os
 import json
+import sys
+import meta
 from meta.MetaProcessor import MetaProcessor
-
-class Preprocessor(MetaProcessor):
+        
+class GlobalPlatform(MetaProcessor):
     """docstring for Preprocessor"""
     def __init__(self,config,stringUtils):
-        super(Preprocessor, self).__init__(config,stringUtils)
-
+        super(GlobalPlatform, self).__init__(config, stringUtils)
+    
         thisPath = os.path.realpath(__file__)
         
         self.globalsPath = os.path.join(os.path.dirname(thisPath),'globals.json')

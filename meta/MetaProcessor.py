@@ -14,6 +14,18 @@ class MetaProcessor(object):
         self.config = config
         self.stringUtils = stringUtils
         
+    def preprocessList(self,list):
+        if len(list)==0:
+            return
+            
+        list[0]["_first_"] = True
+        list[len(list)-1]['_last_'] = True
+
+        i = 0
+        for item in list:
+            item['_index_'] = i
+            i = i+1
+        
     def platformPartials(self,platformDir):
         """docstring for platformPartials"""
         assert platformDir
@@ -79,11 +91,12 @@ class MetaProcessor(object):
         globalPlatformDir = os.path.join(self.config.globalPlatformsPath,platform)
 
         globalPreprocessor = None
-        globalPreprocessorClass = Utils.importClass(os.path.join(globalPlatformDir,self.config.preprocessorFile))
+        classFilePath = os.path.join(globalPlatformDir,self.config.preprocessorFile)
+        globalPreprocessorClass = Utils.importClass(classFilePath)
         if globalPreprocessorClass!=None:
             globalPreprocessor = globalPreprocessorClass(self.config,self.stringUtils)
         else:
-            print("No global processor for platform: " + platform)
+            print("No global processor for platform: " + platform + " in path: " + classFilePath)
         
         return globalPreprocessor
     
