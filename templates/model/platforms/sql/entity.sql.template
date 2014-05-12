@@ -1,0 +1,5 @@
+CREATE TABLE {{_globals_.prefix}}{{entityName}} (
+	{{#properties}}
+	{{name}} {{type}},
+	{{/properties}}
+	PRIMARY KEY ({{#primaryKeys}}{{name}}{{^_last_}},{{/_last_}}{{/primaryKeys}})) DEFAULT CHARSET={{_globals_.charset}};
