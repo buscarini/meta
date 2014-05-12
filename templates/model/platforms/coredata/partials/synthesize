@@ -1,0 +1,3 @@
+{{#properties}}
+@dynamic {{name}};
+{{/properties}}

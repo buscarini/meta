@@ -1,12 +1,14 @@
 import os
 import json
+import sys
+import meta
 from meta.MetaProcessor import MetaProcessor
-
+        
 class GlobalPlatform(MetaProcessor):
     """docstring for Preprocessor"""
     def __init__(self,config,stringUtils):
-        super(GlobalPlatform, self).__init__(config,stringUtils)
-
+        super(GlobalPlatform, self).__init__(config, stringUtils)
+    
         thisPath = os.path.realpath(__file__)
         
         self.globalsPath = os.path.join(os.path.dirname(thisPath),'globals.json')
@@ -26,28 +28,41 @@ class GlobalPlatform(MetaProcessor):
 
         return hashDic
         
-    def platformTypeForType(self,type):
+    def processProperty(self,property,hash,hashes):
+        property['_camelcase_'] = self.stringUtils.camelcase(str(property['name']))
+        property['_capitalized_'] = self.stringUtils.capitalize(str(property['name']))
+        
+        type = property['type']
+        property['type_' + type] = True
+     
         if type=='string':
-            return 'String'
+            property['type'] = 'NSString'
+            property['object'] = True
+            property['storage'] = 'copy'
         elif type=='integer':
-            return 'Integer 32'
+            property['type'] = 'NSInteger'
+            property['object'] = False
+            property['storage'] = 'assign'
         elif type=='float':
-            return 'Float'
+            property['type'] = 'CGFloat'
+            property['object'] = False
+            property['storage'] = 'assign'
         elif type=='double':
-            return 'Double'
+            property['type'] = 'double'
+            property['object'] = False
+            property['storage'] = 'assign'            
         elif type=='bool':
-            return 'Boolean'
+            property['type'] = 'BOOL'
+            property['object'] = False
+            property['storage'] = 'assign'
         elif type=='date':
-            return 'Date'
+            property['type'] = 'NSDate'
+            property['object'] = True
+            property['storage'] = 'strong'
+        elif type=='relationship':
+            pass
         else:
-            return None
-            
-    def platformValueForValue(self,value):
-        """docstring for platformValueForValue"""
-        if value=='true':
-            return 'YES'
-        elif value=='false':
-            return 'NO'
-        else:
-            return value
+            print("Error: unknown property type: " + type)
+            sys.exit()
+    
             

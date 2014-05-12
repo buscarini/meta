@@ -1,0 +1,57 @@
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [super init];
+    if (self) {
+		{{#properties}}
+		{{#object}}
+		{{^type_relationship}}
+		_{{name}} = [coder decodeObjectForKey:@"{{_globals_.fileBaseName}}_{{name}}"];
+		{{/type_relationship}}
+		{{/object}}
+		{{#type_relationship}}
+		{{^weak}}
+		_{{name}} = [coder decodeObjectForKey:@"{{_globals_.fileBaseName}}_{{name}}"];
+		{{/weak}}
+		{{/type_relationship}}
+		{{#type_integer}}
+		_{{name}} = [coder decodeInt32ForKey:@"{{_globals_.fileBaseName}}_{{name}}"];
+		{{/type_integer}}
+		{{#type_float}}
+		_{{name}} = [coder decodeFloatForKey:@"{{_globals_.fileBaseName}}_{{name}}"];
+		{{/type_float}}
+		{{#type_double}}
+		_{{name}} = [coder decodeDoubleForKey:@"{{_globals_.fileBaseName}}_{{name}}"];
+		{{/type_double}}
+		{{#type_bool}}
+		_{{name}} = [coder decodeBoolForKey:@"{{_globals_.fileBaseName}}_{{name}}"];
+		{{/type_bool}}
+		{{/properties}}
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder {
+	{{#properties}}
+	{{#object}}
+	{{^type_relationship}}
+    [coder encodeObject:self.{{name}} forKey:@"{{_globals_.fileBaseName}}_{{name}}"];
+	{{/type_relationship}}
+	{{/object}}
+	{{#type_relationship}}
+	{{^weak}}
+	[coder encodeObject:self.{{name}} forKey:@"{{_globals_.fileBaseName}}_{{name}}"];
+	{{/weak}}
+	{{/type_relationship}}
+	{{#type_integer}}
+    [coder encodeInt32:self.{{name}} forKey:@"{{_globals_.fileBaseName}}_{{name}}"];
+	{{/type_integer}}
+	{{#type_float}}
+    [coder encodeFloat:self.{{name}} forKey:@"{{_globals_.fileBaseName}}_{{name}}"];
+	{{/type_float}}
+	{{#type_double}}
+    [coder encodeDouble:self.{{name}} forKey:@"{{_globals_.fileBaseName}}_{{name}}"];
+	{{/type_double}}
+	{{#type_bool}}
+    [coder encodeBool:self.{{name}} forKey:@"{{_globals_.fileBaseName}}_{{name}}"];
+	{{/type_bool}}
+	{{/properties}}
+}

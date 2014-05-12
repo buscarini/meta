@@ -1,100 +1,79 @@
 import sys
 import os
-import os.path
 import json
+import meta
 from meta.MetaProcessor import MetaProcessor
 
 class Platform(MetaProcessor):
     """docstring for Platform"""
+    # def __init__(self,stringUtils):
+ #        super(Platform, self).__init__()
+ #        self.stringUtils = stringUtils
         
-    def preprocess_property(self,property,hash,hashes):
-        """docstring for preprocess_property"""
-        property['_camelcase_'] = self.stringUtils.camelcase(str(property['name']))
-        property['_capitalized_'] = self.stringUtils.capitalize(str(property['name']))
-        
-        if 'default' in property:
-            property['default'] = self.globalPlatform.platformValueForValue(property['default'])
-        
-        if 'required' in property:
-            property['optional'] = 'NO'
+    def preprocess_relationship(self,property,hash,hashes):
+        """docstring for preprocess_relationship"""
+                
+        if 'destination' in property:
+            hashFileName = property['destination'] + ".json"
+            matching = [s for s in hashes if hashFileName==os.path.basename(s)]
+            if len(matching)>0:
+                with open (matching[0], "r") as f:
+                    hashString = f.read()
+                hashObject = json.loads(hashString)
+                
+                entityName = hashObject['entityName']
+                finalEntityName = '_' + hash['_globals_']['prefix'] + entityName                
+                if not 'forward_classes' in hash:
+                    hash['forward_classes'] = []
+                hash['forward_classes'].append({ "class" : finalEntityName })
+                                
+                storage = 'strong'
+                if property['weak']:
+                    storage = 'weak'
+                    
+                if property['relationshipType']=='toOne':
+                    property['type'] = finalEntityName
+                    property['object'] = True
+                    property['storage'] = storage
+                elif property['relationshipType']=='toMany':
+                    property['type'] = 'NSMutableSet'
+                    property['object'] = True
+                    property['storage'] = storage
+                else:
+                    print("Error: relationshipType unknown (toOne, toMany): " + property['relationshipType'])
+                    sys.exit()
+            else:
+               print("Error: destination hash not found: " + hashFileName + " in " + str(hashes))
+               sys.exit()
         else:
-            property['optional'] = 'YES'
-        
-        type = property['type']
-        property['type_' + type] = True
-        
-        platformType = self.globalPlatform.platformTypeForType(type)
-        if platformType!=None:
-            property['type'] = platformType
-        elif type=='relationship':
-            pass
-        else:
-            print("Error: unknown property type: " + type)
+            print("Error: destination missing in relationship property: " + property)
             sys.exit()
             
-            
-    def outputDir(self,product,platform,template):
-        """returns the final output directory"""
         
-        outputDir = super(Platform, self).outputDir(product,platform,template)
+    def preprocess_property(self,property,hash,hashes):
         
-        path, template = os.path.split(outputDir)
-
-        cdatamodeldPath = os.path.join(path,os.path.basename(self.config.projectPath) + ".xcdatamodeld")
-        cdatamodelPath = os.path.join(cdatamodeldPath,os.path.basename(self.config.projectPath) + ".xcdatamodel")
-        
-        os.makedirs(cdatamodelPath)
-        
-        return os.path.join(cdatamodelPath,template)
+        self.globalPlatform.processProperty(property,hash,hashes)
+        if type=='relationship':
+                    self.preprocess_relationship(property,hash,hashes)
             
     def preprocess(self,hash,hashes):
         if hash!=None and 'properties' in hash:
-            i=0
-            properties = hash['properties']
-            for property in properties:
+            for property in hash['properties']:
                 self.preprocess_property(property,hash,hashes)
-                i=i+1
-                
-            self.preprocessList(properties)
+            
+    def finalFileName(self,fileName,hash):
+        """docstring for finalFileName"""
+
+        prefix = ""
+        if hash!=None and '_globals_' in hash:
+            globals = hash['_globals_']
+            if 'prefix' in globals:
+                prefix = globals['prefix']
+
+        entityName = None
+        if hash!=None and 'entityName' in hash:
+            entityName = hash['entityName']
+        if (entityName):
+            fileName = fileName.replace("entity",prefix + entityName)
         
-        if hash!=None and 'primaryKeys' in hash:
-            primaryKeys = hash['primaryKeys']
-            self.preprocessList(primaryKeys)
-            
-    def process(self,hashes,templates,product,platform,platformDir):
-        assert hashes
-        assert templates
-        assert product
-        assert platform
-        assert platformDir
-
-
-        finalHash = {}
-        finalHash['_entities_'] = []
-            
-        self.globalPlatform = self.globalProcessor(platform)
-            
-        for hashFile in hashes:
-            hash = self.readHash(hashFile)
-            
-            # Global Platform preprocess
-            if self.globalPlatform!=None:
-                if self.config.verbose:
-                    print('Global Preprocessing')
-                self.globalPlatform.preprocess(hash,hashes)
-                        
-            if self.config.verbose:
-                print("Hash after global preprocess: " + str(hash))
-
-            self.preprocess(hash,hashes)
-            
-            finalHash['_entities_'].append(hash)
-            
-        if self.config.verbose:
-            print("Hash after product preprocess: " + str(finalHash))
-
-        renderer = self.renderer(platformDir)
-    
-        for templateFile in templates:
-           self.renderTemplate(renderer,templateFile,finalHash,hashes,product,platform,platformDir)
-        
+        return fileName

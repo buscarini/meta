@@ -1,0 +1,9 @@
+// Generated Automatically: Any changes will be overwritten
+
+#import <Foundation/Foundation.h>
+
+#import "_{{_globals_.fileBaseName}}.h"
+
+@interface {{_globals_.fileBaseName}} : _{{_globals_.fileBaseName}}
+
+@end

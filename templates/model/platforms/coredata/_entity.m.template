@@ -1,0 +1,9 @@
+// Generated Automatically: Any changes will be overwritten
+
+#import "{{_globals_.fileBaseName}}.h"
+
+@implementation {{_globals_.fileBaseName}}
+
+{{> synthesize}}
+
+@end
