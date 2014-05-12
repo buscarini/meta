@@ -1,5 +1,6 @@
 import sys
 import os
+import os.path
 import json
 from meta.MetaProcessor import MetaProcessor
 
@@ -30,6 +31,21 @@ class Platform(MetaProcessor):
         else:
             print("Error: unknown property type: " + type)
             sys.exit()
+            
+            
+    def outputDir(self,product,platform,template):
+        """returns the final output directory"""
+        
+        outputDir = super(Platform, self).outputDir(product,platform,template)
+        
+        path, template = os.path.split(outputDir)
+
+        cdatamodeldPath = os.path.join(path,os.path.basename(self.config.projectPath) + ".xcdatamodeld")
+        cdatamodelPath = os.path.join(cdatamodeldPath,os.path.basename(self.config.projectPath) + ".xcdatamodel")
+        
+        os.makedirs(cdatamodelPath)
+        
+        return os.path.join(cdatamodelPath,template)
             
     def preprocess(self,hash,hashes):
         if hash!=None and 'properties' in hash:
