@@ -74,6 +74,18 @@ class MetaProcessor(object):
             sys.exit()
         
         return hashObject
+        
+    def globalProcessor(self,platform):
+        globalPlatformDir = os.path.join(self.config.globalPlatformsPath,platform)
+
+        globalPreprocessor = None
+        globalPreprocessorClass = Utils.importClass(os.path.join(globalPlatformDir,self.config.preprocessorFile))
+        if globalPreprocessorClass!=None:
+            globalPreprocessor = globalPreprocessorClass(self.config,self.stringUtils)
+        else:
+            print("No global processor for platform: " + platform)
+        
+        return globalPreprocessor
     
     def process(self,hashes,templates,product,platform,platformDir):
         assert hashes
@@ -81,24 +93,18 @@ class MetaProcessor(object):
         assert product
         assert platform
         assert platformDir
-        
-        globalPlatformDir = os.path.join(self.config.globalPlatformsPath,platform)
-        
-        # Platform preprocess
-        globalPreprocessor = None
-        globalPreprocessorClass = Utils.importClass(os.path.join(globalPlatformDir,self.config.preprocessorFile))
-        if globalPreprocessorClass!=None:
-            globalPreprocessor = globalPreprocessorClass(self.config,self.stringUtils)
+            
+        self.globalPlatform = self.globalProcessor(platform)
             
         for hashFile in hashes:
             hash = self.readHash(hashFile)
         
             # Global Platform preprocess
-            if globalPreprocessor!=None:
+            if self.globalPlatform!=None:
                 if self.config.verbose:
                     print('Global Preprocessing')
                 
-                globalPreprocessor.preprocess(hash,hashes)
+                self.globalPlatform.preprocess(hash,hashes)
 
             if self.config.verbose:
                 print("Hash after global preprocess: " + str(hash))
