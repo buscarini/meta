@@ -16,10 +16,10 @@
 - (id)initWithCoder:(NSCoder *)coder {
     self = [super init];
     if (self) {
-		_id = [coder decodeInt32ForKey:@"_TRNBook_id"];
+		_id = [coder decodeIntegerForKey:@"_TRNBook_id"];
 		_title = [coder decodeObjectForKey:@"_TRNBook_title"];
 		_author = [coder decodeObjectForKey:@"_TRNBook_author"];
-		_numPages = [coder decodeInt32ForKey:@"_TRNBook_numPages"];
+		_numPages = [coder decodeIntegerForKey:@"_TRNBook_numPages"];
 		_purchaseDate = [coder decodeObjectForKey:@"_TRNBook_purchaseDate"];
 		_deleted = [coder decodeBoolForKey:@"_TRNBook_deleted"];
     }
@@ -27,10 +27,10 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-    [coder encodeInt32:self.id forKey:@"_TRNBook_id"];
+    [coder encodeInteger:self.id forKey:@"_TRNBook_id"];
     [coder encodeObject:self.title forKey:@"_TRNBook_title"];
     [coder encodeObject:self.author forKey:@"_TRNBook_author"];
-    [coder encodeInt32:self.numPages forKey:@"_TRNBook_numPages"];
+    [coder encodeInteger:self.numPages forKey:@"_TRNBook_numPages"];
     [coder encodeObject:self.purchaseDate forKey:@"_TRNBook_purchaseDate"];
     [coder encodeBool:self.deleted forKey:@"_TRNBook_deleted"];
 }
@@ -52,7 +52,7 @@
 - (void) setTitle:(NSString *) title {
 	[self willChangeValueForKey:@"title"];
 	if (_title!=title) {
-		_title = title;
+		_title = [title copy];
 	}
 	[self didChangeValueForKey:@"title"];
 }
@@ -64,7 +64,7 @@
 - (void) setAuthor:(NSString *) author {
 	[self willChangeValueForKey:@"author"];
 	if (_author!=author) {
-		_author = author;
+		_author = [author copy];
 	}
 	[self didChangeValueForKey:@"author"];
 }
@@ -110,4 +110,26 @@
 }
 
 
+- (instancetype) copyWithZone:(NSZone *) zone {
+	_TRNBook *copy = [[_TRNBook allocWithZone:zone] init];
+	
+	copy->_id = _id;
+	copy->_title = [_title copy];
+	copy->_author = [_author copy];
+	copy->_numPages = _numPages;
+	copy->_purchaseDate = [_purchaseDate copy];
+	copy->_deleted = _deleted;
+	
+	return copy;
+}
+- (NSString *) description {
+	return [NSString stringWithFormat:@"<%@: %p, %@>",[self class],self,@{
+		@"id" : @(_id),
+		@"title" : _title,
+		@"author" : _author,
+		@"numPages" : @(_numPages),
+		@"purchaseDate" : _purchaseDate,
+		@"deleted" : @(_deleted),
+	}];
+}
 @end

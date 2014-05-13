@@ -1,0 +1,7 @@
+- (NSString *) description {
+	return [NSString stringWithFormat:@"<%@: %p, %@>",[self class],self,@{
+		{{#properties}}
+		{{#object}}@"{{name}}" : _{{name}}{{/object}}{{^object}}@"{{name}}" : @(_{{name}}){{/object}}{{^_last_}},{{/_last_}}
+		{{/properties}}
+	}];
+}

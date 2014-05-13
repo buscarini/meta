@@ -14,4 +14,8 @@
 
 {{> accessors}}
 
+{{> copy}}
+
+{{> description}}
+
 @end

@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
 	#sp.dependency 'CocoaLumberjack', '~>1.6.4'
 	s.dependency 'CocoaLumberjack'
 	s.dependency 'AFNetworking', '~> 2.2'
-  s.dependency 'ReactiveCocoa', '~> 2.2.3'
+  s.dependency 'ReactiveCocoa', '~> 2.3'
   s.dependency 'Base32', '~> 1.0.2'
   s.dependency 'Base64', '~> 1.0.1'
   

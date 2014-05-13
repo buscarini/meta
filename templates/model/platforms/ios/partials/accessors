@@ -2,7 +2,12 @@
 - (void) set{{_capitalized_}}:({{> type}}) {{name}} {
 	[self willChangeValueForKey:@"{{name}}"];
 	if (_{{name}}!={{name}}) {
+		{{#_storage_copy}}
+		_{{name}} = [{{name}} copy];
+		{{/_storage_copy}}
+		{{^_storage_copy}}
 		_{{name}} = {{name}};
+		{{/_storage_copy}}
 	}
 	[self didChangeValueForKey:@"{{name}}"];
 }

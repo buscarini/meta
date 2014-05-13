@@ -1,0 +1,14 @@
+- (instancetype) copyWithZone:(NSZone *) zone {
+	{{_globals_.fileBaseName}} *copy = [[{{_globals_.fileBaseName}} allocWithZone:zone] init];
+	
+	{{#properties}}
+	{{#object}}
+	copy->_{{name}} = [_{{name}} copy];
+	{{/object}}
+	{{^object}}
+	copy->_{{name}} = _{{name}};
+	{{/object}}
+	{{/properties}}
+	
+	return copy;
+}

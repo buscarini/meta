@@ -13,7 +13,7 @@
 		{{/weak}}
 		{{/type_relationship}}
 		{{#type_integer}}
-		_{{name}} = [coder decodeInt32ForKey:@"{{_globals_.fileBaseName}}_{{name}}"];
+		_{{name}} = [coder decodeIntegerForKey:@"{{_globals_.fileBaseName}}_{{name}}"];
 		{{/type_integer}}
 		{{#type_float}}
 		_{{name}} = [coder decodeFloatForKey:@"{{_globals_.fileBaseName}}_{{name}}"];
@@ -42,7 +42,7 @@
 	{{/weak}}
 	{{/type_relationship}}
 	{{#type_integer}}
-    [coder encodeInt32:self.{{name}} forKey:@"{{_globals_.fileBaseName}}_{{name}}"];
+    [coder encodeInteger:self.{{name}} forKey:@"{{_globals_.fileBaseName}}_{{name}}"];
 	{{/type_integer}}
 	{{#type_float}}
     [coder encodeFloat:self.{{name}} forKey:@"{{_globals_.fileBaseName}}_{{name}}"];

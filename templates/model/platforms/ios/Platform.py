@@ -57,6 +57,8 @@ class Platform(MetaProcessor):
         
         if type=='relationship':
             self.preprocess_relationship(property,hash,hashes)
+            
+        property['_storage_' + property['storage']] = True
                 
     def preprocess(self,hash,hashes):
         if hash!=None and 'properties' in hash:

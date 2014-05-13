@@ -1,1 +1,1 @@
-../../../../../../bmf/bmf/shared/configurations/modules/BMFMagicalRecordConfigurationModule.h
+../../../../../../bmf/bmf/shared/subspecs/coredata/BMFMagicalRecordConfigurationModule.h

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9EBC24BB55204FFC8CBF2FE3"
+               BlueprintIdentifier = "10A1A4BE7E454EBEB48B8AEA"
                BuildableName = "BMF.bundle"
                BlueprintName = "BMF"
                ReferencedContainer = "container:Pods.xcodeproj">
