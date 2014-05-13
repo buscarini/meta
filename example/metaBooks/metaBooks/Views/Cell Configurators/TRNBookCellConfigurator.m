@@ -31,6 +31,8 @@
 	
 	cell.textLabel.text = book.title;
 	cell.detailTextLabel.text = book.author;
+	
+	DDLogInfo(@"%@",book);
 }
 
 @end

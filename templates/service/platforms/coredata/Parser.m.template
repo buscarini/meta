@@ -1,0 +1,83 @@
+
+#import "{{_globals_.fileBaseName}}.h"
+
+#import <BMF/BMF.h>
+
+{{> entityImports}}
+	
+@implementation {{_globals_.fileBaseName}} {
+	{{#content.model._formats_}}
+	NSDateFormatter *{{name}}DateFormatter;
+	{{/content.model._formats_}}
+}
+
+- (id) init {
+	self = [super init];
+	if (self) {
+		{{#content.model._formats_}}
+		{{name}}DateFormatter = [[NSDateFormatter alloc] init];
+		{{name}}DateFormatter.dateFormat = @"{{format}}";
+		{{/content.model._formats_}}
+	}
+	return self;
+}
+
+- (void) parse:(NSDictionary *) rawObject completion:(BMFCompletionBlock) completionBlock {
+	
+	[self.progress start];
+	
+	@try {
+		
+		{{#resultValue}}
+		/// Check result
+		id result = rawObject[@"{{key}}"];
+		if (![result isEqual:{{{okValue}}}]) {
+			NSString *errorMessage = rawObject[@"{{errorMessage.key}}"];
+			if (!errorMessage) {
+				errorMessage = BMFLocalized(@"Unknown error",nil);
+			}
+		    NSError *error = [NSError errorWithDomain:@"Parse" code:BMFErrorData userInfo:@{ NSLocalizedDescriptionKey : errorMessage }];
+			[self.progress stop:error];
+			if (completionBlock) completionBlock(nil,error);
+			return;
+		}
+		{{/resultValue}}
+	
+		NSMutableArray *results = nil;
+	
+		{{#content}}
+		results = [NSMutableArray array];
+		
+		NSArray *dictionaries = rawObject[@"{{key}}"];
+		
+		{{#model}}
+		NSFetchRequest *fr = [NSFetchRequest fetchRequestWithEntityName:@"{{> entityName}}"];
+		fr.resultType = NSDictionaryResultType;
+		fr.propertiesToFetch = @[ {{#primaryKeys}}@"{{name}}"{{^_last_}},{{/_last_}}{{/primaryKeys}} ];
+		fr.sortDescriptors = @[ {{#primaryKeys}}[NSSortDescriptor sortDescriptorWithKey:@"{{name}}" ascending:YES]{{^_last_}},{{/_last_}}{{/primaryKeys}} ];
+		NSError *error = nil;
+		NSArray *allIds = [[NSManagedObjectContext MR_defaultContext] executeFetchRequest:fr error:&error];
+		{{/model}}
+		
+		for (NSDictionary *dic in dictionaries) {
+			{{#model}}
+			{{> parseDictionary}}
+			{{/model}}
+		}
+		{{/content}}
+
+		[self.progress stop:nil];
+
+		if (completionBlock) completionBlock(results,nil);
+	}
+	@catch (NSException *exception) {
+		DDLogError(@"Exception in parse: %@",exception);
+	}
+}
+
+- (void) cancel {
+    NSError *error = [NSError errorWithDomain:@"Parse" code:BMFErrorCancelled userInfo:@{ NSLocalizedDescriptionKey : BMFLocalized(@"Parse Operation Cancelled",nil) }];
+	[self.progress stop:error];
+}
+
+@end

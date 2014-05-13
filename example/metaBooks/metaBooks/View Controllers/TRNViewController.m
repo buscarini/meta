@@ -46,7 +46,7 @@
 }
 
 - (void) loadBooks {
-	id<BMFTaskProtocol> task = [[BMFBase sharedInstance].factory dataLoadTask:@"http://192.168.1.237:3000/books" parameters:nil sender:self];
+	id<BMFTaskProtocol> task = [[BMFBase sharedInstance].factory dataLoadTask:@"http://localhost:3000/books" parameters:nil sender:self];
 	
 	[self.loaderView.progress addChild:task.progress];
 	

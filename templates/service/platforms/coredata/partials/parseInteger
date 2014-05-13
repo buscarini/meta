@@ -1,0 +1,10 @@
+{{#type_integer}}
+value = dic[@"{{name}}"];
+if ([value isKindOfClass:[NSNumber class]]) {
+	object.{{destination}} = [value integerValue];
+}
+else {
+	{{> logError}}
+}
+
+{{/type_integer}}

@@ -1,0 +1,13 @@
+{{> entityName}} *object = [{{> entityName}} new];
+
+id value = nil;
+NSArray *values = nil;
+
+{{#properties}}
+{{> parseInteger}}
+{{> parseObject}}
+{{> parseDate}}
+{{> parseRelationship}}
+{{/properties}}
+
+[results addObject:object];

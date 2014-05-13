@@ -1,0 +1,3 @@
+{{#_entity_imports_}}
+#import "{{name}}"
+{{/_entity_imports_}}
