@@ -8,10 +8,15 @@
 
 #import "TRNViewController.h"
 
+
+#import <ReactiveCocoa/RACEXTScope.h>
+
+#import <BMF/BMFBase.h>
 #import <BMF/BMFOperationsTask.h>
 #import <BMF/BMFParserOperation.h>
 #import <BMF/BMFArrayDataStore.h>
 #import <BMF/BMFTableViewDataSource.h>
+#import <BMF/BMFLoaderViewProtocol.h>
 
 #import "TRNParser.h"
 
@@ -25,14 +30,18 @@
     [super viewDidLoad];
 
 	self.loaderView = [[BMFBase sharedInstance].factory navBarLoaderItem:self];
-//	self.loaderView = [[BMFBase sharedInstance].factory generalLoaderView:self];
+	@weakify(self);
+	self.loaderView.reloadActionBlock = ^(id sender) {
+		@strongify(self);
+		[self loadBooks];
+	};
+
 	[self.loaderView addToViewController:self];
 		
 	BMFArrayDataStore *dataStore = (id)[[BMFBase sharedInstance].factory dataStoreWithParameter:@[] sender:self];
 	
 	self.dataSource = [[BMFBase sharedInstance].factory tableViewDataSourceWithStore:dataStore cellClassOrNib:nil animatedUpdates:YES sender:self];
 	
-	@weakify(self);
 	self.navigationItem.rightBarButtonItem.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
 		return [RACSignal defer:^RACSignal *{
 			@strongify(self);
@@ -46,19 +55,10 @@
 }
 
 - (void) loadBooks {
-	id<BMFTaskProtocol> task = [[BMFBase sharedInstance].factory dataLoadTask:@"http://localhost:3000/books" parameters:nil sender:self];
 	
-	[self.loaderView.progress addChild:task.progress];
+	id<BMFTaskProtocol> task = [[BMFBase sharedInstance].factory jsonLoadTask:@"http://localhost:3000/books" parameters:nil parser:[TRNParser new] sender:self];
 	
-	BMFOperationsTask *opTask = [BMFOperationsTask BMF_cast:task];
-	
-	[opTask addOperation:[[BMFBase sharedInstance].factory jsonSerializerOperation:self]];
-	
-	TRNParser *parser = [TRNParser new];
-	BMFOperation *parserOp = [[BMFParserOperation alloc] initWithParser:parser];
-	[opTask addOperation:parserOp];
-	
-	[opTask start:^(id result, NSError *error) {
+	[task start:^(id result, NSError *error) {
 		
 		BMFArrayDataStore *dataStore = (id)self.dataSource.dataStore;
 		

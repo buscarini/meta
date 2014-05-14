@@ -1,0 +1,265 @@
+PODS:
+  - AFNetworking (2.2.4):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+    - AFNetworking/UIKit
+  - AFNetworking/NSURLConnection (2.2.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.2.4):
+    - AFNetworking/NSURLConnection
+  - AFNetworking/Reachability (2.2.4)
+  - AFNetworking/Security (2.2.4)
+  - AFNetworking/Serialization (2.2.4)
+  - AFNetworking/UIKit (2.2.4):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - Base32 (1.0.2)
+  - Base64 (1.0.1)
+  - BMF/Core (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - BMF/Core/Activities
+    - BMF/Core/Aspects
+    - BMF/Core/Base
+    - BMF/Core/Behaviors
+    - BMF/Core/Categories
+    - BMF/Core/Cell configuration
+    - BMF/Core/Cell factory
+    - BMF/Core/Cells
+    - BMF/Core/Conditions
+    - BMF/Core/Configurations
+    - BMF/Core/Data
+    - BMF/Core/Data Sources
+    - BMF/Core/Data Stores
+    - BMF/Core/Events
+    - BMF/Core/Factories
+    - BMF/Core/ITOX
+    - BMF/Core/Loaders
+    - BMF/Core/Model
+    - BMF/Core/Nodes
+    - BMF/Core/Operations
+    - BMF/Core/Parsers
+    - BMF/Core/Serializers
+    - BMF/Core/Utils
+    - BMF/Core/Values
+    - BMF/Core/View Controllers
+    - BMF/Core/View register
+    - BMF/Core/Views
+    - BMF/Core/Writers
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Activities (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Aspects (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Base (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Behaviors (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Categories (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Cell configuration (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Cell factory (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Cells (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Conditions (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Configurations (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Data (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Data Sources (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Data Stores (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Events (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Factories (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/ITOX (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Loaders (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Model (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Nodes (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Operations (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Parsers (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Serializers (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Utils (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Values (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/View Controllers (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/View register (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Views (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/Core/Writers (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - ReactiveCocoa (~> 2.3)
+  - BMF/CoreData (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - MagicalRecord (~> 2.2)
+    - ReactiveCocoa (~> 2.3)
+  - CocoaLumberjack (1.8.1):
+    - CocoaLumberjack/Extensions
+  - CocoaLumberjack/Core (1.8.1)
+  - CocoaLumberjack/Extensions (1.8.1):
+    - CocoaLumberjack/Core
+  - MagicalRecord (2.2):
+    - MagicalRecord/Core
+  - MagicalRecord/Core (2.2)
+  - ReactiveCocoa (2.3):
+    - ReactiveCocoa/UI
+  - ReactiveCocoa/Core (2.3):
+    - ReactiveCocoa/no-arc
+  - ReactiveCocoa/no-arc (2.3)
+  - ReactiveCocoa/UI (2.3):
+    - ReactiveCocoa/Core
+
+DEPENDENCIES:
+  - BMF/Core (from `git@bitbucket.org:buscarini/bmf.git`)
+  - BMF/CoreData (from `git@bitbucket.org:buscarini/bmf.git`)
+
+EXTERNAL SOURCES:
+  BMF:
+    :git: git@bitbucket.org:buscarini/bmf.git
+
+SPEC CHECKSUMS:
+  AFNetworking: 01aa7c3aa9a200b94943e54072a4373f14b3d219
+  Base32: 448ba467c707ab67968377fe53adc0a6f5b9f141
+  Base64: eaac9f2088ba659c5db1db960576eb0f2969ebaf
+  BMF: c5a4561f788b5c48ec77085eee551e5f202a6c8e
+  CocoaLumberjack: 020378ec400d658923bf5887178394f65f052c90
+  MagicalRecord: 95d49d74ef752cd52f6ad87bcb474817fc3978cf
+  ReactiveCocoa: dde7b11a14954edf789e7343b2c32e595caabd01
+
+COCOAPODS: 0.32.1
