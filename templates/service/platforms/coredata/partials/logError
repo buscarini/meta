@@ -1,7 +1,7 @@
 {{#required}}
 // If required stop parsing
-if (completionBlock) completionBlock(nil,[NSError errorWithDomain:@"Parse" code:BMFErrorInvalidType userInfo:@{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Invalid type or missing key: %@ for property {{destination}}",value] }]);
-return;
+*error = [NSError errorWithDomain:@"Parse" code:BMFErrorInvalidType userInfo:@{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Invalid type or missing key: %@ for property {{destination}}",value] }];
+return NO;
 {{/required}}
 {{^required}}
 DDLogWarn(@"Invalid type or missing key for property {{destination}}: %@",value);

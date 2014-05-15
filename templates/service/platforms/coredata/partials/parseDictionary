@@ -3,11 +3,6 @@
 id value = nil;
 NSArray *values = nil;
 
-{{#properties}}
-{{> parseInteger}}
-{{> parseObject}}
-{{> parseDate}}
-{{> parseRelationship}}
-{{/properties}}
+{{> parseProperties}}
 
 [results addObject:object];

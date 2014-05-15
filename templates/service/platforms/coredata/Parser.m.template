@@ -3,6 +3,8 @@
 
 #import <BMF/BMF.h>
 
+#import <MagicalRecord/CoreData+MagicalRecord.h>
+
 {{> entityImports}}
 	
 @implementation {{_globals_.fileBaseName}} {
@@ -21,6 +23,27 @@
 	}
 	return self;
 }
+
+- (NSComparisonResult) p_compareDictionaries:(NSDictionary *) obj1 with:(NSDictionary *)obj2 {
+	NSComparisonResult result;
+	{{#content.model.primaryKeys}}
+	id {{name}}1 = obj1[@"{{name}}"];
+	id {{name}}2 = obj2[@"{{name}}"];
+	result = [{{name}}1 compare:{{name}}2];
+	if (result!=NSOrderedSame) return result;
+	{{/content.model.primaryKeys}}
+
+	return NSOrderedSame;
+}
+
+{{#content.model}}
+- (BOOL) p_updateEntity:({{> entityName}} *)object withDictionary:(NSDictionary *) dic error:(NSError **) error {
+	id value;
+	{{> parseProperties}}
+	
+	return YES;
+}
+{{/content.model}}
 
 - (void) parse:(NSDictionary *) rawObject completion:(BMFCompletionBlock) completionBlock {
 	
@@ -49,19 +72,124 @@
 		results = [NSMutableArray array];
 		
 		NSArray *dictionaries = rawObject[@"{{key}}"];
-		
-		{{#model}}
-		NSFetchRequest *fr = [NSFetchRequest fetchRequestWithEntityName:@"{{> entityName}}"];
-		fr.resultType = NSDictionaryResultType;
-		fr.propertiesToFetch = @[ {{#primaryKeys}}@"{{name}}"{{^_last_}},{{/_last_}}{{/primaryKeys}} ];
-		fr.sortDescriptors = @[ {{#primaryKeys}}[NSSortDescriptor sortDescriptorWithKey:@"{{name}}" ascending:YES]{{^_last_}},{{/_last_}}{{/primaryKeys}} ];
-		NSError *error = nil;
-		NSArray *allIds = [[NSManagedObjectContext MR_defaultContext] executeFetchRequest:fr error:&error];
-		{{/model}}
-		
-		for (NSDictionary *dic in dictionaries) {
+		if (dictionaries.count>0) {
 			{{#model}}
-			{{> parseDictionary}}
+			
+			NSUInteger batchSize = {{_globals_.batchSize}};
+			
+			[MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+				NSError *error = nil;
+
+				NSArray *sortedDictionaries = [dictionaries sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2) {
+					return [self p_compareDictionaries:obj1 with:obj2];
+				}];
+
+				NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"{{> entityName}}"];
+
+				fetchRequest.includesPropertyValues = NO;
+				fetchRequest.sortDescriptors = @[
+					{{#primaryKeys}}
+					[[NSSortDescriptor alloc] initWithKey: @"{{name}}" ascending:YES]{{^_last_}},{{/_last_}}
+					{{/primaryKeys}}
+						];
+				fetchRequest.fetchBatchSize = batchSize;
+
+				NSArray *allLocalEntities = [localContext executeFetchRequest:fetchRequest error:&error];
+
+				NSUInteger index = 0;
+				NSUInteger localIndex = 0;
+				NSUInteger serverIndex = 0;
+
+				while (localIndex<allLocalEntities.count && serverIndex<sortedDictionaries.count) {
+					{{> entityName}} *localEntity = allLocalEntities[localIndex];
+	
+					NSDictionary *serverEntityDic = sortedDictionaries[serverIndex];
+	
+					NSComparisonResult comparisonResult = [self p_compareDictionaries:@{
+						{{#primaryKeys}}
+						{{^object}}
+						@"{{name}}" : @(localEntity.{{name}})
+						{{/object}}
+						{{#object}}
+						@"{{name}}" : localEntity.{{name}}
+						{{/object}}{{^_last_}}{{/_last_}}
+						{{/primaryKeys}}
+						} with:serverEntityDic];
+		
+					if (comparisonResult==NSOrderedAscending) {
+						// Remove local object
+						[localContext deleteObject:localEntity];
+
+						localIndex++;
+					}
+					else {
+		
+						TRNBook *entity = localEntity;
+		
+						if (comparisonResult==NSOrderedDescending) {
+							// Add object
+							entity = [{{> entityName}} MR_createInContext:localContext];
+						}
+						else {
+							localIndex++;
+						}
+		
+						serverIndex++;
+		
+						if ([self p_updateEntity:entity withDictionary:serverEntityDic error:&error]) {
+							[results addObject:entity];	
+						}
+						else {
+							DDLogError(@"Error updating entity: %@",error);
+						}
+					}
+	
+					index++;
+	
+					if (index%batchSize==0) {
+						[localContext MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *saveError) {
+							if (saveError) {
+								DDLogError(@"Error saving sync context: %@",saveError);
+							}
+							else {
+								DDLogInfo(@"Sync context saved");
+							}
+						}];
+					}
+				}
+
+				// Delete all these objects
+				while (localIndex<allLocalEntities.count) {
+					{{> entityName}} *localEntity = allLocalEntities[localIndex];
+					[localContext deleteObject:localEntity];
+					localIndex++;
+				}
+
+				// Add all these objects
+				while (serverIndex<sortedDictionaries.count) {
+	
+					NSDictionary *serverEntityDic = sortedDictionaries[serverIndex];
+	
+					// Add all these objects
+					{{> entityName}} *entity = [{{> entityName}} MR_createInContext:localContext];
+
+					if ([self p_updateEntity:entity withDictionary:serverEntityDic error:&error]) {
+						[results addObject:entity];						
+					}
+					else {
+						DDLogError(@"Error updating entity: %@",error);
+					}
+
+					serverIndex++;
+				}
+
+
+			} completion:^(BOOL success, NSError *error) {
+				[self.progress stop:nil];
+
+				if (completionBlock) completionBlock(results,nil);
+			}];
+		
 			{{/model}}
 		}
 		{{/content}}

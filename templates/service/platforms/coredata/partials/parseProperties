@@ -1,0 +1,6 @@
+{{#properties}}
+{{> parseInteger}}
+{{> parseObject}}
+{{> parseDate}}
+{{> parseRelationship}}
+{{/properties}}
