@@ -23,6 +23,17 @@ class Platform(MetaProcessor):
             property['format'] = format
      
     def preprocess(self,hash,hashes):
+        if hash!=None and 'primaryKeys' in hash:
+            primaryKeys = hash['primaryKeys']
+            self.preprocessList(primaryKeys)
+            if hash!=None and 'properties' in hash:
+                properties = hash['properties']
+                for key in primaryKeys:
+                    for property in properties:
+                        if key['name']==property['name']:
+                            key['type_' + property['type']] = True
+                
+        
         if hash!=None and 'properties' in hash:
             
             i=0

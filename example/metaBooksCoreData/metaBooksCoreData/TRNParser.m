@@ -83,68 +83,64 @@
 				NSUInteger localIndex = 0;
 				NSUInteger serverIndex = 0;
 
-				while (localIndex<allLocalEntities.count) {
-					while (serverIndex<sortedDictionaries.count) {
-						TRNBook *localBook = allLocalEntities[localIndex];
-						NSInteger localId = localBook.id;
-						
-						NSDictionary *serverBookDic = sortedDictionaries[serverIndex];
-						
-						NSInteger serverId = [serverBookDic[@"id"] integerValue];
-						
-						if (localId<serverId) {
-							// Remove local object
-							[localContext deleteObject:localBook];
-
-							localIndex++;
-						}
-						else {
-							
-							TRNBook *book = localBook;
-							
-							if (localId>serverId) {
-								// Add object
-								book = [TRNBook MR_createInContext:localContext];
-							}
-							else {
-								localIndex++;
-							}
-							
-							serverIndex++;
-							
-							book.id = [serverBookDic[@"id"] integerValue];
-							book.title = serverBookDic[@"title"];
-							book.author = serverBookDic[@"author"];
-							
-							[results addObject:book];
-						}
-						
-						index++;
-						
-						if (index%batchSize==0) {
-							[localContext MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *saveError) {
-								if (saveError) {
-									DDLogError(@"Error saving sync context: %@",saveError);
-								}
-								else {
-									DDLogInfo(@"Sync context saved");
-								}
-							}];
-						}
-						
-					}
-				}
-				
-				if (localIndex<allLocalEntities.count) {
-					// Delete all these objects
-					while (localIndex<allLocalEntities.count) {
-						TRNBook *localBook = allLocalEntities[localIndex];
+				while (localIndex<allLocalEntities.count && serverIndex<sortedDictionaries.count) {
+					TRNBook *localBook = allLocalEntities[localIndex];
+					NSInteger localId = localBook.id;
+					
+					NSDictionary *serverBookDic = sortedDictionaries[serverIndex];
+					
+					NSInteger serverId = [serverBookDic[@"id"] integerValue];
+					
+					if (localId<serverId) {
+						// Remove local object
 						[localContext deleteObject:localBook];
+
 						localIndex++;
 					}
+					else {
+						
+						TRNBook *book = localBook;
+						
+						if (localId>serverId) {
+							// Add object
+							book = [TRNBook MR_createInContext:localContext];
+						}
+						else {
+							localIndex++;
+						}
+						
+						serverIndex++;
+						
+						book.id = [serverBookDic[@"id"] integerValue];
+						book.title = serverBookDic[@"title"];
+						book.author = serverBookDic[@"author"];
+						
+						[results addObject:book];
+					}
+					
+					index++;
+					
+					if (index%batchSize==0) {
+						[localContext MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *saveError) {
+							if (saveError) {
+								DDLogError(@"Error saving sync context: %@",saveError);
+							}
+							else {
+								DDLogInfo(@"Sync context saved");
+							}
+						}];
+					}
 				}
 				
-				if (serverIndex<sortedDictionaries.count) {
+				// Delete all these objects
+				while (localIndex<allLocalEntities.count) {
+					TRNBook *localBook = allLocalEntities[localIndex];
+					[localContext deleteObject:localBook];
+					localIndex++;
+				}
+				
+				// Add all these objects
+				while (serverIndex<sortedDictionaries.count) {
 					
 					NSDictionary *serverBookDic = sortedDictionaries[serverIndex];
 					

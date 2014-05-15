@@ -3,10 +3,30 @@ var mongoose = require('mongoose');
 var csv = require('csv');
 var schema = require('./{{entityName}}Schema')
 var moment = require('moment');
+var events = require('events');
+var eventEmitter = new events.EventEmitter();
+
+var compareEntities = function(a,b) {
+	var result = 0;
+	{{#primaryKeys}}
+	{{#type_integer}}
+	result = a.{{name}}-b.{{name}};
+	{{/type_integer}}
+	{{#type_string}}
+	result = a.{{name}}.localeCompare(b.{{name}});
+	{{/type_string}}
+	if (result!=0) return result;
+	{{/primaryKeys}}
+	
+	return result;	
+};
 
 module.exports.importFile = function(filePath,callback) {
 	
 	var {{entityName}} = mongoose.model('{{entityName}}', schema.schema)
+	
+	var imported = [];
+	var numEntitiesImported = 0;
 	
 	csv()
 	.from.path(filePath, { delimiter: '{{delimiter}}', escape: '"' })
@@ -33,15 +53,79 @@ module.exports.importFile = function(filePath,callback) {
 			if (err) {
 				console.log("Error updating {{entityName}}: " + err)
 			}
+			else {
+				numEntitiesImported++;
+				{{entityName}}.findOne({ {{#primaryKeys}}{{name}} : row[{{index}}]{{^_last_}},{{/_last_}}{{/primaryKeys}}
+										}).exec(function (err, entity) {
+					imported.push(entity);
+					eventEmitter.emit('entityImported');
+				});
+			}
 		})
 	})
 	.on('end', function(count) {
 		
-		{{entityName}}.find(function (err, items) {
-			if (callback) {
-				callback(err,items);
-			}
-		})
+		eventEmitter.on('entityImported',function() {
+			numEntitiesImported--;
+			if (numEntitiesImported!=0) return;
+					
+			imported.sort(compareEntities);
+		
+			var importedSorted = imported;
+	
+			{{entityName}}.find().sort({{#primaryKeys}}"{{name}}"{{^_last_}},{{/_last_}}{{/primaryKeys}}).exec(function(err,allEntities) {
+				if (!err) {
+								
+					var importedIndex = 0;
+					var dbIndex = 0;
+					var numImported = importedSorted.length;
+					var numInDB = allEntities.length;
+								
+					while (importedIndex<numImported && dbIndex<numInDB) {
+						var importedEntity = importedSorted[importedIndex];
+						var dbEntity = allEntities[dbIndex];
+						
+						importedId = importedEntity.id;
+						dbId = dbEntity.id;
+						
+						var comparison = compareEntities(dbEntity,importedEntity);
+//						dbId-importedId dbId<importedId
+						if (comparison<0) {
+							dbEntity.remove(function(err,entity) {
+								if (err) {
+									console.log("Error removing entity");
+								}
+							})
+							dbIndex++;
+						}
+						else {
+							if (comparison==0) {
+								dbIndex++;
+							}
+							importedIndex++;
+						}
+					}
+				
+					while (dbIndex<numInDB) {
+						var dbEntity = allEntities[dbIndex];
+						dbEntity.remove(function(err,entity) {
+							if (err) {
+								console.log("Error removing entity");
+							}
+						});
+						dbIndex++;
+					}
+				
+					if (callback) {
+						callback(err,importedSorted);
+					}
+				}
+				else {
+					console.log("Error finding all entitites: " + err)
+				}
+			});
+			
+		});
 	})
 	.on('error', function(error){
 		console.log(error.message);
