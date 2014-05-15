@@ -22,7 +22,9 @@
 			"type" : "toMany",
 			"entityName" : "Book",
 			"required" : false,
-			"inverse" : "category"
+			"inverse" : "category",
+			"min" : "0",
+			"max" : "50"
 		}
 	]
 }

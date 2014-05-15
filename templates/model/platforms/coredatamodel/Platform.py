@@ -42,6 +42,9 @@ class Platform(MetaProcessor):
                 relationship['_optional_'] = "YES"
             if relationship['type']=='toMany':
                 relationship['_toMany_'] = True
+            else:
+                relationship['min'] = "1"
+                relationship['max'] = "1"
         
             
     def outputDir(self,product,platform,template):
