@@ -69,6 +69,8 @@ class Platform(MetaProcessor):
 
             relationship['type'] = type
             
+            relationship['name_capitalized'] = self.stringUtils.capitalize(relationship['name'])
+            
     def preprocess(self,hash,hashes):
         if hash!=None and 'properties' in hash:
             for property in hash['properties']:
