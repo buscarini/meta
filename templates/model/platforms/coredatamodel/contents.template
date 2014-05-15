@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C1021" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
 	{{#_entities_}}
-    <entity name="{{_globals_.prefix}}{{entityName}}" representedClassName="{{_globals_.prefix}}{{entityName}}" syncable="YES">
+    <entity name="{{> entityName}}" representedClassName="{{> entityName}}" syncable="YES">
 		{{#properties}}
 		<attribute name="{{name}}" optional="{{optional}}" attributeType="{{type}}" {{#default}}defaultValueString="{{default}}"{{/default}} syncable="YES"/>
 		{{/properties}}
+		{{#relationships}}
+        <relationship name="{{name}}" optional="{{_optional_}}" {{#_toMany_}}toMany="YES"{{/_toMany_}} deletionRule="{{#required}}Nullify{{/required}}Cascade{{^required}}{{/required}}" destinationEntity="{{> entityName}}" inverseName="{{inverse}}" inverseEntity="{{> entityName}}" syncable="YES"/>
+		{{/relationships}}
 	</entity>
 	{{/_entities_}}
     <elements>
 		{{#_entities_}}
-		<element name="{{_globals_.prefix}}{{entityName}}" positionX="0" positionY="0" width="200" height="500"/>
+		<element name="{{> entityName}}" positionX="0" positionY="0" width="200" height="500"/>
 		{{/_entities_}}
     </elements>
 </model>

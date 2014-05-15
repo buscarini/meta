@@ -38,7 +38,8 @@
 			"name" : "category",
 			"type" : "toOne",
 			"entityName" : "Category",
-			"isOwner" : false
+			"required" : true,
+			"inverse" : "books"
 		}
 	]
 }

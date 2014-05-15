@@ -21,7 +21,8 @@
 			"name" : "books",
 			"type" : "toMany",
 			"entityName" : "Book",
-			"isOwner" : true
+			"required" : false,
+			"inverse" : "category"
 		}
 	]
 }

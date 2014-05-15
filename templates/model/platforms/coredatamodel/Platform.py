@@ -7,8 +7,8 @@ from meta.MetaProcessor import MetaProcessor
 class Platform(MetaProcessor):
     """docstring for Platform"""
         
-    def preprocess_property(self,property,hash,hashes):
-        """docstring for preprocess_property"""
+    def preprocessProperty(self,property,hash,hashes):
+        """docstring for preprocessProperty"""
         property['_camelcase_'] = self.stringUtils.camelcase(str(property['name']))
         property['_capitalized_'] = self.stringUtils.capitalize(str(property['name']))
         
@@ -26,12 +26,23 @@ class Platform(MetaProcessor):
         platformType = self.globalPlatform.platformTypeForType(type)
         if platformType!=None:
             property['type'] = platformType
-        elif type=='relationship':
-            pass
         else:
             print("Error: unknown property type: " + type)
             sys.exit()
             
+            
+    def preprocessRelationships(self,relationships,hash,hashes):
+        """docstring for preprocessRelationships"""
+        for relationship in relationships:
+            type = relationship['type']
+            relationship['type_' + type] = True
+            if 'required' in relationship and relationship['required']==True:
+                relationship['_optional_'] = "NO"
+            else:
+                relationship['_optional_'] = "YES"
+            if relationship['type']=='toMany':
+                relationship['_toMany_'] = True
+        
             
     def outputDir(self,product,platform,template):
         """returns the final output directory"""
@@ -52,7 +63,7 @@ class Platform(MetaProcessor):
             i=0
             properties = hash['properties']
             for property in properties:
-                self.preprocess_property(property,hash,hashes)
+                self.preprocessProperty(property,hash,hashes)
                 i=i+1
                 
             self.preprocessList(properties)
@@ -60,6 +71,12 @@ class Platform(MetaProcessor):
         if hash!=None and 'primaryKeys' in hash:
             primaryKeys = hash['primaryKeys']
             self.preprocessList(primaryKeys)
+        
+        if hash!=None and 'relationships' in hash:
+            relationships = hash['relationships']
+            self.preprocessList(relationships)
+            self.preprocessRelationships(relationships,hash,hashes)
+        
             
     def process(self,hashes,templates,product,platform,platformDir):
         assert hashes
