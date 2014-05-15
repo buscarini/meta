@@ -1,0 +1,27 @@
+{
+	"entityName" : "Category",
+	"primaryKeys" : [
+		{
+			"name" : "id"
+		}
+	],
+	"properties" : [
+		{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true
+		},
+		{
+			"name" : "title",
+			"type" : "string"
+		}
+	],
+	"relationships" : [
+		{
+			"name" : "books",
+			"type" : "toMany",
+			"entityName" : "Book",
+			"isOwner" : true
+		}
+	]
+}

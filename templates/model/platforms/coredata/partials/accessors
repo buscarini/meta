@@ -10,5 +10,4 @@
 - ({{> type}}) {{name}} {
 	return _{{name}};
 }
-
 {{/properties}}

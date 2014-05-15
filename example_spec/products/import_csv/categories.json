@@ -1,0 +1,22 @@
+{
+	"entityName" : "Category",
+	"delimiter" : ";",
+	"primaryKeys" : [
+		{
+			"name" : "id",
+			"type" : "integer",
+			"index" : 0
+		}
+	],
+	"properties" : [
+		{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true
+		},
+		{
+			"name" : "title",
+			"type" : "string"
+		}
+	]
+}

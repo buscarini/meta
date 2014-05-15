@@ -35,6 +35,12 @@
 			"name" : "deleted",
 			"type" : "bool",
 			"default" : "false"
-		}
+		},
+		{
+			"name" : "id",
+			"type" : "relationship",
+			"destinationEntityName" : "Category",
+			"required" : true
+		}		
 	]
 }

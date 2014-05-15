@@ -1,0 +1,12 @@
+@interface {{> entityName}} (CoreDataGeneratedAccessors)
+
+{{#relationships}}
+{{#type_toMany}}
+- (void)add{{_capitalized_}}Object:({{entityName}} *)value;
+- (void)remove{{_capitalized_}}Object:({{entityName}} *)value;
+- (void)add{{_capitalized_}}:(NSSet *)values;
+- (void)remove{{_capitalized_}}:(NSSet *)values;
+{{/type_toMany}}
+{{/relationships}}
+
+@end

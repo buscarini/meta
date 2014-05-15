@@ -6,8 +6,11 @@
 {{> imports}}
 {{> forward}}
 
-@interface {{_globals_.fileBaseName}} : NSManagedObject
+@interface {{> entityName}} : NSManagedObject
 
 {{> properties}}
+{{> relationships}}
 
 @end
+
+{{> relationshipAccessors}}

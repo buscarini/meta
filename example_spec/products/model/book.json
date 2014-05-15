@@ -32,5 +32,13 @@
 			"type" : "bool",
 			"default" : "false"
 		}
+	],
+	"relationships" : [
+		{
+			"name" : "category",
+			"type" : "toOne",
+			"entityName" : "Category",
+			"isOwner" : false
+		}
 	]
 }
