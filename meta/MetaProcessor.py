@@ -25,6 +25,10 @@ class MetaProcessor(object):
         for item in list:
             item['_index_'] = i
             i = i+1
+            
+    def sortHashes(self,hashes):
+        """docstring for sortHashes"""
+        return hashes
         
     def platformPartials(self,platformDir):
         """docstring for platformPartials"""
@@ -108,6 +112,8 @@ class MetaProcessor(object):
         assert platformDir
             
         self.globalPlatform = self.globalProcessor(platform)
+        
+        hashes = self.sortHashes(hashes)
             
         for hashFile in hashes:
             hash = self.readHash(hashFile)
