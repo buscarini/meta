@@ -2,6 +2,10 @@ import sys
 import os
 import json
 import meta
+
+import inflect
+pluralEngine = inflect.engine()
+
 from meta.MetaProcessor import MetaProcessor
 
 class Platform(MetaProcessor):
@@ -77,6 +81,8 @@ class Platform(MetaProcessor):
                 globals = hash['_globals_']
                 if 'prefix' in globals:
                     hash['_finalEntityName_'] = globals['prefix'] + hash['entityName']
+                    hash['_lowercaseEntityName_'] = self.stringUtils.lowercase(hash['entityName'])
+                    hash['_pluralEntityName_'] = pluralEngine.plural(hash['entityName'])
                     
         if hash!=None and 'primaryKeys' in hash:
             primaryKeys = hash['primaryKeys']
