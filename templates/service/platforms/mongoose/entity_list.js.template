@@ -57,6 +57,7 @@ module.exports.findAll = function(req, res,callback) {
 		{{/content.model.filters}}
 	})
 	.sort({ {{#content.model.sortBy}} {{property}} : {{ascending}}{{^_last_}},{{/_last_}} {{/content.model.sortBy}} })
+	.populate({{#content.model.relationships}}'{{name}}'{{^_last_}},{{/_last_}}{{/content.model.relationships}})
 	.exec(function (err, items) {
 		if (err) {
 			res.send({"{{resultValue.key}}": {{{resultValue.errorValue}}}, "{{errorMessage.key}}":err.errmsg});

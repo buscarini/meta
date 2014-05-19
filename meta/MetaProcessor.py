@@ -17,14 +17,18 @@ class MetaProcessor(object):
     def preprocessList(self,list):
         if len(list)==0:
             return
-            
-        list[0]["_first_"] = True
-        list[len(list)-1]['_last_'] = True
 
         i = 0
         for item in list:
             item['_index_'] = i
+            item['_first_'] = False
+            item['_last_'] = False
             i = i+1
+            
+        list[0]["_first_"] = True
+        list[0]["_count_"] = len(list)
+        list[len(list)-1]['_last_'] = True
+
             
     def sortHashes(self,hashes):
         """docstring for sortHashes"""

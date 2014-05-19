@@ -9,20 +9,15 @@
 		"key" : "errorMessage"
 	},
 	"content" : {
-		"key" : "books",
+		"key" : "categories",
 		"model" : {
-			"entityName" : "Book",
+			"entityName" : "Category",
 			"primaryKeys" : [ 
 				{
 					"name" : "id"
 				}
 			],
 			"filters" : [
-				{
-					"property" : "deleted",
-					"relation" : "equal",
-					"value" : "false"
-				}
 			],
 			"sortBy" : [
 				{
@@ -41,33 +36,12 @@
 					"name" : "title",
 					"destination" : "title",
 					"type" : "string"
-				},
-				{
-					"name" : "author",
-					"destination" : "author",
-					"type" : "string"
-				},
-				{
-					"name" : "numPages",
-					"destination" : "numPages",
-					"type" : "integer"
-				},
-				{
-					"name" : "purchaseDate",
-					"destination" : "purchaseDate",
-					"type" : "date",
-					"format" : "dd.MM.yyyy"
-				},
-				{
-					"name" : "deleted",
-					"destination" : "deleted",
-					"type" : "bool"
 				}
 			],
 			"relationships" : [
 				{
-					"name" : "categories",
-					"entityName" : "Category"
+					"name" : "books",
+					"entityName" : "Book"
 				}
 			]
 		}

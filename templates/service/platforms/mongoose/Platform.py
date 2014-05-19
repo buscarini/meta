@@ -5,8 +5,8 @@ class Platform(MetaProcessor):
     """docstring for Platform"""
         
     def preprocessFilters(self,filters,hash):
+        self.preprocessList(filters)
         """docstring for preprocessFilters"""
-        filters[len(filters)-1]['_last_'] = True
         for filter in filters:
             relation = filter['relation']
             if relation=='equal':
@@ -28,12 +28,12 @@ class Platform(MetaProcessor):
 
     def preprocessSort(self,sorts,hash):
         """docstring for preprocessSort"""
+        self.preprocessList(sorts)
         for sort in sorts:
             if sort['ascending']==True:
                 sort['ascending'] = '1'
             else:
                 sort['ascending'] = '-1'
-        sorts[len(sorts)-1]['_last_'] = True
 
 
     def preprocessProperties(self,properties,hash):
@@ -88,6 +88,9 @@ class Platform(MetaProcessor):
                     self.preprocessSort(model['sortBy'],hash)
                 if 'properties' in model:
                     self.preprocessProperties(model['properties'],hash)
+                if 'relationships' in model:
+                    relationships = model['relationships']
+                    self.preprocessList(relationships)
 
 
                 
