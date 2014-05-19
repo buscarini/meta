@@ -3,6 +3,9 @@ var Schema = mongoose.Schema;
 
 module.exports.schema = mongoose.Schema({
 	{{#properties}}
-	{{name}}: { type: {{type}}{{#_has_default_}},default: {{default}}{{/_has_default_}} }{{^_last_}},{{/_last_}}
+	{{name}}: { type: {{type}}{{#_has_default_}},default: {{default}}{{/_has_default_}} }{{^_last_}},{{/_last_}}{{#_last_}}{{#relationships}}{{#_first_}},{{/_first_}}{{/relationships}}{{/_last_}}
 	{{/properties}}
+	{{#relationships}}
+	{{name}} : {{#_toMany_}}[{{/_toMany_}}{ type: {{#primaryKeys}}{{type}}{{/primaryKeys}}, ref: '{{entityName}}' }{{#_toMany_}}]{{/_toMany_}}{{^_last_}},{{/_last_}}
+	{{/relationships}}
 })

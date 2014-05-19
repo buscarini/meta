@@ -19,6 +19,8 @@ Installation
 Download the project. You'll need these:
 
 - [Python][] (Latest 2.x)
+- [pip][]:
+	http://pip.readthedocs.org/en/latest/installing.html
 - [Pystache][]:
 	pip install pystache
 - [Inflect][] (Pluralizes words):
@@ -27,6 +29,7 @@ Download the project. You'll need these:
 
 
 [Python]:https://www.python.org "Python"
+[pip]:http://pip.readthedocs.org "pip"
 [Mustache]:http://mustache.github.io "Mustache"
 [Pystache]:https://github.com/defunkt/pystache "pystache"
 [coma]:https://github.com/BohemianCoding/Coma "Coma"
