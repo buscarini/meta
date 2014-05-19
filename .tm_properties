@@ -1,0 +1,5 @@
+projectDirectory     = "$CWD"
+TM_PROJECT_DIRECTORY = "$projectDirectory"
+
+[ "*.*" ]
+scopeAttributes = 'attr.project.meta'

@@ -2,8 +2,14 @@
 
 #import <Foundation/Foundation.h>
 
-#import "_{{_globals_.fileBaseName}}.h"
+#import <BMF/BMFObjectDataStoreProtocol.h>
+#import <BMF/BMFDataReadProtocol.h>
 
-@interface {{_globals_.fileBaseName}} : _{{_globals_.fileBaseName}}
+#import "_{{> entityName}}.h"
+
+@interface {{> entityName}} : _{{> entityName}}
+
++ (id<BMFObjectDataStoreProtocol>) {{_lowercaseEntityName_}}DataStore;
++ (id<BMFDataReadProtocol>) all{{_pluralEntityName_}}DataStore;
 
 @end

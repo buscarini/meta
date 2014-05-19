@@ -1,0 +1,11 @@
+#import <Foundation/Foundation.h>
+
+#import <BMF/BMFManagedObjectDataStore.h>
+
+#import "{{_finalEntityName_}}.h"
+
+@interface {{_finalEntityName_}}ObjectStore : BMFManagedObjectDataStore
+
+@property (nonatomic, strong) {{_finalEntityName_}} *object;
+
+@end

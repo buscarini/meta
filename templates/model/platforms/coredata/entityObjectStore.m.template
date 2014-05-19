@@ -1,0 +1,7 @@
+// Generated Automatically: Any changes will be overwritten
+
+#import "{{_finalEntityName_}}ObjectStore.h"
+
+@implementation {{_finalEntityName_}}ObjectStore
+
+@end

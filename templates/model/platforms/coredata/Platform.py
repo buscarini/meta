@@ -72,6 +72,16 @@ class Platform(MetaProcessor):
             relationship['name_capitalized'] = self.stringUtils.capitalize(relationship['name'])
             
     def preprocess(self,hash,hashes):
+        if hash!=None and 'entityName' in hash:
+            if '_globals_' in hash:
+                globals = hash['_globals_']
+                if 'prefix' in globals:
+                    hash['_finalEntityName_'] = globals['prefix'] + hash['entityName']
+                    
+        if hash!=None and 'primaryKeys' in hash:
+            primaryKeys = hash['primaryKeys']
+            self.preprocessList(primaryKeys)
+        
         if hash!=None and 'properties' in hash:
             for property in hash['properties']:
                 self.preprocess_property(property,hash,hashes)

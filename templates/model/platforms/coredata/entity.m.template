@@ -1,7 +1,20 @@
 // Generated Automatically: Any changes will be overwritten
 
-#import "{{_globals_.fileBaseName}}.h"
+#import "{{> entityName}}.h"
+#import "{{> entityName}}ObjectStore.h"
 
-@implementation {{_globals_.fileBaseName}}
+#import <MagicalRecord/CoreData+MagicalRecord.h>
+
+@implementation {{> entityName}}
+
++ (id<BMFObjectDataStoreProtocol>) {{_lowercaseEntityName_}}DataStore {
+	return [{{> entityName}}ObjectStore new];
+}
+
++ (id<BMFDataReadProtocol>) all{{_pluralEntityName_}}DataStore {
+	NSFetchedResultsController *frc = [{{> entityName}} MR_fetchAllSortedBy:{{#primaryKeys}}{{#_first_}}@"{{name}}"{{/_first_}}{{/primaryKeys}} ascending:YES withPredicate:nil groupBy:nil delegate:nil];
+
+	return [[BMFBase sharedInstance].factory dataStoreWithParameter:frc sender:self];
+}
 
 @end
