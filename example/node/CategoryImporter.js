@@ -1,7 +1,7 @@
 var fs = require('fs');
 var mongoose = require('mongoose');
 var csv = require('csv');
-var schema = require('./BookSchema')
+var schema = require('./CategorySchema')
 var moment = require('moment');
 var events = require('events');
 var eventEmitter = new events.EventEmitter();
@@ -16,7 +16,7 @@ var compareEntities = function(a,b) {
 
 module.exports.importFile = function(filePath,callback) {
 	
-	var Book = mongoose.model('Book', schema.schema)
+	var Category = mongoose.model('Category', schema.schema)
 	
 	var imported = [];
 	var numEntitiesImported = 0;
@@ -26,27 +26,23 @@ module.exports.importFile = function(filePath,callback) {
 	.on('record', function(row,index) {
 	
 		var properties = {}
-		if (row.length<6) {
-			console.log("Error: number of columns not valid: " + row.length + " should be " + 6);
+		if (row.length<2) {
+			console.log("Error: number of columns not valid: " + row.length + " should be " + 2);
 			return;
 		}
 		
 		properties.id = row[0]
 		properties.title = row[1]
-		properties.author = row[2]
-		properties.numPages = row[3]
-		properties.purchaseDate = moment(row[4],"DD/MM/YYYY")
-		properties.category = row[5]
 	
-		Book.update({ 
+		Category.update({ 
 			id : row[0]
 		}, properties,{ upsert: true, multi: true },function(err) {
 			if (err) {
-				console.log("Error updating Book: " + err)
+				console.log("Error updating Category: " + err)
 			}
 			else {
 				numEntitiesImported++;
-				Book.findOne({ id : row[0]
+				Category.findOne({ id : row[0]
 										}).exec(function (err, entity) {
 					imported.push(entity);
 					eventEmitter.emit('entityImported');
@@ -64,7 +60,7 @@ module.exports.importFile = function(filePath,callback) {
 		
 			var importedSorted = imported;
 	
-			Book.find().sort("id").exec(function(err,allEntities) {
+			Category.find().sort("id").exec(function(err,allEntities) {
 				if (!err) {
 								
 					var importedIndex = 0;

@@ -32,15 +32,10 @@
 			"format" : "dd/MM/yyyy"
 		},
 		{
-			"name" : "deleted",
-			"type" : "bool",
-			"default" : "false"
-		},
-		{
-			"name" : "id",
+			"name" : "category",
 			"type" : "relationship",
-			"destinationEntityName" : "Category",
+			"entityName" : "Category",
 			"required" : true
-		}		
+		}
 	]
 }

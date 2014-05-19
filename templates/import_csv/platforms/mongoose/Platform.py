@@ -28,6 +28,7 @@ class Platform(MetaProcessor):
             self.preprocessList(primaryKeys)
             if hash!=None and 'properties' in hash:
                 properties = hash['properties']
+                self.preprocessList(properties)
                 for key in primaryKeys:
                     for property in properties:
                         if key['name']==property['name']:

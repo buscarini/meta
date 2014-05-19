@@ -2,12 +2,19 @@ var fs = require('fs');
 var mongoose = require('mongoose');
 var moment = require('moment');
 
-var schema = require('./{{content.model.entityName}}Schema')
+var schema = require('./{{content.model.entityName}}Schema');
+
+{{#content.model.relationships}}
+var {{name}}Schema = require('./{{entityName}}Schema');
+{{/content.model.relationships}}
 
 module.exports.findOne = function(req, res,callback) {
 	res.setHeader('Content-Type', 'application/json');
 
 	var {{content.model.entityName}} = mongoose.model('{{content.model.entityName}}', schema.schema)
+	{{#content.model.relationships}}
+	var {{entityName}} = mongoose.model('{{entityName}}', {{name}}Schema.schema);
+	{{/content.model.relationships}}
 
 	{{content.model.entityName}}.find({
 		{{#content.model.primaryKeys}}
@@ -50,6 +57,9 @@ module.exports.findAll = function(req, res,callback) {
 	res.setHeader('Content-Type', 'application/json');
 
 	var {{content.model.entityName}} = mongoose.model('{{content.model.entityName}}', schema.schema)
+	{{#content.model.relationships}}
+	var {{entityName}} = mongoose.model('{{entityName}}', {{name}}Schema.schema);
+	{{/content.model.relationships}}
 
 	{{content.model.entityName}}.find({
 		{{#content.model.filters}}
@@ -77,6 +87,9 @@ module.exports.findAll = function(req, res,callback) {
 				serviceItem.{{name}} = moment(item.{{name}}).format("{{format}}")
 				{{/type_date}}
 				{{/content.model.properties}}
+				{{#content.model.relationships}}
+				serviceItem.{{name}} = item.{{name}};
+				{{/content.model.relationships}}
 				
 				contentObject.{{content.key}}.push(serviceItem)
 			})

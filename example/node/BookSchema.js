@@ -7,5 +7,6 @@ module.exports.schema = mongoose.Schema({
 	author: { type: String },
 	numPages: { type: Number },
 	purchaseDate: { type: Date },
-	deleted: { type: Boolean,default: false }
+	deleted: { type: Boolean,default: false },
+	category : { type: Number, ref: 'Category' }
 })

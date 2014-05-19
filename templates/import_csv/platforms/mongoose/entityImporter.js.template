@@ -34,14 +34,21 @@ module.exports.importFile = function(filePath,callback) {
 	
 		var properties = {}
 		{{#properties}}
+		{{#_count_}}
+		if (row.length<{{_count_}}) {
+			console.log("Error: number of columns not valid: " + row.length + " should be " + {{_count_}});
+			return;
+		}
+		
+		{{/_count_}}
 		{{#_has_default_}}
 		properties.{{name}} = {{default}}
 		{{/_has_default_}}
 		{{^type_date}}
-		if (row.length>{{index}}) properties.{{name}} = row[{{index}}]
+		properties.{{name}} = row[{{index}}]
 		{{/type_date}}
 		{{#type_date}}
-		if (row.length>{{index}}) properties.{{name}} = moment(row[{{index}}],"{{format}}")
+		properties.{{name}} = moment(row[{{index}}],"{{format}}")
 		{{/type_date}}
 		{{/properties}}
 	

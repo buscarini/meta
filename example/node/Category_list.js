@@ -2,19 +2,15 @@ var fs = require('fs');
 var mongoose = require('mongoose');
 var moment = require('moment');
 
-var schema = require('./BookSchema');
-
-var categorySchema = require('./CategorySchema');
+var schema = require('./CategorySchema')
 
 module.exports.findOne = function(req, res,callback) {
 	res.setHeader('Content-Type', 'application/json');
 
-	var Book = mongoose.model('Book', schema.schema)
-	var Category = mongoose.model('Category', categorySchema.schema);
+	var Category = mongoose.model('Category', schema.schema)
 
-	Book.find({
-		id : req.id,
-		deleted : { $eq: false }
+	Category.find({
+		id : req.id
 	},function (err, items) {
 		if (err) {
 			res.send({"result": "1", "errorMessage":err.errmsg});
@@ -22,18 +18,14 @@ module.exports.findOne = function(req, res,callback) {
 		else {
 			
 			var contentObject = { "result" :"0" }
-			contentObject.books = new Array()
+			contentObject.categories = new Array()
 			items.forEach(function(item) {
 				var serviceItem = {}
 				
 				serviceItem.id = item.id
 				serviceItem.title = item.title
-				serviceItem.author = item.author
-				serviceItem.numPages = item.numPages
-				serviceItem.purchaseDate = moment(item.purchaseDate).format("DD.MM.YYYY")
-				serviceItem.deleted = item.deleted
 				
-				contentObject.books.push(serviceItem)
+				contentObject.categories.push(serviceItem)
 			})
 			
 			res.send(contentObject)
@@ -46,14 +38,12 @@ module.exports.findOne = function(req, res,callback) {
 module.exports.findAll = function(req, res,callback) {
 	res.setHeader('Content-Type', 'application/json');
 
-	var Book = mongoose.model('Book', schema.schema)
-	var Category = mongoose.model('Category', categorySchema.schema);
+	var Category = mongoose.model('Category', schema.schema)
 
-	Book.find({
-		deleted : { $eq: false }
+	Category.find({
 	})
 	.sort({  id : 1  })
-	.populate('category')
+	.populate('books')
 	.exec(function (err, items) {
 		if (err) {
 			res.send({"result": "1", "errorMessage":err.errmsg});
@@ -61,19 +51,15 @@ module.exports.findAll = function(req, res,callback) {
 		else {
 			
 			var contentObject = { "result" :"0" }
-			contentObject.books = new Array()
+			contentObject.categories = new Array()
 			items.forEach(function(item) {
 				var serviceItem = {}
 				
 				serviceItem.id = item.id
 				serviceItem.title = item.title
-				serviceItem.author = item.author
-				serviceItem.numPages = item.numPages
-				serviceItem.purchaseDate = moment(item.purchaseDate).format("DD.MM.YYYY")
-				serviceItem.deleted = item.deleted
-				serviceItem.category = item.category;
+				serviceItem.books = item.books;
 				
-				contentObject.books.push(serviceItem)
+				contentObject.categories.push(serviceItem)
 			})
 			
 			res.send(contentObject)
