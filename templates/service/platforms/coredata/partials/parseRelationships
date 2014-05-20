@@ -1,0 +1,8 @@
+{{#relationships}}
+{{#_toMany_}}
+
+{{/_toMany_}}
+{{^_toMany_}}
+
+{{/_toMany_}}
+{{/relationships}}

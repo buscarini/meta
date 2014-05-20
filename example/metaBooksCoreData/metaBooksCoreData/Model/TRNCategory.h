@@ -5,11 +5,11 @@
 #import <BMF/BMFObjectDataStoreProtocol.h>
 #import <BMF/BMFDataReadProtocol.h>
 
-#import "_TRNBook.h"
+#import "_TRNCategory.h"
 
-@interface TRNBook : _TRNBook
+@interface TRNCategory : _TRNCategory
 
-+ (id<BMFObjectDataStoreProtocol>) bookDataStore;
-+ (id<BMFDataReadProtocol>) allBooksDataStore;
++ (id<BMFObjectDataStoreProtocol>) categoryDataStore;
++ (id<BMFDataReadProtocol>) allCategorysDataStore;
 
 @end

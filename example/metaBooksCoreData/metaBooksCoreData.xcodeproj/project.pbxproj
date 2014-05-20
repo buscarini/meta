@@ -13,10 +13,14 @@
 		864051FBD14F455B811F8D82 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 379A16FE291542EC9482C128 /* libPods.a */; };
 		AC60C969192356E9008D9C91 /* TRNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC60C968192356E9008D9C91 /* TRNViewController.m */; };
 		AC60C96C192356F2008D9C91 /* TRNBookCellConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = AC60C96B192356F2008D9C91 /* TRNBookCellConfigurator.m */; };
-		AC60C97119235994008D9C91 /* _TRNBook.m in Sources */ = {isa = PBXBuildFile; fileRef = AC60C96E19235994008D9C91 /* _TRNBook.m */; };
-		AC60C97219235994008D9C91 /* TRNBook.m in Sources */ = {isa = PBXBuildFile; fileRef = AC60C97019235994008D9C91 /* TRNBook.m */; };
-		AC60C97519235998008D9C91 /* example_spec.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AC60C97319235998008D9C91 /* example_spec.xcdatamodeld */; };
-		ACA139D4192364680054B80C /* TRNParser.m in Sources */ = {isa = PBXBuildFile; fileRef = ACA139D3192364680054B80C /* TRNParser.m */; };
+		AC75C7D7192B70AE0065E671 /* _TRNBook.m in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7CC192B70AE0065E671 /* _TRNBook.m */; };
+		AC75C7D8192B70AE0065E671 /* _TRNCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7CE192B70AE0065E671 /* _TRNCategory.m */; };
+		AC75C7D9192B70AE0065E671 /* TRNBook.m in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7D0192B70AE0065E671 /* TRNBook.m */; };
+		AC75C7DA192B70AE0065E671 /* TRNBookObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7D2192B70AE0065E671 /* TRNBookObjectStore.m */; };
+		AC75C7DB192B70AE0065E671 /* TRNCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7D4192B70AE0065E671 /* TRNCategory.m */; };
+		AC75C7DC192B70AE0065E671 /* TRNCategoryObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7D6192B70AE0065E671 /* TRNCategoryObjectStore.m */; };
+		AC75C7DF192B70B70065E671 /* TRNDataParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7DE192B70B70065E671 /* TRNDataParser.m */; };
+		AC75C7E2192B70CD0065E671 /* example_spec.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7E0192B70CD0065E671 /* example_spec.xcdatamodeld */; };
 		ACA139D61923C3760054B80C /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA139D51923C3760054B80C /* Storyboard.storyboard */; };
 		C31967A5412E41F2A47E40DF /* TRNAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3635AA7AFAEE43EA900D98DA /* TRNAppDelegate.m */; };
 /* End PBXBuildFile section */
@@ -45,13 +49,21 @@
 		AC60C968192356E9008D9C91 /* TRNViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNViewController.m; sourceTree = "<group>"; };
 		AC60C96A192356F2008D9C91 /* TRNBookCellConfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRNBookCellConfigurator.h; path = ../TRNBookCellConfigurator.h; sourceTree = "<group>"; };
 		AC60C96B192356F2008D9C91 /* TRNBookCellConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRNBookCellConfigurator.m; path = ../TRNBookCellConfigurator.m; sourceTree = "<group>"; };
-		AC60C96D19235994008D9C91 /* _TRNBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _TRNBook.h; sourceTree = "<group>"; };
-		AC60C96E19235994008D9C91 /* _TRNBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _TRNBook.m; sourceTree = "<group>"; };
-		AC60C96F19235994008D9C91 /* TRNBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNBook.h; sourceTree = "<group>"; };
-		AC60C97019235994008D9C91 /* TRNBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNBook.m; sourceTree = "<group>"; };
-		AC60C97419235998008D9C91 /* example_spec.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = example_spec.xcdatamodel; sourceTree = "<group>"; };
-		ACA139D2192364680054B80C /* TRNParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNParser.h; sourceTree = "<group>"; };
-		ACA139D3192364680054B80C /* TRNParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNParser.m; sourceTree = "<group>"; };
+		AC75C7CB192B70AE0065E671 /* _TRNBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _TRNBook.h; sourceTree = "<group>"; };
+		AC75C7CC192B70AE0065E671 /* _TRNBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _TRNBook.m; sourceTree = "<group>"; };
+		AC75C7CD192B70AE0065E671 /* _TRNCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _TRNCategory.h; sourceTree = "<group>"; };
+		AC75C7CE192B70AE0065E671 /* _TRNCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _TRNCategory.m; sourceTree = "<group>"; };
+		AC75C7CF192B70AE0065E671 /* TRNBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNBook.h; sourceTree = "<group>"; };
+		AC75C7D0192B70AE0065E671 /* TRNBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNBook.m; sourceTree = "<group>"; };
+		AC75C7D1192B70AE0065E671 /* TRNBookObjectStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNBookObjectStore.h; sourceTree = "<group>"; };
+		AC75C7D2192B70AE0065E671 /* TRNBookObjectStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNBookObjectStore.m; sourceTree = "<group>"; };
+		AC75C7D3192B70AE0065E671 /* TRNCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNCategory.h; sourceTree = "<group>"; };
+		AC75C7D4192B70AE0065E671 /* TRNCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNCategory.m; sourceTree = "<group>"; };
+		AC75C7D5192B70AE0065E671 /* TRNCategoryObjectStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNCategoryObjectStore.h; sourceTree = "<group>"; };
+		AC75C7D6192B70AE0065E671 /* TRNCategoryObjectStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNCategoryObjectStore.m; sourceTree = "<group>"; };
+		AC75C7DD192B70B70065E671 /* TRNDataParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNDataParser.h; sourceTree = "<group>"; };
+		AC75C7DE192B70B70065E671 /* TRNDataParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNDataParser.m; sourceTree = "<group>"; };
+		AC75C7E1192B70CD0065E671 /* example_spec.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = example_spec.xcdatamodel; sourceTree = "<group>"; };
 		ACA139D51923C3760054B80C /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		AD5B06EE51F34FC5B7B79069 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		E001E858AD354FA58A3F446A /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,11 +181,19 @@
 		A73E1BACC82E4E37B544E68A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				AC60C97319235998008D9C91 /* example_spec.xcdatamodeld */,
-				AC60C96D19235994008D9C91 /* _TRNBook.h */,
-				AC60C96E19235994008D9C91 /* _TRNBook.m */,
-				AC60C96F19235994008D9C91 /* TRNBook.h */,
-				AC60C97019235994008D9C91 /* TRNBook.m */,
+				AC75C7CB192B70AE0065E671 /* _TRNBook.h */,
+				AC75C7CC192B70AE0065E671 /* _TRNBook.m */,
+				AC75C7CD192B70AE0065E671 /* _TRNCategory.h */,
+				AC75C7CE192B70AE0065E671 /* _TRNCategory.m */,
+				AC75C7CF192B70AE0065E671 /* TRNBook.h */,
+				AC75C7D0192B70AE0065E671 /* TRNBook.m */,
+				AC75C7D1192B70AE0065E671 /* TRNBookObjectStore.h */,
+				AC75C7D2192B70AE0065E671 /* TRNBookObjectStore.m */,
+				AC75C7D3192B70AE0065E671 /* TRNCategory.h */,
+				AC75C7D4192B70AE0065E671 /* TRNCategory.m */,
+				AC75C7D5192B70AE0065E671 /* TRNCategoryObjectStore.h */,
+				AC75C7D6192B70AE0065E671 /* TRNCategoryObjectStore.m */,
+				AC75C7E0192B70CD0065E671 /* example_spec.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -181,8 +201,8 @@
 		ACA139D1192364620054B80C /* data */ = {
 			isa = PBXGroup;
 			children = (
-				ACA139D2192364680054B80C /* TRNParser.h */,
-				ACA139D3192364680054B80C /* TRNParser.m */,
+				AC75C7DD192B70B70065E671 /* TRNDataParser.h */,
+				AC75C7DE192B70B70065E671 /* TRNDataParser.m */,
 			);
 			name = data;
 			sourceTree = "<group>";
@@ -451,13 +471,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				C31967A5412E41F2A47E40DF /* TRNAppDelegate.m in Sources */,
-				AC60C97519235998008D9C91 /* example_spec.xcdatamodeld in Sources */,
-				AC60C97219235994008D9C91 /* TRNBook.m in Sources */,
+				AC75C7DB192B70AE0065E671 /* TRNCategory.m in Sources */,
+				AC75C7D8192B70AE0065E671 /* _TRNCategory.m in Sources */,
 				4D7A7279DB7746059732669C /* main.m in Sources */,
+				AC75C7DC192B70AE0065E671 /* TRNCategoryObjectStore.m in Sources */,
+				AC75C7D9192B70AE0065E671 /* TRNBook.m in Sources */,
 				AC60C96C192356F2008D9C91 /* TRNBookCellConfigurator.m in Sources */,
 				AC60C969192356E9008D9C91 /* TRNViewController.m in Sources */,
-				AC60C97119235994008D9C91 /* _TRNBook.m in Sources */,
-				ACA139D4192364680054B80C /* TRNParser.m in Sources */,
+				AC75C7DA192B70AE0065E671 /* TRNBookObjectStore.m in Sources */,
+				AC75C7DF192B70B70065E671 /* TRNDataParser.m in Sources */,
+				AC75C7D7192B70AE0065E671 /* _TRNBook.m in Sources */,
+				AC75C7E2192B70CD0065E671 /* example_spec.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -708,12 +732,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		AC60C97319235998008D9C91 /* example_spec.xcdatamodeld */ = {
+		AC75C7E0192B70CD0065E671 /* example_spec.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				AC60C97419235998008D9C91 /* example_spec.xcdatamodel */,
+				AC75C7E1192B70CD0065E671 /* example_spec.xcdatamodel */,
 			);
-			currentVersion = AC60C97419235998008D9C91 /* example_spec.xcdatamodel */;
+			currentVersion = AC75C7E1192B70CD0065E671 /* example_spec.xcdatamodel */;
 			path = example_spec.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

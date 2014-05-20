@@ -13,7 +13,7 @@
 #import <BMF/BMFArrayDataStore.h>
 #import <BMF/BMFTableViewDataSource.h>
 
-#import "TRNParser.h"
+#import "TRNDataParser.h"
 
 #import "TRNBook.h"
 
@@ -33,10 +33,11 @@
 	[self.loaderView addToViewController:self];
 
 	
+	id<BMFDataReadProtocol> dataStore =	[TRNBook allBooksDataStore];
 	
-	NSFetchedResultsController *frc = [TRNBook MR_fetchAllSortedBy:@"id" ascending:YES withPredicate:nil groupBy:nil delegate:nil];
-	
-	id<BMFDataReadProtocol> dataStore = (id)[[BMFBase sharedInstance].factory dataStoreWithParameter:frc sender:self];
+//	NSFetchedResultsController *frc = [TRNBook MR_fetchAllSortedBy:@"id" ascending:YES withPredicate:nil groupBy:nil delegate:nil];
+//	
+//	id<BMFDataReadProtocol> dataStore = (id)[[BMFBase sharedInstance].factory dataStoreWithParameter:frc sender:self];
 	
 //	BMFArrayDataStore *dataStore = (id)[[BMFBase sharedInstance].factory dataStoreWithParameter:@[] sender:self];
 	
@@ -64,7 +65,7 @@
 	
 	[opTask addOperation:[[BMFBase sharedInstance].factory jsonSerializerOperation:self]];
 	
-	TRNParser *parser = [TRNParser new];
+	TRNDataParser *parser = [TRNDataParser new];
 	BMFOperation *parserOp = [[BMFParserOperation alloc] initWithParser:parser];
 	[opTask addOperation:parserOp];
 	

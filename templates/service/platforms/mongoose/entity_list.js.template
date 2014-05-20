@@ -12,8 +12,6 @@ var {{name}}Schema = require('./{{entityName}}Schema');
 
 {{/content}}
 
-
-
 {{#content}}
 module.exports.findOne{{model.entityName}} = function(req, res,callback) {
 	res.setHeader('Content-Type', 'application/json');

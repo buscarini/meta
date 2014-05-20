@@ -11,4 +11,6 @@
 @dynamic purchaseDate;
 @dynamic deleted;
 
+@dynamic category;
+
 @end

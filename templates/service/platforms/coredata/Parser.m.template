@@ -5,45 +5,58 @@
 
 #import <MagicalRecord/CoreData+MagicalRecord.h>
 
+{{#content}}
 {{> entityImports}}
+{{/content}}
 	
 @implementation {{_globals_.fileBaseName}} {
-	{{#content.model._formats_}}
+{{#content}}
+	{{#model._formats_}}
 	NSDateFormatter *{{name}}DateFormatter;
-	{{/content.model._formats_}}
+	{{/model._formats_}}
+{{/content}}
 }
 
 - (id) init {
 	self = [super init];
 	if (self) {
-		{{#content.model._formats_}}
+		{{#content}}
+		{{#model._formats_}}
 		{{name}}DateFormatter = [[NSDateFormatter alloc] init];
 		{{name}}DateFormatter.dateFormat = @"{{format}}";
-		{{/content.model._formats_}}
+		{{/model._formats_}}
+		{{/content}}
 	}
 	return self;
 }
 
-- (NSComparisonResult) p_compareDictionaries:(NSDictionary *) obj1 with:(NSDictionary *)obj2 {
+{{#content}}
+{{#model}}
+- (NSComparisonResult) p_compare{{entityName}}Dictionaries:(NSDictionary *) obj1 with:(NSDictionary *)obj2 {
 	NSComparisonResult result;
-	{{#content.model.primaryKeys}}
+	{{#model.primaryKeys}}
 	id {{name}}1 = obj1[@"{{name}}"];
 	id {{name}}2 = obj2[@"{{name}}"];
 	result = [{{name}}1 compare:{{name}}2];
 	if (result!=NSOrderedSame) return result;
-	{{/content.model.primaryKeys}}
+	{{/model.primaryKeys}}
 
 	return NSOrderedSame;
 }
+{{/model}}
+{{/content}}
 
-{{#content.model}}
-- (BOOL) p_updateEntity:({{> entityName}} *)object withDictionary:(NSDictionary *) dic error:(NSError **) error {
+{{#content}}
+{{#model}}
+- (BOOL) p_update{{entityName}}Entity:({{> entityName}} *)object withDictionary:(NSDictionary *) dic error:(NSError **) error {
 	id value;
 	{{> parseProperties}}
+	{{> parseRelationships}}
 	
 	return YES;
 }
-{{/content.model}}
+{{/model}}
+{{/content}}
 
 - (void) parse:(NSDictionary *) rawObject completion:(BMFCompletionBlock) completionBlock {
 	
@@ -66,12 +79,11 @@
 		}
 		{{/resultValue}}
 	
-		NSMutableArray *results = nil;
-	
+		NSMutableArray *results = [NSMutableArray array];
+		NSArray *dictionaries = nil;
 		{{#content}}
-		results = [NSMutableArray array];
 		
-		NSArray *dictionaries = rawObject[@"{{key}}"];
+		dictionaries = rawObject[@"{{key}}"];
 		if (dictionaries.count>0) {
 			{{#model}}
 			
@@ -81,7 +93,7 @@
 				NSError *error = nil;
 
 				NSArray *sortedDictionaries = [dictionaries sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2) {
-					return [self p_compareDictionaries:obj1 with:obj2];
+					return [self p_compare{{entityName}}Dictionaries:obj1 with:obj2];
 				}];
 
 				NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"{{> entityName}}"];
@@ -105,7 +117,7 @@
 	
 					NSDictionary *serverEntityDic = sortedDictionaries[serverIndex];
 	
-					NSComparisonResult comparisonResult = [self p_compareDictionaries:@{
+					NSComparisonResult comparisonResult = [self p_compare{{entityName}}Dictionaries:@{
 						{{#primaryKeys}}
 						{{^object}}
 						@"{{name}}" : @(localEntity.{{name}})
@@ -124,7 +136,7 @@
 					}
 					else {
 		
-						TRNBook *entity = localEntity;
+						{{> entityName}} *entity = localEntity;
 		
 						if (comparisonResult==NSOrderedDescending) {
 							// Add object
@@ -136,7 +148,7 @@
 		
 						serverIndex++;
 		
-						if ([self p_updateEntity:entity withDictionary:serverEntityDic error:&error]) {
+						if ([self p_update{{entityName}}Entity:entity withDictionary:serverEntityDic error:&error]) {
 							[results addObject:entity];	
 						}
 						else {
@@ -173,7 +185,7 @@
 					// Add all these objects
 					{{> entityName}} *entity = [{{> entityName}} MR_createInContext:localContext];
 
-					if ([self p_updateEntity:entity withDictionary:serverEntityDic error:&error]) {
+					if ([self p_update{{entityName}}Entity:entity withDictionary:serverEntityDic error:&error]) {
 						[results addObject:entity];						
 					}
 					else {

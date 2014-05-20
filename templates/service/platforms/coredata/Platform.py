@@ -92,7 +92,7 @@ class Platform(MetaProcessor):
         if 'hash' in key:
             key = self.preprocessHash(key,key['hash'],hash,hashes)
         else:
-            hash['_entity_imports_'].append({ "name" : self.finalFileName(key['entityName'],hash) + '.h' })
+            key['_entity_imports_'].append({ "name" : self.finalEntityFileName(key['entityName'],hash) + '.h' })
             for property in key['properties']:
                 self.preprocessProperty(property,hash,hashes)
 
@@ -118,18 +118,32 @@ class Platform(MetaProcessor):
         
     def preprocess(self,hash,hashes):
         
-        hash['_entity_imports_'] = []
+        # hash['_entity_imports_'] = []
 
         if hash!=None and 'resultValue' in hash:
             resultValue = hash['resultValue']
             self.preprocessResultValue(resultValue)
         
         if hash!=None and 'content' in hash:
-            content = hash['content']
-            if 'model' in content:
-                model = content['model']
-                newKey = self.preprocessModel(model,hash,hashes)
-                model.update(newKey)
+            contents = hash['content']
+            for content in contents:
+                if 'model' in content:
+                    model = content['model']
+                    model['_entity_imports_'] = []
+                    newKey = self.preprocessModel(model,hash,hashes)
+                    model.update(newKey)
+                    
+    def finalEntityFileName(self,fileName,hash):
+        """docstring for finalFileName"""
+        prefix = ""
+        if hash!=None and '_globals_' in hash:
+           globals = hash['_globals_']
+           if 'prefix' in globals:
+               prefix = globals['prefix']
+
+        fileName = prefix + fileName
+
+        return fileName
                 
     def finalFileName(self,fileName,hash):
         """docstring for finalFileName"""
@@ -139,6 +153,10 @@ class Platform(MetaProcessor):
            if 'prefix' in globals:
                prefix = globals['prefix']
 
-        fileName = prefix + fileName
+        serviceName = ""
+        if hash!=None and 'serviceName' in hash:
+            serviceName = self.stringUtils.capitalize(hash['serviceName'])
+
+        fileName = prefix + serviceName + fileName
 
         return fileName

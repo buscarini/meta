@@ -2,7 +2,7 @@
 
 #import <BMF/BMFManagedObjectDataStore.h>
 
-@class {{_finalEntityName_}};
+#import "{{_finalEntityName_}}.h"
 
 @interface {{_finalEntityName_}}ObjectStore : BMFManagedObjectDataStore
 

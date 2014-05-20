@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C1021" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="TRNBook" representedClassName="TRNBook" syncable="YES">
-		<attribute name="id" optional="NO" attributeType="Integer 32"  syncable="YES"/>
-		<attribute name="title" optional="YES" attributeType="String"  syncable="YES"/>
-		<attribute name="author" optional="YES" attributeType="String"  syncable="YES"/>
-		<attribute name="numPages" optional="YES" attributeType="Integer 32"  syncable="YES"/>
-		<attribute name="purchaseDate" optional="YES" attributeType="Date"  syncable="YES"/>
-		<attribute name="deleted" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-	</entity>
+        <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deleted" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="id" attributeType="Integer 32" syncable="YES"/>
+        <attribute name="numPages" optional="YES" attributeType="Integer 32" syncable="YES"/>
+        <attribute name="purchaseDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="category" maxCount="1" deletionRule="Nullify" destinationEntity="TRNCategory" inverseName="books" inverseEntity="TRNCategory" syncable="YES"/>
+    </entity>
+    <entity name="TRNCategory" representedClassName="TRNCategory" syncable="YES">
+        <attribute name="id" attributeType="Integer 32" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="books" optional="YES" toMany="YES" maxCount="50" deletionRule="Cascade" destinationEntity="TRNBook" inverseName="category" inverseEntity="TRNBook" syncable="YES"/>
+    </entity>
     <elements>
-		<element name="TRNBook" positionX="0" positionY="0" width="200" height="500"/>
+        <element name="TRNBook" positionX="0" positionY="0" width="200" height="148"/>
+        <element name="TRNCategory" positionX="0" positionY="0" width="200" height="500"/>
     </elements>
 </model>
