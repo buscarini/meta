@@ -24,6 +24,19 @@ class Platform(MetaProcessor):
             print("Error: unknown property type: " + type)
             sys.exit()
         
+    def preprocessPrimaryKeys(self,primaryKeys,properties):
+        """docstring for preprocessPrimaryKeys"""
+        assert len(primaryKeys)<2
+
+        self.preprocessList(primaryKeys)
+        keyName = primaryKeys[0]['name']
+        for property in properties:
+            if property['name']==keyName:
+                property['name'] = '_id'
+                break
+        
+        primaryKeys[0]['name'] = '_id'
+        
     def preprocessProperty(self,property,hash,hashes):
         """docstring for preprocessProperty"""
         property['_camelcase_'] = self.stringUtils.camelcase(str(property['name']))
@@ -71,6 +84,9 @@ class Platform(MetaProcessor):
                     break
     
     def preprocess(self,hash,hashes):
+        if hash!=None and 'primaryKeys' in hash and 'properties' in hash:
+            self.globalPlatform.preprocessPrimaryKeys(hash['primaryKeys'],hash['properties'])
+        
         if hash!=None and 'properties' in hash:
             i=0
             properties = hash['properties']

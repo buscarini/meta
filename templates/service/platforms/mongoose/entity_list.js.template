@@ -3,9 +3,11 @@ var mongoose = require('mongoose');
 var moment = require('moment');
 
 var schema = require('./{{content.model.entityName}}Schema');
+schema.schema.set('autoIndex', false);
 
 {{#content.model.relationships}}
 var {{name}}Schema = require('./{{entityName}}Schema');
+{{name}}Schema.schema.set('autoIndex', false);
 {{/content.model.relationships}}
 
 module.exports.findOne = function(req, res,callback) {
@@ -25,25 +27,14 @@ module.exports.findOne = function(req, res,callback) {
 		{{/content.model.filters}}
 	},function (err, items) {
 		if (err) {
-			res.send({"{{resultValue.key}}": {{{resultValue.errorValue}}}, "{{errorMessage.key}}":err.errmsg});
+			res.send({"{{resultValue.key}}": {{{resultValue.errorValue}}}, "{{errorMessage.key}}":err.message});
 		}
 		else {
 			
 			var contentObject = { "{{resultValue.key}}" :{{{resultValue.okValue}}} }
 			contentObject.{{content.key}} = new Array()
 			items.forEach(function(item) {
-				var serviceItem = {}
-				
-				{{#content.model.properties}}
-				{{^type_date}}
-				serviceItem.{{name}} = item.{{name}}
-				{{/type_date}}
-				{{#type_date}}
-				serviceItem.{{name}} = moment(item.{{name}}).format("{{format}}")
-				{{/type_date}}
-				{{/content.model.properties}}
-				
-				contentObject.{{content.key}}.push(serviceItem)
+				{{> fillServiceItem}}
 			})
 			
 			res.send(contentObject)
@@ -77,21 +68,7 @@ module.exports.findAll = function(req, res,callback) {
 			var contentObject = { "{{resultValue.key}}" :{{{resultValue.okValue}}} }
 			contentObject.{{content.key}} = new Array()
 			items.forEach(function(item) {
-				var serviceItem = {}
-				
-				{{#content.model.properties}}
-				{{^type_date}}
-				serviceItem.{{name}} = item.{{name}}
-				{{/type_date}}
-				{{#type_date}}
-				serviceItem.{{name}} = moment(item.{{name}}).format("{{format}}")
-				{{/type_date}}
-				{{/content.model.properties}}
-				{{#content.model.relationships}}
-				serviceItem.{{name}} = item.{{name}};
-				{{/content.model.relationships}}
-				
-				contentObject.{{content.key}}.push(serviceItem)
+				{{> fillServiceItem}}
 			})
 			
 			res.send(contentObject)

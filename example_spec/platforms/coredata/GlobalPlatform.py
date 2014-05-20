@@ -59,10 +59,7 @@ class GlobalPlatform(MetaProcessor):
             property['type'] = 'NSDate'
             property['object'] = True
             property['storage'] = 'strong'
-        elif type=='relationship':
-            pass
         else:
-            print("Error: unknown property type: " + type)
-            sys.exit()
+            raise SyntaxError("Unknown property type: " + type)
     
             

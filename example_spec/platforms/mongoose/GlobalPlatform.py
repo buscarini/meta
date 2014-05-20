@@ -11,6 +11,19 @@ class GlobalPlatform(MetaProcessor):
         
         self.globalsPath = os.path.join(os.path.dirname(thisPath),'globals.json')
 
+    def preprocessPrimaryKeys(self,primaryKeys,properties):
+        """docstring for preprocessPrimaryKeys"""
+        assert len(primaryKeys)<2
+
+        self.preprocessList(primaryKeys)
+        keyName = primaryKeys[0]['name']
+        for property in properties:
+            if property['name']==keyName:
+                property['name'] = '_id'
+                break
+        
+        primaryKeys[0]['name'] = '_id'
+
     def preprocess(self,hash,hashes):
         """Make any preprocessing necessary for the platform"""
         return self.addHashGlobals(hash)

@@ -29,14 +29,11 @@ class Platform(MetaProcessor):
                 elif property['relationshipType']=='toMany':
                     property['type'] = finalEntityName + '[]'
                 else:
-                    print("Error: relationshipType unknown (toOne, toMany): " + property['relationshipType'])
-                    sys.exit()
+                    raise SyntaxError("RelationshipType unknown (toOne, toMany): " + property['relationshipType'])
             else:
-               print("Error: destination hash not found: " + hashFileName + " in " + str(hashes))
-               sys.exit()
+               raise SyntaxError("Destination hash not found: " + hashFileName + " in " + str(hashes)
         else:
-            print("Error: destination missing in relationship property: " + property)
-            sys.exit()
+            raise SyntaxError("Destination missing in relationship property: " + property)
             
         
     def preprocess_property(self,property,hash,hashes):

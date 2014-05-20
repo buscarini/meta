@@ -8,7 +8,7 @@ var eventEmitter = new events.EventEmitter();
 
 var compareEntities = function(a,b) {
 	var result = 0;
-	result = a.id-b.id;
+	result = a._id-b._id;
 	if (result!=0) return result;
 	
 	return result;	
@@ -31,22 +31,35 @@ module.exports.importFile = function(filePath,callback) {
 			return;
 		}
 		
-		properties.id = row[0]
+		properties._id = row[0]
 		properties.title = row[1]
 		properties.author = row[2]
 		properties.numPages = row[3]
 		properties.purchaseDate = moment(row[4],"DD/MM/YYYY")
 		properties.category = row[5]
+		
+		schema.schema.eachPath(function(key) {
+			if (key instanceof Object) return;
+
+			var options = schema.schema.path(key).options;				
+			if ( ('default' in options) && !(key in properties) ) {
+				var defaultValue = options['default'];
+				
+				if (typeof(defaultValue) != "function") {
+					properties[key] = defaultValue;
+				}
+			}
+		});
 	
-		Book.update({ 
-			id : row[0]
+		Book.update({
+			_id : row[0]
 		}, properties,{ upsert: true, multi: true },function(err) {
 			if (err) {
 				console.log("Error updating Book: " + err)
 			}
 			else {
 				numEntitiesImported++;
-				Book.findOne({ id : row[0]
+				Book.findOne({ _id : row[0]
 										}).exec(function (err, entity) {
 					imported.push(entity);
 					eventEmitter.emit('entityImported');
@@ -64,7 +77,7 @@ module.exports.importFile = function(filePath,callback) {
 		
 			var importedSorted = imported;
 	
-			Book.find().sort("id").exec(function(err,allEntities) {
+			Book.find().sort("_id").exec(function(err,allEntities) {
 				if (!err) {
 								
 					var importedIndex = 0;

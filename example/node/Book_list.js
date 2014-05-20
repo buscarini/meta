@@ -3,8 +3,10 @@ var mongoose = require('mongoose');
 var moment = require('moment');
 
 var schema = require('./BookSchema');
+schema.schema.set('autoIndex', false);
 
 var categorySchema = require('./CategorySchema');
+categorySchema.schema.set('autoIndex', false);
 
 module.exports.findOne = function(req, res,callback) {
 	res.setHeader('Content-Type', 'application/json');
@@ -13,11 +15,11 @@ module.exports.findOne = function(req, res,callback) {
 	var Category = mongoose.model('Category', categorySchema.schema);
 
 	Book.find({
-		id : req.id,
+		_id : req._id,
 		deleted : { $eq: false }
 	},function (err, items) {
 		if (err) {
-			res.send({"result": "1", "errorMessage":err.errmsg});
+			res.send({"result": "1", "errorMessage":err.message});
 		}
 		else {
 			
@@ -25,14 +27,15 @@ module.exports.findOne = function(req, res,callback) {
 			contentObject.books = new Array()
 			items.forEach(function(item) {
 				var serviceItem = {}
-				
-				serviceItem.id = item.id
+
+				serviceItem.id = item._id
 				serviceItem.title = item.title
 				serviceItem.author = item.author
 				serviceItem.numPages = item.numPages
 				serviceItem.purchaseDate = moment(item.purchaseDate).format("DD.MM.YYYY")
 				serviceItem.deleted = item.deleted
-				
+				serviceItem.category = item.category;
+
 				contentObject.books.push(serviceItem)
 			})
 			
@@ -64,15 +67,15 @@ module.exports.findAll = function(req, res,callback) {
 			contentObject.books = new Array()
 			items.forEach(function(item) {
 				var serviceItem = {}
-				
-				serviceItem.id = item.id
+
+				serviceItem.id = item._id
 				serviceItem.title = item.title
 				serviceItem.author = item.author
 				serviceItem.numPages = item.numPages
 				serviceItem.purchaseDate = moment(item.purchaseDate).format("DD.MM.YYYY")
 				serviceItem.deleted = item.deleted
 				serviceItem.category = item.category;
-				
+
 				contentObject.books.push(serviceItem)
 			})
 			

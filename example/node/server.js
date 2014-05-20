@@ -14,6 +14,13 @@ var booksCSVFile = __dirname+"/books.csv";
 var categoriesCSVFile = __dirname+"/categories.csv";
 
 app.get('/import', function(req, res) {
+
+	var numTasks = 2;
+	
+	var finished = function(response) {
+		if (numTasks>0) return;
+		res.send(response);
+	}
 	
 	bookImporter.importFile(booksCSVFile,function(err,books) {
 
@@ -25,7 +32,8 @@ app.get('/import', function(req, res) {
 			});
 		}
 		
-		res.send(response)
+		numTasks--;
+		finished(response);
 	})
 	
 	categoryImporter.importFile(categoriesCSVFile,function(err,categories) {
@@ -38,7 +46,8 @@ app.get('/import', function(req, res) {
 			});
 		}
 		
-		res.send(response)
+		numTasks--;
+		finished(response);
 	})
 })
 

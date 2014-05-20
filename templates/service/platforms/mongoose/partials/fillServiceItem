@@ -1,0 +1,15 @@
+var serviceItem = {}
+
+{{#content.model.properties}}
+{{^type_date}}
+serviceItem.{{destination}} = item.{{name}}
+{{/type_date}}
+{{#type_date}}
+serviceItem.{{destination}} = moment(item.{{name}}).format("{{format}}")
+{{/type_date}}
+{{/content.model.properties}}
+{{#content.model.relationships}}
+serviceItem.{{name}} = item.{{name}};
+{{/content.model.relationships}}
+
+contentObject.{{content.key}}.push(serviceItem)

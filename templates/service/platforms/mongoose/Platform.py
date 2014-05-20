@@ -49,9 +49,9 @@ class Platform(MetaProcessor):
                 property['format'] = format
             
         
-    def preprocessPrimaryKeys(self,keys,hash):
+    def preprocessPrimaryKeys(self,keys,properties):
         """docstring for preprocessPrimaryKeys"""
-        keys[len(keys)-1]['_last_'] = True
+        self.globalPlatform.preprocessPrimaryKeys(keys,properties)
         
         
     def preprocessResultValue(self,resultValue,hash,hashes):
@@ -78,7 +78,7 @@ class Platform(MetaProcessor):
             if content!=None and 'model' in content:
                 model = content['model']
                 if 'primaryKeys' in model:
-                    self.preprocessPrimaryKeys(model['primaryKeys'],hash)
+                    self.preprocessPrimaryKeys(model['primaryKeys'],model['properties'])
                 if 'filters' in model:
                     filters = model['filters']
                     self.preprocessFilters(filters,hash)

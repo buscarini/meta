@@ -89,9 +89,7 @@ class MetaProcessor(object):
         assert hashPath
         
         hashObject = Utils.readJSONFile(hashPath)
-        if hashObject==None:
-            print("Error reading json file: " + hashPath)
-            sys.exit()
+        assert hashObject!=None
         
         return hashObject
         

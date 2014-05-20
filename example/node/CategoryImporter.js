@@ -8,7 +8,7 @@ var eventEmitter = new events.EventEmitter();
 
 var compareEntities = function(a,b) {
 	var result = 0;
-	result = a.id-b.id;
+	result = a._id-b._id;
 	if (result!=0) return result;
 	
 	return result;	
@@ -31,18 +31,31 @@ module.exports.importFile = function(filePath,callback) {
 			return;
 		}
 		
-		properties.id = row[0]
+		properties._id = row[0]
 		properties.title = row[1]
+		
+		schema.schema.eachPath(function(key) {
+			if (key instanceof Object) return;
+
+			var options = schema.schema.path(key).options;				
+			if ( ('default' in options) && !(key in properties) ) {
+				var defaultValue = options['default'];
+				
+				if (typeof(defaultValue) != "function") {
+					properties[key] = defaultValue;
+				}
+			}
+		});
 	
-		Category.update({ 
-			id : row[0]
+		Category.update({
+			_id : row[0]
 		}, properties,{ upsert: true, multi: true },function(err) {
 			if (err) {
 				console.log("Error updating Category: " + err)
 			}
 			else {
 				numEntitiesImported++;
-				Category.findOne({ id : row[0]
+				Category.findOne({ _id : row[0]
 										}).exec(function (err, entity) {
 					imported.push(entity);
 					eventEmitter.emit('entityImported');
@@ -60,7 +73,7 @@ module.exports.importFile = function(filePath,callback) {
 		
 			var importedSorted = imported;
 	
-			Category.find().sort("id").exec(function(err,allEntities) {
+			Category.find().sort("_id").exec(function(err,allEntities) {
 				if (!err) {
 								
 					var importedIndex = 0;

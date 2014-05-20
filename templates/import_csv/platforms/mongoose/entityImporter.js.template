@@ -51,8 +51,21 @@ module.exports.importFile = function(filePath,callback) {
 		properties.{{name}} = moment(row[{{index}}],"{{format}}")
 		{{/type_date}}
 		{{/properties}}
+		
+		schema.schema.eachPath(function(key) {
+			if (key instanceof Object) return;
+
+			var options = schema.schema.path(key).options;				
+			if ( ('default' in options) && !(key in properties) ) {
+				var defaultValue = options['default'];
+				
+				if (typeof(defaultValue) != "function") {
+					properties[key] = defaultValue;
+				}
+			}
+		});
 	
-		{{entityName}}.update({ 
+		{{entityName}}.update({
 			{{#primaryKeys}}
 			{{name}} : row[{{index}}]{{^_last_}},{{/_last_}}
 			{{/primaryKeys}}
