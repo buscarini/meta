@@ -8,68 +8,114 @@
 	"errorMessage" : {
 		"key" : "errorMessage"
 	},
-	"content" : {
-		"key" : "books",
-		"model" : {
-			"entityName" : "Book",
-			"primaryKeys" : [ 
-				{
-					"name" : "id"
-				}
-			],
-			"filters" : [
-				{
-					"property" : "deleted",
-					"relation" : "equal",
-					"value" : "false"
-				}
-			],
-			"sortBy" : [
-				{
-					"property" : "id",
-					"ascending" : true
-				}
-			],
-			"properties" : [
-				{
-					"name" : "id",
-					"destination" : "id",
-					"type" : "integer",
-					"required" : true
-				},
-				{
-					"name" : "title",
-					"destination" : "title",
-					"type" : "string"
-				},
-				{
-					"name" : "author",
-					"destination" : "author",
-					"type" : "string"
-				},
-				{
-					"name" : "numPages",
-					"destination" : "numPages",
-					"type" : "integer"
-				},
-				{
-					"name" : "purchaseDate",
-					"destination" : "purchaseDate",
-					"type" : "date",
-					"format" : "dd.MM.yyyy"
-				},
-				{
-					"name" : "deleted",
-					"destination" : "deleted",
-					"type" : "bool"
-				}
-			],
-			"relationships" : [
-				{
-					"name" : "category",
-					"entityName" : "Category"
-				}
-			]
+	"serviceName" : "data",
+	"content" : [
+		{
+			"key" : "categories",
+			"model" : {
+				"entityName" : "Category",
+				"primaryKeys" : [ 
+					{
+						"name" : "id"
+					}
+				],
+				"sortBy" : [
+					{
+						"property" : "id",
+						"ascending" : true
+					}
+				],
+				"properties" : [
+					{
+						"name" : "id",
+						"destination" : "id",
+						"type" : "integer",
+						"required" : true
+					},
+					{
+						"name" : "title",
+						"destination" : "title",
+						"type" : "string"
+					}
+				]
+			}
+		},
+		{
+			"key" : "books",
+			"model" : {
+				"entityName" : "Book",
+				"primaryKeys" : [ 
+					{
+						"name" : "id"
+					}
+				],
+				"filters" : [
+					{
+						"property" : "deleted",
+						"relation" : "equal",
+						"value" : "false"
+					}
+				],
+				"sortBy" : [
+					{
+						"property" : "id",
+						"ascending" : true
+					}
+				],
+				"properties" : [
+					{
+						"name" : "id",
+						"destination" : "id",
+						"type" : "integer",
+						"required" : true
+					},
+					{
+						"name" : "title",
+						"destination" : "title",
+						"type" : "string"
+					},
+					{
+						"name" : "author",
+						"destination" : "author",
+						"type" : "string"
+					},
+					{
+						"name" : "numPages",
+						"destination" : "numPages",
+						"type" : "integer"
+					},
+					{
+						"name" : "purchaseDate",
+						"destination" : "purchaseDate",
+						"type" : "date",
+						"format" : "dd.MM.yyyy"
+					},
+					{
+						"name" : "deleted",
+						"destination" : "deleted",
+						"type" : "bool"
+					}
+				],
+				"relationships" : [
+					{
+						"name" : "category",
+						"entityName" : "Category",
+						"type" : "toOne",
+						"primaryKeys" : [ 
+							{
+								"name" : "id"
+							}
+						],
+						"properties" : [
+							{
+								"name" : "id",
+								"destination" : "id",
+								"type" : "integer"
+							}
+						]
+					}
+				]
+			}
 		}
-	}
+	]
 }

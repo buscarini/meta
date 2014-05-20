@@ -1,15 +1,39 @@
 var serviceItem = {}
 
-{{#content.model.properties}}
+{{#model.properties}}
 {{^type_date}}
 serviceItem.{{destination}} = item.{{name}}
 {{/type_date}}
 {{#type_date}}
 serviceItem.{{destination}} = moment(item.{{name}}).format("{{format}}")
 {{/type_date}}
-{{/content.model.properties}}
-{{#content.model.relationships}}
-serviceItem.{{name}} = item.{{name}};
-{{/content.model.relationships}}
+{{/model.properties}}
 
-contentObject.{{content.key}}.push(serviceItem)
+{{#model.relationships}}
+{{#_toMany_}}
+var populated = item.{{name}}
+var related = []
+for (var index=0;index<populated.length;index++) {
+	var populatedObj = populated[index]
+	var relatedObj = {}
+
+{{#properties}}
+	relatedObj.{{destination}} = populatedObj.{{name}}
+{{/properties}}
+
+	related.push(relatedObj)
+}
+
+serviceItem.{{name}} = related;
+{{/_toMany_}}
+{{^_toMany_}}
+var populated = item.{{name}}
+var related = {}
+{{#properties}}
+related.{{destination}} = populated.{{name}}
+{{/properties}}
+serviceItem.{{name}} = related;
+{{/_toMany_}}
+{{/model.relationships}}
+
+contentObject.{{key}}.push(serviceItem)

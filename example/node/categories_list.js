@@ -2,27 +2,31 @@ var fs = require('fs');
 var mongoose = require('mongoose');
 var moment = require('moment');
 
-var schema = require('./CategorySchema');
-schema.schema.set('autoIndex', false);
-
+var CategorySchema = require('./CategorySchema');
+CategorySchema.schema.set('autoIndex', false);
 var booksSchema = require('./BookSchema');
 booksSchema.schema.set('autoIndex', false);
 
-module.exports.findOne = function(req, res,callback) {
+
+
+
+module.exports.findOneCategory = function(req, res,callback) {
 	res.setHeader('Content-Type', 'application/json');
 
-	var Category = mongoose.model('Category', schema.schema)
+	var Category = mongoose.model('Category', CategorySchema.schema)
 	var Book = mongoose.model('Book', booksSchema.schema);
 
 	Category.find({
 		_id : req._id
-	},function (err, items) {
+	})
+	.populate('books')
+	.exec(function (err, items) {
 		if (err) {
 			res.send({"result": "1", "errorMessage":err.message});
 		}
 		else {
 			
-			var contentObject = { "result" :"0" }
+			contentObject = { "result" :"0" }
 			contentObject.categories = new Array()
 			items.forEach(function(item) {
 				var serviceItem = {}
@@ -60,8 +64,29 @@ module.exports.findOne = function(req, res,callback) {
 
 module.exports.findAll = function(req, res,callback) {
 	res.setHeader('Content-Type', 'application/json');
-
-	var Category = mongoose.model('Category', schema.schema)
+	
+	var numFinds = 0;
+	var contentObject = {}
+		
+	var foundFunction = function(err) {
+		if (err) {
+			res.send({"result": "1", "errorMessage":err.message});
+		}
+		else {
+			numFinds--;
+			if (numFinds>0) return;
+			
+			contentObject.result = "0"
+			
+			res.send(contentObject)
+					
+			if (callback) callback()
+		}
+	};
+	
+	numFinds++;
+	
+	var Category = mongoose.model('Category', CategorySchema.schema)
 	var Book = mongoose.model('Book', booksSchema.schema);
 
 	Category.find({
@@ -69,12 +94,7 @@ module.exports.findAll = function(req, res,callback) {
 	.sort({  id : 1  })
 	.populate('books')
 	.exec(function (err, items) {
-		if (err) {
-			res.send({"result": "1", "errorMessage":err.errmsg});
-		}
-		else {
-			
-			var contentObject = { "result" :"0" }
+		if (!err) {
 			contentObject.categories = new Array()
 			items.forEach(function(item) {
 				var serviceItem = {}
@@ -102,10 +122,9 @@ module.exports.findAll = function(req, res,callback) {
 
 				contentObject.categories.push(serviceItem)
 			})
-			
-			res.send(contentObject)
-					
-			if (callback) callback()
 		}
+		
+		foundFunction(err)
 	})
+	
 };

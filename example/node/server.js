@@ -3,9 +3,9 @@ var csv = require('csv');
 var mongoose = require('mongoose');
 var express = require('express');
 var bookImporter = require('./BookImporter')
-var Book_list = require('./Book_list')
+var data_list = require('./data_list')
 var categoryImporter = require('./CategoryImporter')
-var Category_list = require('./Category_list')
+var categories_list = require('./categories_list')
 var fs = require('fs')
 	
 var app = express();
@@ -76,12 +76,12 @@ fs.watchFile(categoriesCSVFile, function(curr,prev) {
 });
 
 app.get('/books', function(req, res) {
-	Book_list.findAll(req,res,function() {
+	data_list.findAll(req,res,function() {
 	})
 })
 
 app.get('/categories', function(req, res) {
-	Category_list.findAll(req,res,function() {
+	categories_list.findAll(req,res,function() {
 	})
 })
 

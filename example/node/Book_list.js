@@ -34,7 +34,12 @@ module.exports.findOne = function(req, res,callback) {
 				serviceItem.numPages = item.numPages
 				serviceItem.purchaseDate = moment(item.purchaseDate).format("DD.MM.YYYY")
 				serviceItem.deleted = item.deleted
-				serviceItem.category = item.category;
+
+				var populated = item.category
+				var related = {}
+				related.id = populated._id
+				related.title = populated.title
+				serviceItem.category = related;
 
 				contentObject.books.push(serviceItem)
 			})
@@ -74,7 +79,12 @@ module.exports.findAll = function(req, res,callback) {
 				serviceItem.numPages = item.numPages
 				serviceItem.purchaseDate = moment(item.purchaseDate).format("DD.MM.YYYY")
 				serviceItem.deleted = item.deleted
-				serviceItem.category = item.category;
+
+				var populated = item.category
+				var related = {}
+				related.id = populated._id
+				related.title = populated.title
+				serviceItem.category = related;
 
 				contentObject.books.push(serviceItem)
 			})

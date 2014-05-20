@@ -2,37 +2,44 @@ var fs = require('fs');
 var mongoose = require('mongoose');
 var moment = require('moment');
 
-var schema = require('./{{content.model.entityName}}Schema');
-schema.schema.set('autoIndex', false);
-
-{{#content.model.relationships}}
+{{#content}}
+var {{model.entityName}}Schema = require('./{{model.entityName}}Schema');
+{{model.entityName}}Schema.schema.set('autoIndex', false);
+{{#model.relationships}}
 var {{name}}Schema = require('./{{entityName}}Schema');
 {{name}}Schema.schema.set('autoIndex', false);
-{{/content.model.relationships}}
+{{/model.relationships}}
 
-module.exports.findOne = function(req, res,callback) {
+{{/content}}
+
+
+
+{{#content}}
+module.exports.findOne{{model.entityName}} = function(req, res,callback) {
 	res.setHeader('Content-Type', 'application/json');
 
-	var {{content.model.entityName}} = mongoose.model('{{content.model.entityName}}', schema.schema)
-	{{#content.model.relationships}}
+	var {{model.entityName}} = mongoose.model('{{model.entityName}}', {{model.entityName}}Schema.schema)
+	{{#model.relationships}}
 	var {{entityName}} = mongoose.model('{{entityName}}', {{name}}Schema.schema);
-	{{/content.model.relationships}}
+	{{/model.relationships}}
 
-	{{content.model.entityName}}.find({
-		{{#content.model.primaryKeys}}
-		{{name}} : req.{{name}}{{^_last_}},{{/_last_}}{{#_last_}}{{#content.model._has_filters_}},{{/content.model._has_filters_}}{{/_last_}}
-		{{/content.model.primaryKeys}}
-		{{#content.model.filters}}
+	{{model.entityName}}.find({
+		{{#model.primaryKeys}}
+		{{name}} : req.{{name}}{{^_last_}},{{/_last_}}{{#_last_}}{{#model._has_filters_}},{{/model._has_filters_}}{{/_last_}}
+		{{/model.primaryKeys}}
+		{{#model.filters}}
 		{{property}} : { ${{relation}}: {{value}} }{{^_last_}},{{/_last_}}
-		{{/content.model.filters}}
-	},function (err, items) {
+		{{/model.filters}}
+	})
+	.populate('{{#model.relationships}}{{name}}{{^_last_}} {{/_last_}}{{/model.relationships}}')
+	.exec(function (err, items) {
 		if (err) {
 			res.send({"{{resultValue.key}}": {{{resultValue.errorValue}}}, "{{errorMessage.key}}":err.message});
 		}
 		else {
 			
-			var contentObject = { "{{resultValue.key}}" :{{{resultValue.okValue}}} }
-			contentObject.{{content.key}} = new Array()
+			contentObject = { "{{resultValue.key}}" :{{{resultValue.okValue}}} }
+			contentObject.{{key}} = new Array()
 			items.forEach(function(item) {
 				{{> fillServiceItem}}
 			})
@@ -43,37 +50,55 @@ module.exports.findOne = function(req, res,callback) {
 		}
 	})
 };
+{{/content}}
 
 module.exports.findAll = function(req, res,callback) {
 	res.setHeader('Content-Type', 'application/json');
-
-	var {{content.model.entityName}} = mongoose.model('{{content.model.entityName}}', schema.schema)
-	{{#content.model.relationships}}
-	var {{entityName}} = mongoose.model('{{entityName}}', {{name}}Schema.schema);
-	{{/content.model.relationships}}
-
-	{{content.model.entityName}}.find({
-		{{#content.model.filters}}
-		{{property}} : { ${{relation}}: {{value}} }{{^_last_}},{{/_last_}}
-		{{/content.model.filters}}
-	})
-	.sort({ {{#content.model.sortBy}} {{property}} : {{ascending}}{{^_last_}},{{/_last_}} {{/content.model.sortBy}} })
-	.populate({{#content.model.relationships}}'{{name}}'{{^_last_}},{{/_last_}}{{/content.model.relationships}})
-	.exec(function (err, items) {
+	
+	var numFinds = 0;
+	var contentObject = {}
+		
+	var foundFunction = function(err) {
 		if (err) {
-			res.send({"{{resultValue.key}}": {{{resultValue.errorValue}}}, "{{errorMessage.key}}":err.errmsg});
+			res.send({"{{resultValue.key}}": {{{resultValue.errorValue}}}, "{{errorMessage.key}}":err.message});
 		}
 		else {
+			numFinds--;
+			if (numFinds>0) return;
 			
-			var contentObject = { "{{resultValue.key}}" :{{{resultValue.okValue}}} }
-			contentObject.{{content.key}} = new Array()
-			items.forEach(function(item) {
-				{{> fillServiceItem}}
-			})
+			contentObject.{{resultValue.key}} = {{{resultValue.okValue}}}
 			
 			res.send(contentObject)
 					
 			if (callback) callback()
 		}
+	};
+	
+	{{#content}}
+	numFinds++;
+	
+	var {{model.entityName}} = mongoose.model('{{model.entityName}}', {{model.entityName}}Schema.schema)
+	{{#model.relationships}}
+	var {{entityName}} = mongoose.model('{{entityName}}', {{name}}Schema.schema);
+	{{/model.relationships}}
+
+	{{model.entityName}}.find({
+		{{#model.filters}}
+		{{property}} : { ${{relation}}: {{value}} }{{^_last_}},{{/_last_}}
+		{{/model.filters}}
 	})
+	.sort({ {{#model.sortBy}} {{property}} : {{ascending}}{{^_last_}},{{/_last_}} {{/model.sortBy}} })
+	.populate('{{#model.relationships}}{{name}}{{^_last_}} {{/_last_}}{{/model.relationships}}')
+	.exec(function (err, items) {
+		if (!err) {
+			contentObject.{{key}} = new Array()
+			items.forEach(function(item) {
+				{{> fillServiceItem}}
+			})
+		}
+		
+		foundFunction(err)
+	})
+	
+	{{/content}}
 };

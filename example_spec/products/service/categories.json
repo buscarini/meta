@@ -8,7 +8,8 @@
 	"errorMessage" : {
 		"key" : "errorMessage"
 	},
-	"content" : {
+	"serviceName" : "categories",
+	"content" : [ {
 		"key" : "categories",
 		"model" : {
 			"entityName" : "Category",
@@ -41,9 +42,50 @@
 			"relationships" : [
 				{
 					"name" : "books",
-					"entityName" : "Book"
+					"entityName" : "Book",
+					"type" : "toMany",
+					"primaryKeys" : [
+						{
+							"name" : "id"
+						}
+					],
+					"properties" : [
+						{
+							"name" : "id",
+							"destination" : "id",
+							"type" : "integer",
+							"required" : true
+						},
+						{
+							"name" : "title",
+							"destination" : "title",
+							"type" : "string"
+						},
+						{
+							"name" : "author",
+							"destination" : "author",
+							"type" : "string"
+						},
+						{
+							"name" : "numPages",
+							"destination" : "numPages",
+							"type" : "integer"
+						},
+						{
+							"name" : "purchaseDate",
+							"destination" : "purchaseDate",
+							"type" : "date",
+							"format" : "dd.MM.yyyy"
+						},
+						{
+							"name" : "deleted",
+							"destination" : "deleted",
+							"type" : "bool"
+						}
+					]
 				}
 			]
 		}
 	}
+]
 }

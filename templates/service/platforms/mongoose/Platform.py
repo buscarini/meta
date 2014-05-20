@@ -38,7 +38,7 @@ class Platform(MetaProcessor):
 
     def preprocessProperties(self,properties,hash):
         """docstring for preprocessProperties"""
-        properties[len(properties)-1]['_last_'] = True
+        self.preprocessList(properties)
         for property in properties:
             if 'type' in property:
                 property['type_' + property['type']] = True
@@ -47,11 +47,23 @@ class Platform(MetaProcessor):
                 format = format.replace("d","D")
                 format = format.replace('y','Y')
                 property['format'] = format
-            
         
     def preprocessPrimaryKeys(self,keys,properties):
         """docstring for preprocessPrimaryKeys"""
         self.globalPlatform.preprocessPrimaryKeys(keys,properties)
+
+    def preprocessRelationships(self,relationships):
+        """docstring for preprocessRelationships"""
+        self.preprocessList(relationships)
+        for relationship in relationships:
+            if 'type' in relationship:
+                type = relationship['type']
+                relationship['_toMany_'] = False
+                if type=='toMany':
+                    relationship['_toMany_'] = True
+
+            self.preprocessPrimaryKeys(relationship['primaryKeys'],relationship['properties'])
+            
         
         
     def preprocessResultValue(self,resultValue,hash,hashes):
@@ -74,37 +86,33 @@ class Platform(MetaProcessor):
             self.preprocessResultValue(resultValue,hash,hashes)
         
         if hash!=None and 'content' in hash:
-            content = hash['content']
-            if content!=None and 'model' in content:
-                model = content['model']
-                if 'primaryKeys' in model:
-                    self.preprocessPrimaryKeys(model['primaryKeys'],model['properties'])
-                if 'filters' in model:
-                    filters = model['filters']
-                    self.preprocessFilters(filters,hash)
-                    if (len(filters)>0):
-                        model['_has_filters_'] = True
-                if 'sortBy' in model:
-                    self.preprocessSort(model['sortBy'],hash)
-                if 'properties' in model:
-                    self.preprocessProperties(model['properties'],hash)
-                if 'relationships' in model:
-                    relationships = model['relationships']
-                    self.preprocessList(relationships)
-
+            contents = hash['content']
+            for content in contents:
+                if content!=None and 'model' in content:
+                    model = content['model']
+                    if 'primaryKeys' in model:
+                        self.preprocessPrimaryKeys(model['primaryKeys'],model['properties'])
+                    if 'filters' in model:
+                        filters = model['filters']
+                        self.preprocessFilters(filters,hash)
+                        if (len(filters)>0):
+                            model['_has_filters_'] = True
+                    if 'sortBy' in model:
+                        self.preprocessSort(model['sortBy'],hash)
+                    if 'properties' in model:
+                        self.preprocessProperties(model['properties'],hash)
+                    if 'relationships' in model:
+                        relationships = model['relationships']
+                        self.preprocessRelationships(relationships)
 
                 
     def finalFileName(self,fileName,hash):
         """docstring for finalFileName"""
-        entityName = None
-        if hash!=None and 'content' in hash:
-            content = hash['content']
-            if 'model' in content:
-                model = content['model']
-                if 'entityName' in model:
-                    entityName = model['entityName']
-        if (entityName):
-            fileName = fileName.replace("entity",entityName)
+        serviceName = None
+        if hash!=None and 'serviceName' in hash:
+            serviceName = hash['serviceName']
+        if (serviceName):
+            fileName = fileName.replace("entity",serviceName)
             
         return fileName
             
