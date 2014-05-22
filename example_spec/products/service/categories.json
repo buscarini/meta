@@ -44,6 +44,7 @@
 					"name" : "books",
 					"entityName" : "Book",
 					"type" : "toMany",
+					"inverse" : "category",
 					"primaryKeys" : [
 						{
 							"name" : "id"

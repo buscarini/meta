@@ -11,29 +11,54 @@ serviceItem.{{destination}} = moment(item.{{name}}).format("{{format}}")
 
 {{#model.relationships}}
 {{#_toMany_}}
-var populated = item.{{name}}
-var related = []
-for (var index=0;index<populated.length;index++) {
-	var populatedObj = populated[index]
-	var relatedObj = {}
+var populated = item.{{name}};
+var related = [];
 
-{{#properties}}
-	relatedObj.{{destination}} = populatedObj.{{name}}
-{{/properties}}
+var fillRelated = function(populated,related,serviceItem) {
+	if (populated instanceof Array) {
+	for (var index=0;index<populated.length;index++) {
+		var populatedObj = populated[index];
+		var relatedObj = {};
+	}
 
-	related.push(relatedObj)
+	{{#properties}}
+		relatedObj.{{destination}} = populatedObj.{{name}};
+	{{/properties}}
+
+		related.push(relatedObj);
+	}
+
+	serviceItem.{{name}} = related;
+	contentObject.{{key}}.push(serviceItem);
+	finished(null);
+};
+
+if (populated.length==0) {
+	{{entityName}}.find({ {{inverse}}: item.{{#model.primaryKeys}}{{name}}{{/model.primaryKeys}} }).exec(function (err, items) {
+		if (err) {
+			res.send({"result": "1", "errorMessage":err.message});
+		}
+		else {
+			populated = items;
+		}
+		
+		fillRelated(populated,related,serviceItem);
+	});
 }
-
-serviceItem.{{name}} = related;
+else {
+	fillRelated(populated,related,serviceItem);
+}
 {{/_toMany_}}
 {{^_toMany_}}
-var populated = item.{{name}}
-var related = {}
+var populated = item.{{name}};
+var related = {};
 {{#properties}}
-related.{{destination}} = populated.{{name}}
+related.{{destination}} = populated.{{name}};
 {{/properties}}
 serviceItem.{{name}} = related;
+contentObject.{{key}}.push(serviceItem);
+finished(null);
 {{/_toMany_}}
 {{/model.relationships}}
 
-contentObject.{{key}}.push(serviceItem)
+

@@ -11,8 +11,6 @@ var categorySchema = require('./CategorySchema');
 categorySchema.schema.set('autoIndex', false);
 
 
-
-
 module.exports.findOneCategory = function(req, res,callback) {
 	res.setHeader('Content-Type', 'application/json');
 
@@ -27,9 +25,23 @@ module.exports.findOneCategory = function(req, res,callback) {
 			res.send({"result": "1", "errorMessage":err.message});
 		}
 		else {
+			contentObject = { "result" :"0" };
+			contentObject.categories = new Array();
 			
-			contentObject = { "result" :"0" }
-			contentObject.categories = new Array()
+			var sendResponse = function(err) {
+				res.send(contentObject);
+					
+				if (callback) callback();
+			};
+			
+			var numOps = items.length;
+			var finished = function(error) {
+				numOps--;
+				if (numOps==0) {
+					sendResponse(err);
+				}
+			};
+			
 			items.forEach(function(item) {
 				var serviceItem = {}
 
@@ -37,12 +49,8 @@ module.exports.findOneCategory = function(req, res,callback) {
 				serviceItem.title = item.title
 
 
-				contentObject.categories.push(serviceItem)
+
 			})
-			
-			res.send(contentObject)
-					
-			if (callback) callback()
 		}
 	})
 };
@@ -62,9 +70,23 @@ module.exports.findOneBook = function(req, res,callback) {
 			res.send({"result": "1", "errorMessage":err.message});
 		}
 		else {
+			contentObject = { "result" :"0" };
+			contentObject.books = new Array();
 			
-			contentObject = { "result" :"0" }
-			contentObject.books = new Array()
+			var sendResponse = function(err) {
+				res.send(contentObject);
+					
+				if (callback) callback();
+			};
+			
+			var numOps = items.length;
+			var finished = function(error) {
+				numOps--;
+				if (numOps==0) {
+					sendResponse(err);
+				}
+			};
+			
 			items.forEach(function(item) {
 				var serviceItem = {}
 
@@ -75,17 +97,15 @@ module.exports.findOneBook = function(req, res,callback) {
 				serviceItem.purchaseDate = moment(item.purchaseDate).format("DD.MM.YYYY")
 				serviceItem.deleted = item.deleted
 
-				var populated = item.category
-				var related = {}
-				related.id = populated._id
+				var populated = item.category;
+				var related = {};
+				related.id = populated._id;
 				serviceItem.category = related;
+				contentObject.books.push(serviceItem);
+				finished(null);
 
-				contentObject.books.push(serviceItem)
+
 			})
-			
-			res.send(contentObject)
-					
-			if (callback) callback()
 		}
 	})
 };
@@ -94,7 +114,7 @@ module.exports.findAll = function(req, res,callback) {
 	res.setHeader('Content-Type', 'application/json');
 	
 	var numFinds = 0;
-	var contentObject = {}
+	var contentObject = {};
 		
 	var foundFunction = function(err) {
 		if (err) {
@@ -104,11 +124,11 @@ module.exports.findAll = function(req, res,callback) {
 			numFinds--;
 			if (numFinds>0) return;
 			
-			contentObject.result = "0"
+			contentObject.result = "0";
 			
-			res.send(contentObject)
+			res.send(contentObject);
 					
-			if (callback) callback()
+			if (callback) callback();
 		}
 	};
 	
@@ -122,7 +142,15 @@ module.exports.findAll = function(req, res,callback) {
 	.populate('')
 	.exec(function (err, items) {
 		if (!err) {
-			contentObject.categories = new Array()
+			contentObject.categories = new Array();
+			var numOps = items.length;
+			var finished = function(error) {
+				numOps--;
+				if (numOps==0) {
+					foundFunction(err);
+				}
+			};
+			
 			items.forEach(function(item) {
 				var serviceItem = {}
 
@@ -130,11 +158,9 @@ module.exports.findAll = function(req, res,callback) {
 				serviceItem.title = item.title
 
 
-				contentObject.categories.push(serviceItem)
+
 			})
 		}
-		
-		foundFunction(err)
 	})
 	
 	numFinds++;
@@ -149,7 +175,15 @@ module.exports.findAll = function(req, res,callback) {
 	.populate('category')
 	.exec(function (err, items) {
 		if (!err) {
-			contentObject.books = new Array()
+			contentObject.books = new Array();
+			var numOps = items.length;
+			var finished = function(error) {
+				numOps--;
+				if (numOps==0) {
+					foundFunction(err);
+				}
+			};
+			
 			items.forEach(function(item) {
 				var serviceItem = {}
 
@@ -160,16 +194,16 @@ module.exports.findAll = function(req, res,callback) {
 				serviceItem.purchaseDate = moment(item.purchaseDate).format("DD.MM.YYYY")
 				serviceItem.deleted = item.deleted
 
-				var populated = item.category
-				var related = {}
-				related.id = populated._id
+				var populated = item.category;
+				var related = {};
+				related.id = populated._id;
 				serviceItem.category = related;
+				contentObject.books.push(serviceItem);
+				finished(null);
 
-				contentObject.books.push(serviceItem)
+
 			})
 		}
-		
-		foundFunction(err)
 	})
 	
 };

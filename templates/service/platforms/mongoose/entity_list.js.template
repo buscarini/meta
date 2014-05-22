@@ -35,16 +35,26 @@ module.exports.findOne{{model.entityName}} = function(req, res,callback) {
 			res.send({"{{resultValue.key}}": {{{resultValue.errorValue}}}, "{{errorMessage.key}}":err.message});
 		}
 		else {
+			contentObject = { "{{resultValue.key}}" :{{{resultValue.okValue}}} };
+			contentObject.{{key}} = new Array();
 			
-			contentObject = { "{{resultValue.key}}" :{{{resultValue.okValue}}} }
-			contentObject.{{key}} = new Array()
+			var sendResponse = function(err) {
+				res.send(contentObject);
+					
+				if (callback) callback();
+			};
+			
+			var numOps = items.length;
+			var finished = function(error) {
+				numOps--;
+				if (numOps==0) {
+					sendResponse(err);
+				}
+			};
+			
 			items.forEach(function(item) {
 				{{> fillServiceItem}}
 			})
-			
-			res.send(contentObject)
-					
-			if (callback) callback()
 		}
 	})
 };
@@ -54,7 +64,7 @@ module.exports.findAll = function(req, res,callback) {
 	res.setHeader('Content-Type', 'application/json');
 	
 	var numFinds = 0;
-	var contentObject = {}
+	var contentObject = {};
 		
 	var foundFunction = function(err) {
 		if (err) {
@@ -64,11 +74,11 @@ module.exports.findAll = function(req, res,callback) {
 			numFinds--;
 			if (numFinds>0) return;
 			
-			contentObject.{{resultValue.key}} = {{{resultValue.okValue}}}
+			contentObject.{{resultValue.key}} = {{{resultValue.okValue}}};
 			
-			res.send(contentObject)
+			res.send(contentObject);
 					
-			if (callback) callback()
+			if (callback) callback();
 		}
 	};
 	
@@ -89,13 +99,19 @@ module.exports.findAll = function(req, res,callback) {
 	.populate('{{#model.relationships}}{{name}}{{^_last_}} {{/_last_}}{{/model.relationships}}')
 	.exec(function (err, items) {
 		if (!err) {
-			contentObject.{{key}} = new Array()
+			contentObject.{{key}} = new Array();
+			var numOps = items.length;
+			var finished = function(error) {
+				numOps--;
+				if (numOps==0) {
+					foundFunction(err);
+				}
+			};
+			
 			items.forEach(function(item) {
 				{{> fillServiceItem}}
 			})
 		}
-		
-		foundFunction(err)
 	})
 	
 	{{/content}}
