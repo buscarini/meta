@@ -229,10 +229,14 @@ PODS:
     - CocoaLumberjack
     - MagicalRecord (~> 2.2)
     - ReactiveCocoa (~> 2.3)
-  - CocoaLumberjack (1.8.1):
+  - CocoaLumberjack (1.9.0):
+    - CocoaLumberjack/CLI
+    - CocoaLumberjack/Core
     - CocoaLumberjack/Extensions
-  - CocoaLumberjack/Core (1.8.1)
-  - CocoaLumberjack/Extensions (1.8.1):
+  - CocoaLumberjack/CLI (1.9.0):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Core (1.9.0)
+  - CocoaLumberjack/Extensions (1.9.0):
     - CocoaLumberjack/Core
   - MagicalRecord (2.2):
     - MagicalRecord/Core
@@ -254,12 +258,12 @@ EXTERNAL SOURCES:
     :git: git@bitbucket.org:buscarini/bmf.git
 
 SPEC CHECKSUMS:
-  AFNetworking: 01aa7c3aa9a200b94943e54072a4373f14b3d219
-  Base32: 448ba467c707ab67968377fe53adc0a6f5b9f141
-  Base64: eaac9f2088ba659c5db1db960576eb0f2969ebaf
+  AFNetworking: ab63e259fe91eef4519b371ef0a4955af0e73e64
+  Base32: a0ef6e90e721130c474cc970a4d98a6cbf16ce85
+  Base64: c6d74f31f150543b246a07e180ba813c88e59311
   BMF: c5a4561f788b5c48ec77085eee551e5f202a6c8e
-  CocoaLumberjack: 020378ec400d658923bf5887178394f65f052c90
-  MagicalRecord: 95d49d74ef752cd52f6ad87bcb474817fc3978cf
-  ReactiveCocoa: dde7b11a14954edf789e7343b2c32e595caabd01
+  CocoaLumberjack: 5766cdd1d0a24bcf15a133c6023747346bf786dd
+  MagicalRecord: 2b471584fc9e3137f3d0a56967917baa4979e224
+  ReactiveCocoa: 2066583826c17dde8e90c41e489f682048cc57c9
 
 COCOAPODS: 0.32.1

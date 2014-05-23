@@ -1,0 +1,3 @@
+{{#model}}
+#import "{{_globals_.prefix}}{{entityName}}Parser.h"
+{{/model}}

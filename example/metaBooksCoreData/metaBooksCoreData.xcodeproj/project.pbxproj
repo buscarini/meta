@@ -11,7 +11,7 @@
 		4D7A7279DB7746059732669C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63675356600C4C1AB03878BC /* main.m */; };
 		56BCA12F6D574096AAEC465F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD5B06EE51F34FC5B7B79069 /* Foundation.framework */; };
 		864051FBD14F455B811F8D82 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 379A16FE291542EC9482C128 /* libPods.a */; };
-		AC60C969192356E9008D9C91 /* TRNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC60C968192356E9008D9C91 /* TRNViewController.m */; };
+		AC60C969192356E9008D9C91 /* TRNBookListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC60C968192356E9008D9C91 /* TRNBookListViewController.m */; };
 		AC60C96C192356F2008D9C91 /* TRNBookCellConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = AC60C96B192356F2008D9C91 /* TRNBookCellConfigurator.m */; };
 		AC75C7D7192B70AE0065E671 /* _TRNBook.m in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7CC192B70AE0065E671 /* _TRNBook.m */; };
 		AC75C7D8192B70AE0065E671 /* _TRNCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7CE192B70AE0065E671 /* _TRNCategory.m */; };
@@ -19,9 +19,14 @@
 		AC75C7DA192B70AE0065E671 /* TRNBookObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7D2192B70AE0065E671 /* TRNBookObjectStore.m */; };
 		AC75C7DB192B70AE0065E671 /* TRNCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7D4192B70AE0065E671 /* TRNCategory.m */; };
 		AC75C7DC192B70AE0065E671 /* TRNCategoryObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7D6192B70AE0065E671 /* TRNCategoryObjectStore.m */; };
-		AC75C7DF192B70B70065E671 /* TRNDataParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7DE192B70B70065E671 /* TRNDataParser.m */; };
 		AC75C7E2192B70CD0065E671 /* example_spec.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7E0192B70CD0065E671 /* example_spec.xcdatamodeld */; };
+		AC83EDC9192F3D40008EAE74 /* TRNCategoryCellConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = AC83EDC8192F3D40008EAE74 /* TRNCategoryCellConfigurator.m */; };
+		AC83EDCC192F4120008EAE74 /* TRNNavigationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AC83EDCB192F4120008EAE74 /* TRNNavigationManager.m */; };
+		AC83EDF2192F964A008EAE74 /* TRNCategoriesServiceParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AC83EDF1192F964A008EAE74 /* TRNCategoriesServiceParser.m */; };
 		ACA139D61923C3760054B80C /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA139D51923C3760054B80C /* Storyboard.storyboard */; };
+		ACCD7134192F381100D96681 /* TRNCategoryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = ACCD7133192F381100D96681 /* TRNCategoryParser.m */; };
+		ACCD7138192F382900D96681 /* TRNBookParser.m in Sources */ = {isa = PBXBuildFile; fileRef = ACCD7137192F382900D96681 /* TRNBookParser.m */; };
+		ACCD713B192F3BE900D96681 /* TRNCategoryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACCD713A192F3BE900D96681 /* TRNCategoryListViewController.m */; };
 		C31967A5412E41F2A47E40DF /* TRNAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3635AA7AFAEE43EA900D98DA /* TRNAppDelegate.m */; };
 /* End PBXBuildFile section */
 
@@ -45,8 +50,8 @@
 		6EA1D800ED444495A603DAE8 /* Images.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9211FC982E4444D4AB6DDFB6 /* TRNAppDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = TRNAppDelegate.h; sourceTree = "<group>"; };
 		AC5E18916BC042B2B10F77FD /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
-		AC60C967192356E9008D9C91 /* TRNViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNViewController.h; sourceTree = "<group>"; };
-		AC60C968192356E9008D9C91 /* TRNViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNViewController.m; sourceTree = "<group>"; };
+		AC60C967192356E9008D9C91 /* TRNBookListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNBookListViewController.h; sourceTree = "<group>"; };
+		AC60C968192356E9008D9C91 /* TRNBookListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNBookListViewController.m; sourceTree = "<group>"; };
 		AC60C96A192356F2008D9C91 /* TRNBookCellConfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRNBookCellConfigurator.h; path = ../TRNBookCellConfigurator.h; sourceTree = "<group>"; };
 		AC60C96B192356F2008D9C91 /* TRNBookCellConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRNBookCellConfigurator.m; path = ../TRNBookCellConfigurator.m; sourceTree = "<group>"; };
 		AC75C7CB192B70AE0065E671 /* _TRNBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _TRNBook.h; sourceTree = "<group>"; };
@@ -61,10 +66,21 @@
 		AC75C7D4192B70AE0065E671 /* TRNCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNCategory.m; sourceTree = "<group>"; };
 		AC75C7D5192B70AE0065E671 /* TRNCategoryObjectStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNCategoryObjectStore.h; sourceTree = "<group>"; };
 		AC75C7D6192B70AE0065E671 /* TRNCategoryObjectStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNCategoryObjectStore.m; sourceTree = "<group>"; };
-		AC75C7DD192B70B70065E671 /* TRNDataParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNDataParser.h; sourceTree = "<group>"; };
-		AC75C7DE192B70B70065E671 /* TRNDataParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNDataParser.m; sourceTree = "<group>"; };
 		AC75C7E1192B70CD0065E671 /* example_spec.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = example_spec.xcdatamodel; sourceTree = "<group>"; };
+		AC83EDC7192F3D40008EAE74 /* TRNCategoryCellConfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNCategoryCellConfigurator.h; sourceTree = "<group>"; };
+		AC83EDC8192F3D40008EAE74 /* TRNCategoryCellConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNCategoryCellConfigurator.m; sourceTree = "<group>"; };
+		AC83EDCA192F4120008EAE74 /* TRNNavigationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNNavigationManager.h; sourceTree = "<group>"; };
+		AC83EDCB192F4120008EAE74 /* TRNNavigationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNNavigationManager.m; sourceTree = "<group>"; };
+		AC83EDF0192F964A008EAE74 /* TRNCategoriesServiceParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNCategoriesServiceParser.h; sourceTree = "<group>"; };
+		AC83EDF1192F964A008EAE74 /* TRNCategoriesServiceParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNCategoriesServiceParser.m; sourceTree = "<group>"; };
 		ACA139D51923C3760054B80C /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		ACCD7132192F381100D96681 /* TRNCategoryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNCategoryParser.h; sourceTree = "<group>"; };
+		ACCD7133192F381100D96681 /* TRNCategoryParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNCategoryParser.m; sourceTree = "<group>"; };
+		ACCD7135192F381D00D96681 /* TRNObjectParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TRNObjectParser.h; sourceTree = "<group>"; };
+		ACCD7136192F382800D96681 /* TRNBookParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNBookParser.h; sourceTree = "<group>"; };
+		ACCD7137192F382900D96681 /* TRNBookParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNBookParser.m; sourceTree = "<group>"; };
+		ACCD7139192F3BE900D96681 /* TRNCategoryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNCategoryListViewController.h; sourceTree = "<group>"; };
+		ACCD713A192F3BE900D96681 /* TRNCategoryListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNCategoryListViewController.m; sourceTree = "<group>"; };
 		AD5B06EE51F34FC5B7B79069 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		E001E858AD354FA58A3F446A /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4D23C607B594089A0F5ACF8 /* metaBooksCoreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = metaBooksCoreData.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,8 +217,13 @@
 		ACA139D1192364620054B80C /* data */ = {
 			isa = PBXGroup;
 			children = (
-				AC75C7DD192B70B70065E671 /* TRNDataParser.h */,
-				AC75C7DE192B70B70065E671 /* TRNDataParser.m */,
+				ACCD7135192F381D00D96681 /* TRNObjectParser.h */,
+				ACCD7132192F381100D96681 /* TRNCategoryParser.h */,
+				ACCD7133192F381100D96681 /* TRNCategoryParser.m */,
+				ACCD7136192F382800D96681 /* TRNBookParser.h */,
+				ACCD7137192F382900D96681 /* TRNBookParser.m */,
+				AC83EDF0192F964A008EAE74 /* TRNCategoriesServiceParser.h */,
+				AC83EDF1192F964A008EAE74 /* TRNCategoriesServiceParser.m */,
 			);
 			name = data;
 			sourceTree = "<group>";
@@ -271,6 +292,8 @@
 			children = (
 				AC60C96A192356F2008D9C91 /* TRNBookCellConfigurator.h */,
 				AC60C96B192356F2008D9C91 /* TRNBookCellConfigurator.m */,
+				AC83EDC7192F3D40008EAE74 /* TRNCategoryCellConfigurator.h */,
+				AC83EDC8192F3D40008EAE74 /* TRNCategoryCellConfigurator.m */,
 			);
 			path = "Cell Configurators";
 			sourceTree = "<group>";
@@ -278,9 +301,13 @@
 		FCA312C3A9BD4D5CB8EFC7F3 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				AC60C967192356E9008D9C91 /* TRNViewController.h */,
-				AC60C968192356E9008D9C91 /* TRNViewController.m */,
+				ACCD7139192F3BE900D96681 /* TRNCategoryListViewController.h */,
+				ACCD713A192F3BE900D96681 /* TRNCategoryListViewController.m */,
+				AC60C967192356E9008D9C91 /* TRNBookListViewController.h */,
+				AC60C968192356E9008D9C91 /* TRNBookListViewController.m */,
 				848E6856B20648A6BCAF3AEB /* Behaviors */,
+				AC83EDCA192F4120008EAE74 /* TRNNavigationManager.h */,
+				AC83EDCB192F4120008EAE74 /* TRNNavigationManager.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -338,6 +365,11 @@
 				CLASSPREFIX = TRN;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Treenovum;
+				TargetAttributes = {
+					7E3942214ADC47B189E4208C = {
+						DevelopmentTeam = 6HB2B7HWP2;
+					};
+				};
 			};
 			buildConfigurationList = 575F646922764F359BCDC90B /* Build configuration list for PBXProject "metaBooksCoreData" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -472,16 +504,21 @@
 			files = (
 				C31967A5412E41F2A47E40DF /* TRNAppDelegate.m in Sources */,
 				AC75C7DB192B70AE0065E671 /* TRNCategory.m in Sources */,
+				ACCD7134192F381100D96681 /* TRNCategoryParser.m in Sources */,
+				AC83EDF2192F964A008EAE74 /* TRNCategoriesServiceParser.m in Sources */,
 				AC75C7D8192B70AE0065E671 /* _TRNCategory.m in Sources */,
+				ACCD7138192F382900D96681 /* TRNBookParser.m in Sources */,
 				4D7A7279DB7746059732669C /* main.m in Sources */,
 				AC75C7DC192B70AE0065E671 /* TRNCategoryObjectStore.m in Sources */,
 				AC75C7D9192B70AE0065E671 /* TRNBook.m in Sources */,
 				AC60C96C192356F2008D9C91 /* TRNBookCellConfigurator.m in Sources */,
-				AC60C969192356E9008D9C91 /* TRNViewController.m in Sources */,
+				AC60C969192356E9008D9C91 /* TRNBookListViewController.m in Sources */,
 				AC75C7DA192B70AE0065E671 /* TRNBookObjectStore.m in Sources */,
-				AC75C7DF192B70B70065E671 /* TRNDataParser.m in Sources */,
 				AC75C7D7192B70AE0065E671 /* _TRNBook.m in Sources */,
+				AC83EDC9192F3D40008EAE74 /* TRNCategoryCellConfigurator.m in Sources */,
 				AC75C7E2192B70CD0065E671 /* example_spec.xcdatamodeld in Sources */,
+				ACCD713B192F3BE900D96681 /* TRNCategoryListViewController.m in Sources */,
+				AC83EDCC192F4120008EAE74 /* TRNNavigationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +545,8 @@
 			baseConfigurationReference = 184435FFB42F4A46B7944578 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/xcodeproj.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -525,6 +564,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -575,6 +615,8 @@
 			baseConfigurationReference = 184435FFB42F4A46B7944578 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/xcodeproj.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -591,6 +633,7 @@
 				INFOPLIST_FILE = "metaBooksCoreData/Resources/Other-Sources/metaBooksCoreData-Info.plist";
 				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;

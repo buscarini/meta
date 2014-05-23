@@ -8,7 +8,7 @@
 	"errorMessage" : {
 		"key" : "errorMessage"
 	},
-	"serviceName" : "books",
+	"serviceName" : "BooksService",
 	"content" : [
 		{
 			"key" : "categories",

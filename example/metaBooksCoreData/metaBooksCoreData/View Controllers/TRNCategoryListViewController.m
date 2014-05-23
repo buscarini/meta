@@ -1,63 +1,65 @@
 //
-//  TRNViewController.m
-//  metaBooks
+//  TRNCategoryListViewController.m
+//  metaBooksCoreData
 //
-//  Created by Jose Manuel Sánchez Peñarroja on 08/05/14.
+//  Created by Jose Manuel Sánchez Peñarroja on 23/05/14.
 //  Copyright (c) 2014 Treenovum. All rights reserved.
 //
 
-#import "TRNViewController.h"
+#import "TRNCategoryListViewController.h"
 
 #import <BMF/BMFOperationsTask.h>
 #import <BMF/BMFParserOperation.h>
 #import <BMF/BMFArrayDataStore.h>
 #import <BMF/BMFTableViewDataSource.h>
 
-#import "TRNDataParser.h"
+#import "TRNCategoriesServiceParser.h"
 
-#import "TRNBook.h"
+#import "TRNCategory.h"
+
+#import <BMF/BMFPresentViewControllerBehavior.h>
 
 #import <MagicalRecord/CoreData+MagicalRecord.h>
 
-@interface TRNViewController ()
+
+@interface TRNCategoryListViewController ()
 
 @end
 
-@implementation TRNViewController
+@implementation TRNCategoryListViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
 
 	self.loaderView = [[BMFBase sharedInstance].factory navBarLoaderItem:self];
-//	self.loaderView = [[BMFBase sharedInstance].factory generalLoaderView:self];
+	//	self.loaderView = [[BMFBase sharedInstance].factory generalLoaderView:self];
 	[self.loaderView addToViewController:self];
-
 	
-	id<BMFDataReadProtocol> dataStore =	[TRNBook allBooksDataStore];
 	
-//	NSFetchedResultsController *frc = [TRNBook MR_fetchAllSortedBy:@"id" ascending:YES withPredicate:nil groupBy:nil delegate:nil];
-//	
-//	id<BMFDataReadProtocol> dataStore = (id)[[BMFBase sharedInstance].factory dataStoreWithParameter:frc sender:self];
-	
-//	BMFArrayDataStore *dataStore = (id)[[BMFBase sharedInstance].factory dataStoreWithParameter:@[] sender:self];
-	
+	id<BMFDataReadProtocol> dataStore =	[TRNCategory allCategorysDataStore];
+		
 	self.dataSource = [[BMFBase sharedInstance].factory tableViewDataSourceWithStore:dataStore cellClassOrNib:nil animatedUpdates:YES sender:self];
-	
+
 	@weakify(self);
 	self.navigationItem.rightBarButtonItem.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
 		return [RACSignal defer:^RACSignal *{
 			@strongify(self);
-			[self loadBooks];
+			[self load];
 			
 			return [RACSignal empty];
 		}];
 	}];
 	
-	[self loadBooks];
+	[self load];
+	
+	BMFPresentViewControllerBehavior *itemBehavior = [BMFPresentViewControllerBehavior new];
+	itemBehavior.segueIdentifier = @"books";
+	[self addBehavior:itemBehavior];
 }
 
-- (void) loadBooks {
-	id<BMFTaskProtocol> task = [[BMFBase sharedInstance].factory dataLoadTask:@"http://localhost:3000/books" parameters:nil sender:self];
+- (void) load {
+	id<BMFTaskProtocol> task = [[BMFBase sharedInstance].factory dataLoadTask:@"http://192.168.1.135:3000/categories" parameters:nil sender:self];
 	
 	[self.loaderView.progress addChild:task.progress];
 	
@@ -65,17 +67,11 @@
 	
 	[opTask addOperation:[[BMFBase sharedInstance].factory jsonSerializerOperation:self]];
 	
-	TRNDataParser *parser = [TRNDataParser new];
+	TRNCategoriesServiceParser *parser = [TRNCategoriesServiceParser new];
 	BMFOperation *parserOp = [[BMFParserOperation alloc] initWithParser:parser];
 	[opTask addOperation:parserOp];
 	
 	[opTask start:^(id result, NSError *error) {
-		
-//		BMFArrayDataStore *dataStore = (id)self.dataSource.dataStore;
-//		
-//		if (!error) dataStore.items = result;
-//		DDLogInfo(@"Finished loading");
 	}];
 }
-
 @end

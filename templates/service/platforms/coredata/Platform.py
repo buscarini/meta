@@ -2,10 +2,17 @@ import sys
 import json
 from meta.MetaProcessor import MetaProcessor
 from meta.utils import Utils
+import re
 
 class Platform(MetaProcessor):
     """docstring for Platform"""
+
+    def __init__(self,config,stringUtils):
+        super(Platform, self).__init__(config, stringUtils)
         
+        self.entityPattern = re.compile("entity", re.IGNORECASE)
+        self.servicePattern = re.compile("service", re.IGNORECASE)
+
     def preprocessType(self,dic):
         """docstring for preprocessType"""
         if dic!=None and 'type' in dic:
@@ -86,19 +93,27 @@ class Platform(MetaProcessor):
               
         key['_formats_'] = formats
         
-    def preprocessModel(self,key,hash,hashes):
+    def preprocessModel(self,model,hash,hashes):
         """Preprocess entity"""
         
-        if 'hash' in key:
-            key = self.preprocessHash(key,key['hash'],hash,hashes)
-        else:
-            key['_entity_imports_'].append({ "name" : self.finalEntityFileName(key['entityName'],hash) + '.h' })
-            for property in key['properties']:
-                self.preprocessProperty(property,hash,hashes)
+        model['_entity_imports_'].append({ "name" : self.finalEntityFileName(model['entityName'],hash) + '.h' })
+        for property in model['properties']:
+            self.preprocessProperty(property,hash,hashes)
 
-            self.preprocessDateFormats(key)
-                
-        return key
+        self.preprocessDateFormats(model)
+        
+        self.preprocessRelationships(model,hash,hashes)
+            
+        return model
+        
+    def preprocessRelationships(self,model,hash,hashes):
+        """docstring for preprocessRelationships"""
+        if 'relationships' in model:
+            relationships = model['relationships']
+            self.preprocessList(relationships)
+            for relationship in relationships:    
+                 relationship['entityName'] = self.finalEntityFileName(relationship['entityName'],hash)
+        
         
     def preprocessResultValue(self,resultValue):
         """docstring for preprocessResultValue"""
@@ -133,6 +148,74 @@ class Platform(MetaProcessor):
                     newKey = self.preprocessModel(model,hash,hashes)
                     model.update(newKey)
                     
+                    
+                    
+    def renderTemplate(self,renderer,templateFile,hash,hashes,product,platform,platformDir):
+        """docstring for renderTemplate"""
+        assert renderer
+        assert templateFile
+        assert hash
+        assert hashes
+        assert product
+        assert platform
+        assert platformDir
+
+        if re.search('entity', templateFile, re.IGNORECASE):
+            print("entity in template name")
+            
+            if 'content' in hash:
+                contents = hash['content']
+                for content in contents:
+                    if 'model' in content:
+                        model = content['model']
+                        fileName = self.finalFileName(os.path.basename(templateFile),model['entityName'],hash)
+                        print("final file name: " + fileName)
+                        hash['_current_model_'] = model
+                        self.performRenderTemplate(renderer,templateFile,fileName,hash,hashes,product,platform,platformDir)
+            else:
+                raise SyntaxError("content missing in hash: " + str(hash))
+        else:
+            fileName = self.finalFileName(os.path.basename(templateFile),None,hash)
+            self.performRenderTemplate(renderer,templateFile,fileName,hash,hashes,product,platform,platformDir)
+                
+    def performRenderTemplate(self,renderer,templateFile,fileName,hash,hashes,product,platform,platformDir):
+        """docstring for renderTemplate"""
+        assert renderer
+        assert templateFile
+        assert hash
+        assert hashes
+        assert product
+        assert platform
+        assert platformDir
+
+        template = self.readTemplate(templateFile)
+
+        if hash!=None and '_globals_' in hash:
+            # Remove .template
+            realFileName, extension = os.path.splitext(fileName)
+        
+            # Split final file name into components
+            baseName, extension = os.path.splitext(realFileName)
+            
+            hash['_globals_']['fileName'] = realFileName
+            hash['_globals_']['fileBaseName'] = baseName
+            hash['_globals_']['fileExtension'] = extension  
+                    
+        if self.config.verbose:
+            print('Hash: ' + str(hash))            
+        
+        rendered = renderer.render_path(templateFile,hash)
+        
+        outputPath = self.outputDir(product,platform,fileName)
+        
+        Utils.printOutput("Rendering to file: " + outputPath)
+        
+        with open(outputPath, "w") as f:
+            f.write(rendered)
+            
+            
+                    
+                    
     def finalEntityFileName(self,fileName,hash):
         """docstring for finalFileName"""
         prefix = ""
@@ -145,7 +228,7 @@ class Platform(MetaProcessor):
 
         return fileName
                 
-    def finalFileName(self,fileName,hash):
+    def finalFileName(self,fileName,entityName,hash):
         """docstring for finalFileName"""
         prefix = ""
         if hash!=None and '_globals_' in hash:
@@ -157,6 +240,12 @@ class Platform(MetaProcessor):
         if hash!=None and 'serviceName' in hash:
             serviceName = self.stringUtils.capitalize(hash['serviceName'])
 
-        fileName = prefix + serviceName + fileName
+
+        if entityName!=None:
+            fileName = self.entityPattern.sub(entityName, fileName)
+
+        fileName = self.servicePattern.sub(serviceName, fileName)
+        
+        fileName = prefix + fileName
 
         return fileName

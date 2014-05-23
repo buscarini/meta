@@ -1,114 +1,41 @@
 
-#import "TRNDataParser.h"
+#import "TRNBooksServiceParser.h"
 
 #import <BMF/BMF.h>
+#import <BMF/BMFObjectParserProtocol.h>
 
 #import <MagicalRecord/CoreData+MagicalRecord.h>
 
 #import "TRNCategory.h"
+#import "TRNCategoryParser.h"
 #import "TRNBook.h"
+#import "TRNCategory.h"
+#import "TRNBookParser.h"
+#import "TRNCategoryParser.h"
 	
-@implementation TRNDataParser {
-	NSDateFormatter *purchaseDateDateFormatter;
-}
+@implementation TRNBooksServiceParser
 
-- (id) init {
-	self = [super init];
-	if (self) {
-		purchaseDateDateFormatter = [[NSDateFormatter alloc] init];
-		purchaseDateDateFormatter.dateFormat = @"dd.MM.yyyy";
-	}
-	return self;
-}
-
-- (NSComparisonResult) p_compareCategoryDictionaries:(NSDictionary *) obj1 with:(NSDictionary *)obj2 {
-	NSComparisonResult result;
-	id id1 = obj1[@"id"];
-	id id2 = obj2[@"id"];
-	result = [id1 compare:id2];
-	if (result!=NSOrderedSame) return result;
-
-	return NSOrderedSame;
-}
-- (NSComparisonResult) p_compareBookDictionaries:(NSDictionary *) obj1 with:(NSDictionary *)obj2 {
-	NSComparisonResult result;
-	id id1 = obj1[@"id"];
-	id id2 = obj2[@"id"];
-	result = [id1 compare:id2];
-	if (result!=NSOrderedSame) return result;
-
-	return NSOrderedSame;
-}
-
-- (BOOL) p_updateCategoryEntity:(TRNCategory *)object withDictionary:(NSDictionary *) dic error:(NSError **) error {
-	id value;
-	value = dic[@"id"];
-	if ([value isKindOfClass:[NSNumber class]]) {
-		object.id = [value integerValue];
-	}
-	else {
-		// If required stop parsing
-		*error = [NSError errorWithDomain:@"Parse" code:BMFErrorInvalidType userInfo:@{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Invalid type or missing key: %@ for property id",value] }];
-		return NO;
-	}
-
-	value = dic[@"title"];
-	if ([value isKindOfClass:[NSString class]]) {
-		object.title = value;
-	}
-	else {
-		DDLogWarn(@"Invalid type or missing key for property title: %@",value);
+- (id) parseDictionary:(NSDictionary *)dic class:(Class)entityClass entity:(id) entity context:(NSManagedObjectContext *) context parser:(id<BMFObjectParserProtocol>) parser {
+	
+	if (!entity) {
+		entity = [entityClass MR_createInContext:context];
 	}
 	
-	return YES;
-}
-- (BOOL) p_updateBookEntity:(TRNBook *)object withDictionary:(NSDictionary *) dic error:(NSError **) error {
-	id value;
-	value = dic[@"id"];
-	if ([value isKindOfClass:[NSNumber class]]) {
-		object.id = [value integerValue];
+	NSError *error = nil;
+	BOOL result = [parser updateObject:entity withDictionary:dic error:&error];
+	if (!result) {
+		DDLogError(@"Error parsing object: %@",error);
+		return nil;
 	}
-	else {
-		// If required stop parsing
-		*error = [NSError errorWithDomain:@"Parse" code:BMFErrorInvalidType userInfo:@{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Invalid type or missing key: %@ for property id",value] }];
-		return NO;
-	}
-
-	value = dic[@"title"];
-	if ([value isKindOfClass:[NSString class]]) {
-		object.title = value;
-	}
-	else {
-		DDLogWarn(@"Invalid type or missing key for property title: %@",value);
-	}
-	value = dic[@"author"];
-	if ([value isKindOfClass:[NSString class]]) {
-		object.author = value;
-	}
-	else {
-		DDLogWarn(@"Invalid type or missing key for property author: %@",value);
-	}
-	value = dic[@"numPages"];
-	if ([value isKindOfClass:[NSNumber class]]) {
-		object.numPages = [value integerValue];
-	}
-	else {
-		DDLogWarn(@"Invalid type or missing key for property numPages: %@",value);
-	}
-
-	value = dic[@"purchaseDate"];
-	if ([value isKindOfClass:[NSString class]]) {
-		object.purchaseDate = [purchaseDateDateFormatter dateFromString:value];
-	}
-	else {
-		DDLogWarn(@"Invalid type or missing key for property purchaseDate: %@",value);
-	}
-
 	
-	return YES;
+	return entity;
 }
 
 - (void) parse:(NSDictionary *) rawObject completion:(BMFCompletionBlock) completionBlock {
+	
+	TRNCategoryParser *TRNCategoryParserInstance = [TRNCategoryParser new];
+	TRNBookParser *TRNBookParserInstance = [TRNBookParser new];
+	TRNCategoryParser *TRNCategoryParserInstance = [TRNCategoryParser new];
 	
 	[self.progress start];
 	
@@ -139,7 +66,7 @@
 				NSError *error = nil;
 
 				NSArray *sortedDictionaries = [dictionaries sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2) {
-					return [self p_compareCategoryDictionaries:obj1 with:obj2];
+					return [TRNCategoryParserInstance compareDictionary:obj1 withDictionary:obj2];
 				}];
 
 				NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"TRNCategory"];
@@ -161,10 +88,10 @@
 	
 					NSDictionary *serverEntityDic = sortedDictionaries[serverIndex];
 	
-					NSComparisonResult comparisonResult = [self p_compareCategoryDictionaries:@{
+					NSComparisonResult comparisonResult = [TRNCategoryParserInstance compareDictionary:@{
 						@"id" : @(localEntity.id)
 
-						} with:serverEntityDic];
+						} withDictionary:serverEntityDic];
 		
 					if (comparisonResult==NSOrderedAscending) {
 						// Remove local object
@@ -178,15 +105,17 @@
 		
 						if (comparisonResult==NSOrderedDescending) {
 							// Add object
-							entity = [TRNCategory MR_createInContext:localContext];
+							entity = nil;
 						}
 						else {
 							localIndex++;
 						}
 		
 						serverIndex++;
+
 		
-						if ([self p_updateCategoryEntity:entity withDictionary:serverEntityDic error:&error]) {
+						entity = [self parseDictionary:serverEntityDic class:[TRNCategory class] entity:entity context:localContext parser:TRNCategoryParserInstance];
+						if (entity) {
 							[results addObject:entity];	
 						}
 						else {
@@ -219,11 +148,11 @@
 				while (serverIndex<sortedDictionaries.count) {
 	
 					NSDictionary *serverEntityDic = sortedDictionaries[serverIndex];
-	
-					// Add all these objects
-					TRNCategory *entity = [TRNCategory MR_createInContext:localContext];
 
-					if ([self p_updateCategoryEntity:entity withDictionary:serverEntityDic error:&error]) {
+					// Add all these objects
+					TRNCategory *entity = [self parseDictionary:serverEntityDic class:[TRNCategory class] entity:nil context:localContext parser:TRNCategoryParserInstance];
+
+					if (entity) {
 						[results addObject:entity];						
 					}
 					else {
@@ -251,7 +180,7 @@
 				NSError *error = nil;
 
 				NSArray *sortedDictionaries = [dictionaries sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2) {
-					return [self p_compareBookDictionaries:obj1 with:obj2];
+					return [TRNBookParserInstance compareDictionary:obj1 withDictionary:obj2];
 				}];
 
 				NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"TRNBook"];
@@ -273,10 +202,10 @@
 	
 					NSDictionary *serverEntityDic = sortedDictionaries[serverIndex];
 	
-					NSComparisonResult comparisonResult = [self p_compareBookDictionaries:@{
+					NSComparisonResult comparisonResult = [TRNBookParserInstance compareDictionary:@{
 						@"id" : @(localEntity.id)
 
-						} with:serverEntityDic];
+						} withDictionary:serverEntityDic];
 		
 					if (comparisonResult==NSOrderedAscending) {
 						// Remove local object
@@ -290,15 +219,17 @@
 		
 						if (comparisonResult==NSOrderedDescending) {
 							// Add object
-							entity = [TRNBook MR_createInContext:localContext];
+							entity = nil;
 						}
 						else {
 							localIndex++;
 						}
 		
 						serverIndex++;
+
 		
-						if ([self p_updateBookEntity:entity withDictionary:serverEntityDic error:&error]) {
+						entity = [self parseDictionary:serverEntityDic class:[TRNBook class] entity:entity context:localContext parser:TRNBookParserInstance];
+						if (entity) {
 							[results addObject:entity];	
 						}
 						else {
@@ -331,11 +262,11 @@
 				while (serverIndex<sortedDictionaries.count) {
 	
 					NSDictionary *serverEntityDic = sortedDictionaries[serverIndex];
-	
-					// Add all these objects
-					TRNBook *entity = [TRNBook MR_createInContext:localContext];
 
-					if ([self p_updateBookEntity:entity withDictionary:serverEntityDic error:&error]) {
+					// Add all these objects
+					TRNBook *entity = [self parseDictionary:serverEntityDic class:[TRNBook class] entity:nil context:localContext parser:TRNBookParserInstance];
+
+					if (entity) {
 						[results addObject:entity];						
 					}
 					else {

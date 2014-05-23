@@ -3,7 +3,7 @@
 #import <BMF/BMFParserProtocol.h>
 #import <BMF/BMFProgress.h>
 
-@interface TRNDataParser : NSObject <BMFParserProtocol>
+@interface TRNCategoriesServiceParser : NSObject <BMFParserProtocol>
 
 @property (nonatomic, strong) BMFProgress *progress;
 

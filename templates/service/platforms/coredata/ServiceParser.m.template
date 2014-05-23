@@ -2,63 +2,45 @@
 #import "{{_globals_.fileBaseName}}.h"
 
 #import <BMF/BMF.h>
+#import <BMF/BMFObjectParserProtocol.h>
 
 #import <MagicalRecord/CoreData+MagicalRecord.h>
 
 {{#content}}
 {{> entityImports}}
+{{> relationshipImports}}
+{{> entityParserImports}}
+{{> relationshipParserImports}}
 {{/content}}
 	
-@implementation {{_globals_.fileBaseName}} {
-{{#content}}
-	{{#model._formats_}}
-	NSDateFormatter *{{name}}DateFormatter;
-	{{/model._formats_}}
-{{/content}}
-}
+@implementation {{_globals_.fileBaseName}}
 
-- (id) init {
-	self = [super init];
-	if (self) {
-		{{#content}}
-		{{#model._formats_}}
-		{{name}}DateFormatter = [[NSDateFormatter alloc] init];
-		{{name}}DateFormatter.dateFormat = @"{{format}}";
-		{{/model._formats_}}
-		{{/content}}
+- (id) parseDictionary:(NSDictionary *)dic class:(Class)entityClass entity:(id) entity context:(NSManagedObjectContext *) context parser:(id<BMFObjectParserProtocol>) parser {
+	
+	if (!entity) {
+		entity = [entityClass MR_createInContext:context];
 	}
-	return self;
-}
-
-{{#content}}
-{{#model}}
-- (NSComparisonResult) p_compare{{entityName}}Dictionaries:(NSDictionary *) obj1 with:(NSDictionary *)obj2 {
-	NSComparisonResult result;
-	{{#model.primaryKeys}}
-	id {{name}}1 = obj1[@"{{name}}"];
-	id {{name}}2 = obj2[@"{{name}}"];
-	result = [{{name}}1 compare:{{name}}2];
-	if (result!=NSOrderedSame) return result;
-	{{/model.primaryKeys}}
-
-	return NSOrderedSame;
-}
-{{/model}}
-{{/content}}
-
-{{#content}}
-{{#model}}
-- (BOOL) p_update{{entityName}}Entity:({{> entityName}} *)object withDictionary:(NSDictionary *) dic error:(NSError **) error {
-	id value;
-	{{> parseProperties}}
-	{{> parseRelationships}}
 	
-	return YES;
+	NSError *error = nil;
+	BOOL result = [parser updateObject:entity withDictionary:dic error:&error];
+	if (!result) {
+		DDLogError(@"Error parsing object: %@",error);
+		return nil;
+	}
+	
+	return entity;
 }
-{{/model}}
-{{/content}}
 
 - (void) parse:(NSDictionary *) rawObject completion:(BMFCompletionBlock) completionBlock {
+	
+	{{#content}}
+	{{#model}}
+	{{> parserName}} *{{> parserName}}Instance = [{{> parserName}} new];
+	{{#relationships}}
+	{{entityName}}Parser *{{entityName}}ParserInstance = [{{entityName}}Parser new];
+	{{/relationships}}
+	{{/model}}
+	{{/content}}
 	
 	[self.progress start];
 	
@@ -93,7 +75,7 @@
 				NSError *error = nil;
 
 				NSArray *sortedDictionaries = [dictionaries sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2) {
-					return [self p_compare{{entityName}}Dictionaries:obj1 with:obj2];
+					return [{{> parserName}}Instance compareDictionary:obj1 withDictionary:obj2];
 				}];
 
 				NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"{{> entityName}}"];
@@ -117,7 +99,7 @@
 	
 					NSDictionary *serverEntityDic = sortedDictionaries[serverIndex];
 	
-					NSComparisonResult comparisonResult = [self p_compare{{entityName}}Dictionaries:@{
+					NSComparisonResult comparisonResult = [{{> parserName}}Instance compareDictionary:@{
 						{{#primaryKeys}}
 						{{^object}}
 						@"{{name}}" : @(localEntity.{{name}})
@@ -126,7 +108,7 @@
 						@"{{name}}" : localEntity.{{name}}
 						{{/object}}{{^_last_}}{{/_last_}}
 						{{/primaryKeys}}
-						} with:serverEntityDic];
+						} withDictionary:serverEntityDic];
 		
 					if (comparisonResult==NSOrderedAscending) {
 						// Remove local object
@@ -140,15 +122,17 @@
 		
 						if (comparisonResult==NSOrderedDescending) {
 							// Add object
-							entity = [{{> entityName}} MR_createInContext:localContext];
+							entity = nil;
 						}
 						else {
 							localIndex++;
 						}
 		
 						serverIndex++;
+
 		
-						if ([self p_update{{entityName}}Entity:entity withDictionary:serverEntityDic error:&error]) {
+						entity = [self parseDictionary:serverEntityDic class:[{{> entityName}} class] entity:entity context:localContext parser:{{> parserName}}Instance];
+						if (entity) {
 							[results addObject:entity];	
 						}
 						else {
@@ -181,11 +165,11 @@
 				while (serverIndex<sortedDictionaries.count) {
 	
 					NSDictionary *serverEntityDic = sortedDictionaries[serverIndex];
-	
-					// Add all these objects
-					{{> entityName}} *entity = [{{> entityName}} MR_createInContext:localContext];
 
-					if ([self p_update{{entityName}}Entity:entity withDictionary:serverEntityDic error:&error]) {
+					// Add all these objects
+					{{> entityName}} *entity = [self parseDictionary:serverEntityDic class:[{{> entityName}} class] entity:nil context:localContext parser:{{> parserName}}Instance];
+
+					if (entity) {
 						[results addObject:entity];						
 					}
 					else {

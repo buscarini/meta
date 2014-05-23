@@ -135,9 +135,10 @@ class MetaProcessor(object):
             
             if self.config.verbose:
                 print("Hash after product preprocess: " + str(hash))
-                
-            with open("/tmp/final_hash" + os.path.basename(hashFile) + "_" + product + "_" + platform, "w") as f:
-                f.write(str(hash))
+
+            if self.config.verbose:
+                with open("/tmp/final_hash" + os.path.basename(hashFile) + "_" + product + "_" + platform, "w") as f:
+                    f.write(str(hash))
     
             renderer = self.renderer(platformDir)
         

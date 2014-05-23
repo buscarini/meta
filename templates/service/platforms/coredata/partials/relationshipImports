@@ -1,0 +1,3 @@
+{{#model.relationships}}
+#import "{{entityName}}.h"
+{{/model.relationships}}

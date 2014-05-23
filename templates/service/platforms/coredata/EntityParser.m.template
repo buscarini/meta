@@ -1,0 +1,49 @@
+#import "{{_globals_.fileBaseName}}.h"
+
+{{#_current_model_}}
+
+#import "{{> entityName}}.h"
+
+@interface {{_globals_.fileBaseName}}()
+
+{{#_formats_}}
+@property (nonatomic, strong) NSDateFormatter *{{name}}DateFormatter;
+{{/_formats_}}
+
+@end
+
+@implementation {{_globals_.fileBaseName}}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+		{{#_formats_}}
+		_{{name}}DateFormatter = [[NSDateFormatter alloc] init];
+		_{{name}}DateFormatter.dateFormat = @"{{format}}";
+		{{/_formats_}}
+    }
+    return self;
+}
+- (NSComparisonResult) compareDictionary:(NSDictionary *) obj1 withDictionary:(NSDictionary *)obj2 {
+	NSComparisonResult result;
+	{{#primaryKeys}}
+	id {{name}}1 = obj1[@"{{name}}"];
+	id {{name}}2 = obj2[@"{{name}}"];
+	result = [{{name}}1 compare:{{name}}2];
+	if (result!=NSOrderedSame) return result;
+	{{/primaryKeys}}
+
+	return NSOrderedSame;
+}
+
+- (BOOL) updateObject:({{> entityName}} *)object withDictionary:(NSDictionary *) dic error:(NSError **) error {
+	id value;
+	{{> parseProperties}}
+	{{> parseRelationships}}
+	
+	return YES;
+}
+{{/_current_model_}}
+
+@end

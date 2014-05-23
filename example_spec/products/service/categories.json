@@ -8,7 +8,7 @@
 	"errorMessage" : {
 		"key" : "errorMessage"
 	},
-	"serviceName" : "categories",
+	"serviceName" : "CategoriesService",
 	"content" : [ {
 		"key" : "categories",
 		"model" : {

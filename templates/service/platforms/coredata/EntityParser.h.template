@@ -1,0 +1,7 @@
+#import <Foundation/Foundation.h>
+
+#import <BMF/BMFObjectParserProtocol.h>
+
+@interface {{_globals_.fileBaseName}} : NSObject <BMFObjectParserProtocol>
+
+@end
