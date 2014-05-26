@@ -49,9 +49,9 @@ class Platform(MetaProcessor):
             property['object'] = True
         elif type=='relationship':
             if property['relationshipType']=='toMany':
-                property['toMany'] = True
+                property['_toMany_'] = True
             else:
-                property['toMany'] = False
+                property['_toMany_'] = False
                 
             property.update(self.preprocessRelationship(property,hash,hashes))
         else:
@@ -127,7 +127,11 @@ class Platform(MetaProcessor):
             relationships = model['relationships']
             self.preprocessList(relationships)
             for relationship in relationships:    
-                 relationship['entityName'] = self.finalEntityFileName(relationship['entityName'],hash)
+                relationship['entityName'] = self.finalEntityFileName(relationship['entityName'],hash)
+                if (relationship['type']=='toMany'):
+                    relationship['_toMany_'] = True
+                else:
+                    relationship['_toMany_'] = False
         
         
     def preprocessResultValue(self,resultValue):
@@ -156,6 +160,7 @@ class Platform(MetaProcessor):
         
         if hash!=None and 'content' in hash:
             contents = hash['content']
+            self.preprocessList(contents)
             for content in contents:
                 if 'model' in content:
                     model = content['model']

@@ -13,8 +13,6 @@
 		864051FBD14F455B811F8D82 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 379A16FE291542EC9482C128 /* libPods.a */; };
 		AC60C969192356E9008D9C91 /* TRNBookListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC60C968192356E9008D9C91 /* TRNBookListViewController.m */; };
 		AC60C96C192356F2008D9C91 /* TRNBookCellConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = AC60C96B192356F2008D9C91 /* TRNBookCellConfigurator.m */; };
-		AC72365219331B0C00E5DB0D /* BMFParserStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = AC72365119331B0C00E5DB0D /* BMFParserStrategy.m */; };
-		AC723656193327DD00E5DB0D /* BMFCompareParserStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = AC723655193327DD00E5DB0D /* BMFCompareParserStrategy.m */; };
 		AC75C7D7192B70AE0065E671 /* _TRNBook.m in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7CC192B70AE0065E671 /* _TRNBook.m */; };
 		AC75C7D8192B70AE0065E671 /* _TRNCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7CE192B70AE0065E671 /* _TRNCategory.m */; };
 		AC75C7D9192B70AE0065E671 /* TRNBook.m in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7D0192B70AE0065E671 /* TRNBook.m */; };
@@ -56,11 +54,6 @@
 		AC60C968192356E9008D9C91 /* TRNBookListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNBookListViewController.m; sourceTree = "<group>"; };
 		AC60C96A192356F2008D9C91 /* TRNBookCellConfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRNBookCellConfigurator.h; path = ../TRNBookCellConfigurator.h; sourceTree = "<group>"; };
 		AC60C96B192356F2008D9C91 /* TRNBookCellConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRNBookCellConfigurator.m; path = ../TRNBookCellConfigurator.m; sourceTree = "<group>"; };
-		AC72365019331B0C00E5DB0D /* BMFParserStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMFParserStrategy.h; sourceTree = "<group>"; };
-		AC72365119331B0C00E5DB0D /* BMFParserStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMFParserStrategy.m; sourceTree = "<group>"; };
-		AC72365319331C1A00E5DB0D /* BMFParserStrategyHelperProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMFParserStrategyHelperProtocol.h; sourceTree = "<group>"; };
-		AC723654193327DD00E5DB0D /* BMFCompareParserStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMFCompareParserStrategy.h; sourceTree = "<group>"; };
-		AC723655193327DD00E5DB0D /* BMFCompareParserStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMFCompareParserStrategy.m; sourceTree = "<group>"; };
 		AC75C7CB192B70AE0065E671 /* _TRNBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _TRNBook.h; sourceTree = "<group>"; };
 		AC75C7CC192B70AE0065E671 /* _TRNBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _TRNBook.m; sourceTree = "<group>"; };
 		AC75C7CD192B70AE0065E671 /* _TRNCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _TRNCategory.h; sourceTree = "<group>"; };
@@ -223,10 +216,6 @@
 		AC72364F19331A2300E5DB0D /* parser */ = {
 			isa = PBXGroup;
 			children = (
-				AC72365019331B0C00E5DB0D /* BMFParserStrategy.h */,
-				AC72365119331B0C00E5DB0D /* BMFParserStrategy.m */,
-				AC723654193327DD00E5DB0D /* BMFCompareParserStrategy.h */,
-				AC723655193327DD00E5DB0D /* BMFCompareParserStrategy.m */,
 			);
 			name = parser;
 			sourceTree = "<group>";
@@ -238,7 +227,6 @@
 				ACCD7133192F381100D96681 /* TRNCategoryParser.m */,
 				ACCD7136192F382800D96681 /* TRNBookParser.h */,
 				ACCD7137192F382900D96681 /* TRNBookParser.m */,
-				AC72365319331C1A00E5DB0D /* BMFParserStrategyHelperProtocol.h */,
 				AC83EDF0192F964A008EAE74 /* TRNCategoriesServiceParser.h */,
 				AC83EDF1192F964A008EAE74 /* TRNCategoriesServiceParser.m */,
 				AC72364F19331A2300E5DB0D /* parser */,
@@ -527,13 +515,11 @@
 				AC75C7D8192B70AE0065E671 /* _TRNCategory.m in Sources */,
 				ACCD7138192F382900D96681 /* TRNBookParser.m in Sources */,
 				4D7A7279DB7746059732669C /* main.m in Sources */,
-				AC72365219331B0C00E5DB0D /* BMFParserStrategy.m in Sources */,
 				AC75C7DC192B70AE0065E671 /* TRNCategoryObjectStore.m in Sources */,
 				AC75C7D9192B70AE0065E671 /* TRNBook.m in Sources */,
 				AC60C96C192356F2008D9C91 /* TRNBookCellConfigurator.m in Sources */,
 				AC60C969192356E9008D9C91 /* TRNBookListViewController.m in Sources */,
 				AC75C7DA192B70AE0065E671 /* TRNBookObjectStore.m in Sources */,
-				AC723656193327DD00E5DB0D /* BMFCompareParserStrategy.m in Sources */,
 				AC75C7D7192B70AE0065E671 /* _TRNBook.m in Sources */,
 				AC83EDC9192F3D40008EAE74 /* TRNCategoryCellConfigurator.m in Sources */,
 				AC75C7E2192B70CD0065E671 /* example_spec.xcdatamodeld in Sources */,
