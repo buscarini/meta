@@ -230,11 +230,7 @@ PODS:
     - MagicalRecord (~> 2.2)
     - ReactiveCocoa (~> 2.3)
   - CocoaLumberjack (1.9.0):
-    - CocoaLumberjack/CLI
-    - CocoaLumberjack/Core
     - CocoaLumberjack/Extensions
-  - CocoaLumberjack/CLI (1.9.0):
-    - CocoaLumberjack/Core
   - CocoaLumberjack/Core (1.9.0)
   - CocoaLumberjack/Extensions (1.9.0):
     - CocoaLumberjack/Core
@@ -250,12 +246,12 @@ PODS:
     - ReactiveCocoa/Core
 
 DEPENDENCIES:
-  - BMF/Core (from `git@bitbucket.org:buscarini/bmf.git`)
-  - BMF/CoreData (from `git@bitbucket.org:buscarini/bmf.git`)
+  - BMF/Core (from `~/prog/bmf`)
+  - BMF/CoreData (from `~/prog/bmf`)
 
 EXTERNAL SOURCES:
   BMF:
-    :git: git@bitbucket.org:buscarini/bmf.git
+    :path: ~/prog/bmf
 
 SPEC CHECKSUMS:
   AFNetworking: ab63e259fe91eef4519b371ef0a4955af0e73e64
@@ -266,4 +262,4 @@ SPEC CHECKSUMS:
   MagicalRecord: 2b471584fc9e3137f3d0a56967917baa4979e224
   ReactiveCocoa: 2066583826c17dde8e90c41e489f682048cc57c9
 
-COCOAPODS: 0.32.1
+COCOAPODS: 0.33.1

@@ -16,16 +16,21 @@ var related = [];
 
 var fillRelated = function(populated,related,serviceItem) {
 	if (populated instanceof Array) {
-	for (var index=0;index<populated.length;index++) {
-		var populatedObj = populated[index];
-		var relatedObj = {};
+		for (var index=0;index<populated.length;index++) {
+			var populatedObj = populated[index];
+			var relatedObj = {};
+		
+			{{#properties}}
+				relatedObj.{{destination}} = populatedObj.{{name}};
+			{{/properties}}
+
+			related.push(relatedObj);
+		}
 	}
-
-	{{#properties}}
-		relatedObj.{{destination}} = populatedObj.{{name}};
-	{{/properties}}
-
-		related.push(relatedObj);
+	else {
+		{{#properties}}
+			related.{{destination}} = populated.{{name}};
+		{{/properties}}
 	}
 
 	serviceItem.{{name}} = related;

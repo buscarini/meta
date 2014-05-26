@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
-#import <BMF/BMFObjectParserProtocol.h>
+#import <BMF/BMFCoreDataObjectParser.h>
 
-@interface TRNBookParser : NSObject <BMFObjectParserProtocol>
+@interface TRNBookParser : BMFCoreDataObjectParser
 
 @end

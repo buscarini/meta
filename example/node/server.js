@@ -3,9 +3,9 @@ var csv = require('csv');
 var mongoose = require('mongoose');
 var express = require('express');
 var bookImporter = require('./BookImporter')
-var books_list = require('./books_list')
+var books_list = require('./BooksService_list')
 var categoryImporter = require('./CategoryImporter')
-var categories_list = require('./categories_list')
+var categories_list = require('./CategoriesService_list')
 var fs = require('fs')
 	
 var app = express();
@@ -55,7 +55,7 @@ fs.watchFile(booksCSVFile, function(curr,prev) {
 	console.log("watching file")
 	if (prev.mtime.getTime()!=curr.mtime.getTime()) {
 		console.log("importing csv")
-		importer.importFile(booksCSVFile,function(err,books) {
+		bookImporter.importFile(booksCSVFile,function(err,books) {
 			if (err) {
 				console.log(err);
 			}
@@ -67,7 +67,7 @@ fs.watchFile(categoriesCSVFile, function(curr,prev) {
 	console.log("watching file")
 	if (prev.mtime.getTime()!=curr.mtime.getTime()) {
 		console.log("importing csv")
-		importer.importFile(categoriesCSVFile,function(err,books) {
+		categoryImporter.importFile(categoriesCSVFile,function(err,books) {
 			if (err) {
 				console.log(err);
 			}

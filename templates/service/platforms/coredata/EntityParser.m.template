@@ -1,5 +1,7 @@
 #import "{{_globals_.fileBaseName}}.h"
 
+#import <MagicalRecord/CoreData+MagicalRecord.h>
+
 {{#_current_model_}}
 
 #import "{{> entityName}}.h"
@@ -14,9 +16,8 @@
 
 @implementation {{_globals_.fileBaseName}}
 
-- (instancetype)init
-{
-    self = [super init];
+- (instancetype) initWithContext:(NSManagedObjectContext *)context {
+	self = [super initWithContext:context];
     if (self) {
 		{{#_formats_}}
 		_{{name}}DateFormatter = [[NSDateFormatter alloc] init];
@@ -25,25 +26,82 @@
     }
     return self;
 }
+
+- (NSArray *) fetchAllLocalObjectsSortedById {
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"{{> entityName}}"];
+	
+	fetchRequest.includesPropertyValues = NO;
+	fetchRequest.sortDescriptors = @[
+									{{#primaryKeys}}
+									[[NSSortDescriptor alloc] initWithKey: @"{{name}}" ascending:YES],{{^_last_}},{{/_last_}}
+									{{/primaryKeys}}
+									 ];
+	
+	NSError *error = nil;
+	NSArray *results = [self.context executeFetchRequest:fetchRequest error:&error];
+	
+	if (!results) {
+		DDLogError(@"Error fetching local objects: %@",error);
+	}
+	
+	return results;
+}
+
 - (NSComparisonResult) compareDictionary:(NSDictionary *) obj1 withDictionary:(NSDictionary *)obj2 {
 	NSComparisonResult result;
 	{{#primaryKeys}}
 	id {{name}}1 = obj1[@"{{name}}"];
 	id {{name}}2 = obj2[@"{{name}}"];
 	result = [{{name}}1 compare:{{name}}2];
+	{{^_last_}}
 	if (result!=NSOrderedSame) return result;
+	{{/_last_}}
 	{{/primaryKeys}}
 
-	return NSOrderedSame;
+	return result;
 }
+
+- (NSComparisonResult) compareObject:({{> entityName}} *)obj1 withDictionary:(NSDictionary *)obj2 {
+	return [self compareDictionary:@{ 
+			{{#primaryKeys}}
+			@"{{name}}" : [obj1 valueForKey:@"{{name}}"]{{^_last_}},{{/_last_}}
+			{{/primaryKeys}}
+		} 
+		withDictionary:obj2];
+}
+
+- (NSComparisonResult) compareObject:({{> entityName}} *)obj1 withObject:({{> entityName}} *)obj2 {
+	NSComparisonResult result;
+
+	{{#primaryKeys}}
+	id {{name}}1 = [obj1 valueForKey:@"{{name}}"];
+	id {{name}}2 = [obj2 valueForKey:@"{{name}}"];
+	result = [{{name}}1 compare:{{name}}2];
+	{{^_last_}}
+	if (result!=NSOrderedSame) return result;
+	{{/_last_}}
+	{{/primaryKeys}}
+	
+	return result;
+}
+
 
 - (BOOL) updateObject:({{> entityName}} *)object withDictionary:(NSDictionary *) dic error:(NSError **) error {
 	id value;
 	{{> parseProperties}}
 	{{> parseRelationships}}
-	
+	if ([self.delegate respondsToSelector:@selector(didParseObject:withDictionary:)]) [self.delegate didParseObject:object withDictionary:dic];
 	return YES;
 }
+
+- (id) newObject {
+	return [{{> entityName}} MR_createInContext:self.context];
+}
+
+- (BOOL) deleteAllLocalObjects {
+	return [{{> entityName}} MR_truncateAllInContext:self.context];
+}
+
 {{/_current_model_}}
 
 @end

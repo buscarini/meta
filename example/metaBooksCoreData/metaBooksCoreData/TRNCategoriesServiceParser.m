@@ -10,32 +10,39 @@
 #import "TRNBook.h"
 #import "TRNCategoryParser.h"
 #import "TRNBookParser.h"
-	
+
+#import "BMFCompareParserStrategy.h"
+
+#import <BMF/BMFObjectParserProtocol.h>
+
+@interface TRNCategoriesServiceParser() <BMFObjectParserDelegateProtocol>
+
+@property (nonatomic, strong) NSManagedObjectContext *localContext;
+@property (nonatomic, strong) TRNCategoryParser *categoryParser;
+@property (nonatomic, strong) TRNBookParser *bookParser;
+
+@end
+
 @implementation TRNCategoriesServiceParser
 
-- (id) parseDictionary:(NSDictionary *)dic class:(Class)entityClass entity:(id) entity context:(NSManagedObjectContext *) context parser:(id<BMFObjectParserProtocol>) parser {
-	
-	if (!entity) {
-		entity = [entityClass MR_createInContext:context];
+#pragma mark BMFObjectParserDelegateProtocol
+
+- (void) didParseObject:(id)object withDictionary:(NSDictionary *)dictionary {
+	if ([object isKindOfClass:[TRNCategory class]]) {
+		TRNCategory *entity = object;
+		TRNBookParser *bookParser = [[TRNBookParser alloc] initWithContext:self.localContext];
+		BMFParserStrategy *strategy = [[BMFCompareParserStrategy alloc] init];
+		
+		entity.books = [NSSet setWithArray:[strategy parseDictionaries:dictionary[@"books"] localObjects:entity.books.allObjects objectParser:bookParser]];
 	}
-	
-	NSError *error = nil;
-	BOOL result = [parser updateObject:entity withDictionary:dic error:&error];
-	if (!result) {
-		DDLogError(@"Error parsing object: %@",error);
-		return nil;
-	}
-	
-	return entity;
 }
 
+#pragma mark BMFParserProtocol
+
 - (void) parse:(NSDictionary *) rawObject completion:(BMFCompletionBlock) completionBlock {
-	
-	TRNCategoryParser *TRNCategoryParserInstance = [TRNCategoryParser new];
-	TRNBookParser *TRNBookParserInstance = [TRNBookParser new];
-	
+		
 	[self.progress start];
-	
+
 	@try {
 		
 		/// Check result
@@ -51,16 +58,26 @@
 			return;
 		}
 	
-		NSMutableArray *results = [NSMutableArray array];
+		__block NSArray *results = nil;
 		NSArray *dictionaries = nil;
 		
 		dictionaries = rawObject[@"categories"];
 		if (dictionaries.count>0) {
 			
-			NSUInteger batchSize = 100;
-			
 			[MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-				NSError *error = nil;
+				
+				self.localContext = localContext;
+				
+				self.categoryParser = [[TRNCategoryParser alloc] initWithContext:localContext];
+				self.categoryParser.delegate = self;
+				self.bookParser = [[TRNBookParser alloc] initWithContext:localContext];
+				self.bookParser.delegate = self;
+				
+				BMFParserStrategy *strategy = [[BMFCompareParserStrategy alloc] init];
+
+				results = [strategy parseDictionaries:dictionaries localObjects:[self.categoryParser fetchAllLocalObjectsSortedById] objectParser:self.categoryParser];
+				
+				/*NSError *error = nil;
 
 				NSArray *sortedDictionaries = [dictionaries sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2) {
 					return [TRNCategoryParserInstance compareDictionary:obj1 withDictionary:obj2];
@@ -157,7 +174,7 @@
 					}
 
 					serverIndex++;
-				}
+				}*/
 
 
 			} completion:^(BOOL success, NSError *error) {
