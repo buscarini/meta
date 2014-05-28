@@ -1,5 +1,6 @@
 pod 'BMF/Core', :path => '~/prog/bmf'
 pod 'BMF/CoreData', :path => '~/prog/bmf'
+pod 'BMF/M13', :path => '~/prog/bmf'
 # pod 'BMF/Crashlytics', :path => '~/prog/bmf'
 # pod 'BMF/Flurry', :path => '~/prog/bmf'
 

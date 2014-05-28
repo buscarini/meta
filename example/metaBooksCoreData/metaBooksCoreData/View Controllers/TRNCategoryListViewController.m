@@ -18,6 +18,7 @@
 #import "TRNCategory.h"
 
 #import <BMF/BMFPresentViewControllerBehavior.h>
+#import <BMF/BMFM13NavigationBarProgressView.h>
 
 #import <MagicalRecord/CoreData+MagicalRecord.h>
 
@@ -32,8 +33,9 @@
 {
     [super viewDidLoad];
 
-	self.loaderView = [[BMFBase sharedInstance].factory navBarLoaderItem:self];
+//	self.loaderView = [[BMFBase sharedInstance].factory navBarLoaderItem:self];
 	//	self.loaderView = [[BMFBase sharedInstance].factory generalLoaderView:self];
+	self.loaderView = [BMFM13NavigationBarProgressView new];
 	[self.loaderView addToViewController:self];
 	
 	
@@ -59,8 +61,9 @@
 }
 
 - (void) load {
-	id<BMFTaskProtocol> task = [[BMFBase sharedInstance].factory dataLoadTask:@"http://192.168.1.135:3000/categories" parameters:nil sender:self];
+	id<BMFTaskProtocol> task = [[BMFBase sharedInstance].factory dataLoadTask:@"http://localhost:3000/categories" parameters:nil sender:self];
 	
+	[self.loaderView.progress reset];
 	[self.loaderView.progress addChild:task.progress];
 	
 	BMFOperationsTask *opTask = [BMFOperationsTask BMF_cast:task];

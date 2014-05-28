@@ -33,6 +33,14 @@
 	
 @implementation {{_globals_.fileBaseName}}
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _progress = [BMFProgress new];
+    }
+    return self;
+}
 
 #pragma mark BMFObjectParserDelegateProtocol
 
@@ -52,6 +60,8 @@
 		entity.{{name}} = [self.strategy parseDictionaries:@[dictionary[@"{{name}}"]] localObjects:@[entity.{{name}}] objectParser:{{entityName}}ParserInstance]].firstObject;
 		{{/_toMany_}}
 		{{/relationships}}
+		
+		self.progress.completedUnitCount++;
 	}
 	{{/model}}
 	{{/content}}
@@ -85,6 +95,8 @@
 		dictionaries = rawObject[@"{{key}}"];
 		if (dictionaries.count>0) {
 		
+			self.progress.totalUnitCount = dictionaries.count;
+		
 			{{#model}}
 			self.localContext = localContext;				
 			self.strategy = [[BMFCompareParserStrategy alloc] init];
@@ -108,9 +120,9 @@
 		if (completionBlock) completionBlock(results,nil);
 	}];
 
-	[self.progress stop:nil];
-
-	if (completionBlock) completionBlock(results,nil);
+	// [self.progress stop:nil];
+	// 
+	// if (completionBlock) completionBlock(results,nil);
 		
 }
 

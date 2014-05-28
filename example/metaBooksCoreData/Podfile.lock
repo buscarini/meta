@@ -229,25 +229,34 @@ PODS:
     - CocoaLumberjack
     - MagicalRecord (~> 2.2)
     - ReactiveCocoa (~> 2.3)
+  - BMF/M13 (0.0.3):
+    - AFNetworking (~> 2.2)
+    - Base32 (~> 1.0.2)
+    - Base64 (~> 1.0.1)
+    - CocoaLumberjack
+    - M13ProgressSuite (~> 1.2.3)
+    - ReactiveCocoa (~> 2.3)
   - CocoaLumberjack (1.9.0):
     - CocoaLumberjack/Extensions
   - CocoaLumberjack/Core (1.9.0)
   - CocoaLumberjack/Extensions (1.9.0):
     - CocoaLumberjack/Core
+  - M13ProgressSuite (1.2.3)
   - MagicalRecord (2.2):
     - MagicalRecord/Core
   - MagicalRecord/Core (2.2)
-  - ReactiveCocoa (2.3):
+  - ReactiveCocoa (2.3.1):
     - ReactiveCocoa/UI
-  - ReactiveCocoa/Core (2.3):
+  - ReactiveCocoa/Core (2.3.1):
     - ReactiveCocoa/no-arc
-  - ReactiveCocoa/no-arc (2.3)
-  - ReactiveCocoa/UI (2.3):
+  - ReactiveCocoa/no-arc (2.3.1)
+  - ReactiveCocoa/UI (2.3.1):
     - ReactiveCocoa/Core
 
 DEPENDENCIES:
   - BMF/Core (from `~/prog/bmf`)
   - BMF/CoreData (from `~/prog/bmf`)
+  - BMF/M13 (from `~/prog/bmf`)
 
 EXTERNAL SOURCES:
   BMF:
@@ -257,9 +266,10 @@ SPEC CHECKSUMS:
   AFNetworking: ab63e259fe91eef4519b371ef0a4955af0e73e64
   Base32: a0ef6e90e721130c474cc970a4d98a6cbf16ce85
   Base64: c6d74f31f150543b246a07e180ba813c88e59311
-  BMF: c5a4561f788b5c48ec77085eee551e5f202a6c8e
+  BMF: bf1030dbfead663e20856862b21a70d72017dc52
   CocoaLumberjack: 5766cdd1d0a24bcf15a133c6023747346bf786dd
+  M13ProgressSuite: c7e62c60468b021f12558f5797b9d280e642d5a6
   MagicalRecord: 2b471584fc9e3137f3d0a56967917baa4979e224
-  ReactiveCocoa: 2066583826c17dde8e90c41e489f682048cc57c9
+  ReactiveCocoa: dca75777b9d18990c8714a3a6f2149f29b4d1462
 
 COCOAPODS: 0.33.1
