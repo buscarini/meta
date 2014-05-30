@@ -38,6 +38,7 @@
     self = [super init];
     if (self) {
         _progress = [BMFProgress new];
+		_progress.key = @"{{_globals_.fileBaseName}}";
     }
     return self;
 }
@@ -60,16 +61,39 @@
 		entity.{{name}} = [self.strategy parseDictionaries:@[dictionary[@"{{name}}"]] localObjects:@[entity.{{name}}] objectParser:{{entityName}}ParserInstance]].firstObject;
 		{{/_toMany_}}
 		{{/relationships}}
-		
-		self.progress.completedUnitCount++;
 	}
+	{{/model}}
+	{{/content}}
+	
+	self.progress.completedUnitCount++;
+}
+
+
+- (void) calculateTotalUnitCount:(NSArray *) dictionaries {
+	{{#content}}
+	{{#model}}
+	int64_t totalObjects = dictionaries.count;
+	NSArray *items = nil;
+	for (NSDictionary *dic in dictionaries) {
+		{{#relationships}}
+		{{#_toMany_}}
+		items = dic[@"{{name}}"];
+		totalObjects += items.count;
+		{{/_toMany_}}
+		{{^_toMany_}}
+		if (dic[@"{{name}}"]) totalObjects++;
+		{{/_toMany_}}
+		{{/relationships}}
+	}
+	
+	self.progress.totalUnitCount = totalObjects;
 	{{/model}}
 	{{/content}}
 }
 
 - (void) parse:(NSDictionary *) rawObject completion:(BMFCompletionBlock) completionBlock {
 	
-	[self.progress start];
+	[self.progress start:@"{{_globals_.fileBaseName}}"];
 		
 	{{#resultValue}}
 	/// Check result
@@ -95,7 +119,9 @@
 		dictionaries = rawObject[@"{{key}}"];
 		if (dictionaries.count>0) {
 		
-			self.progress.totalUnitCount = dictionaries.count;
+			[self calculateTotalUnitCount:dictionaries];
+			
+			[self.progress start:@"{{_globals_.fileBaseName}}"];
 		
 			{{#model}}
 			self.localContext = localContext;				
@@ -115,15 +141,10 @@
 		{{/content}}
 	}
 	completion:^(BOOL success, NSError *error) {
-		[self.progress stop:nil];
+		[self.progress stop:error];
 
 		if (completionBlock) completionBlock(results,nil);
 	}];
-
-	// [self.progress stop:nil];
-	// 
-	// if (completionBlock) completionBlock(results,nil);
-		
 }
 
 - (void) cancel {

@@ -19,6 +19,10 @@
 
 #import <BMF/BMFPresentViewControllerBehavior.h>
 #import <BMF/BMFM13NavigationBarProgressView.h>
+#import <BMF/BMFM13ProgressView.h>
+
+#import <M13ProgressSuite/M13ProgressViewRing.h>
+#import <M13ProgressSuite/M13ProgressHUD.h>
 
 #import <MagicalRecord/CoreData+MagicalRecord.h>
 
@@ -36,8 +40,8 @@
 //	self.loaderView = [[BMFBase sharedInstance].factory navBarLoaderItem:self];
 	//	self.loaderView = [[BMFBase sharedInstance].factory generalLoaderView:self];
 	self.loaderView = [BMFM13NavigationBarProgressView new];
-	[self.loaderView addToViewController:self];
-	
+//	M13ProgressView *view = [M13ProgressViewRing new];
+//	self.loaderView = [[BMFM13ProgressView alloc] initWithView:view];
 	
 	id<BMFDataReadProtocol> dataStore =	[TRNCategory allCategorysDataStore];
 		

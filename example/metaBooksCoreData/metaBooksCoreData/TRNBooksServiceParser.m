@@ -3,6 +3,8 @@
 
 #import <BMF/BMF.h>
 #import <BMF/BMFObjectParserProtocol.h>
+#import <BMF/BMFParserStrategy.h>
+#import <BMF/BMFCompareParserStrategy.h>
 
 #import <MagicalRecord/CoreData+MagicalRecord.h>
 
@@ -12,286 +14,125 @@
 #import "TRNCategory.h"
 #import "TRNBookParser.h"
 #import "TRNCategoryParser.h"
+
+@interface TRNBooksServiceParser() <BMFObjectParserDelegateProtocol>
+	
+@property (nonatomic, strong) NSManagedObjectContext *localContext;
+@property (nonatomic, strong) BMFParserStrategy *strategy;
+
+@property (nonatomic, strong) TRNCategoryParser *TRNCategoryParserInstance;
+@property (nonatomic, strong) TRNBookParser *TRNBookParserInstance;
+@property (nonatomic, strong) TRNCategoryParser *TRNCategoryParserInstance;
+	
+@end
 	
 @implementation TRNBooksServiceParser
 
-- (id) parseDictionary:(NSDictionary *)dic class:(Class)entityClass entity:(id) entity context:(NSManagedObjectContext *) context parser:(id<BMFObjectParserProtocol>) parser {
-	
-	if (!entity) {
-		entity = [entityClass MR_createInContext:context];
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _progress = [BMFProgress new];
+		_progress.key = @"TRNBooksServiceParser";
+    }
+    return self;
+}
+
+#pragma mark BMFObjectParserDelegateProtocol
+
+- (void) didParseObject:(id)object withDictionary:(NSDictionary *)dictionary {
+	if ([object isKindOfClass:[TRNCategory class]]) {
+		TRNCategory *entity = object;
+	}
+	else if ([object isKindOfClass:[TRNBook class]]) {
+		TRNBook *entity = object;
+		TRNCategoryParser *TRNCategoryParserInstance = [[TRNCategoryParser alloc] initWithContext:self.localContext];
+		TRNCategoryParserInstance.delegate = self;
+		
+		entity.category = [self.strategy parseDictionaries:@[dictionary[@"category"]] localObjects:@[entity.category] objectParser:TRNCategoryParserInstance]].firstObject;
 	}
 	
-	NSError *error = nil;
-	BOOL result = [parser updateObject:entity withDictionary:dic error:&error];
-	if (!result) {
-		DDLogError(@"Error parsing object: %@",error);
-		return nil;
+	self.progress.completedUnitCount++;
+}
+
+
+- (void) calculateTotalUnitCount:(NSArray *) dictionaries {
+	int64_t totalObjects = dictionaries.count;
+	NSArray *items = nil;
+	for (NSDictionary *dic in dictionaries) {
 	}
 	
-	return entity;
+	self.progress.totalUnitCount = totalObjects;
+	int64_t totalObjects = dictionaries.count;
+	NSArray *items = nil;
+	for (NSDictionary *dic in dictionaries) {
+		if (dic[@"category"]) totalObjects++;
+	}
+	
+	self.progress.totalUnitCount = totalObjects;
 }
 
 - (void) parse:(NSDictionary *) rawObject completion:(BMFCompletionBlock) completionBlock {
 	
-	TRNCategoryParser *TRNCategoryParserInstance = [TRNCategoryParser new];
-	TRNBookParser *TRNBookParserInstance = [TRNBookParser new];
-	TRNCategoryParser *TRNCategoryParserInstance = [TRNCategoryParser new];
-	
-	[self.progress start];
-	
-	@try {
+	[self.progress start:@"TRNBooksServiceParser"];
 		
-		/// Check result
-		id result = rawObject[@"result"];
-		if (![result isEqual:@"0"]) {
-			NSString *errorMessage = rawObject[@"errorMessage"];
-			if (!errorMessage) {
-				errorMessage = BMFLocalized(@"Unknown error",nil);
-			}
-		    NSError *error = [NSError errorWithDomain:@"Parse" code:BMFErrorData userInfo:@{ NSLocalizedDescriptionKey : errorMessage }];
-			[self.progress stop:error];
-			if (completionBlock) completionBlock(nil,error);
-			return;
+	/// Check result
+	id result = rawObject[@"result"];
+	if (![result isEqual:@"0"]) {
+		NSString *errorMessage = rawObject[@"errorMessage"];
+		if (!errorMessage) {
+			errorMessage = BMFLocalized(@"Unknown error",nil);
 		}
-	
-		NSMutableArray *results = [NSMutableArray array];
-		NSArray *dictionaries = nil;
+	    NSError *error = [NSError errorWithDomain:@"Parse" code:BMFErrorData userInfo:@{ NSLocalizedDescriptionKey : errorMessage }];
+		[self.progress stop:error];
+		if (completionBlock) completionBlock(nil,error);
+		return;
+	}
+
+	__block NSArray *results = nil;
+	__block NSArray *dictionaries = nil;
+
+	[MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
 		
 		dictionaries = rawObject[@"categories"];
 		if (dictionaries.count>0) {
-			
-			NSUInteger batchSize = 100;
-			
-			[MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-				NSError *error = nil;
-
-				NSArray *sortedDictionaries = [dictionaries sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2) {
-					return [TRNCategoryParserInstance compareDictionary:obj1 withDictionary:obj2];
-				}];
-
-				NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"TRNCategory"];
-
-				fetchRequest.includesPropertyValues = NO;
-				fetchRequest.sortDescriptors = @[
-					[[NSSortDescriptor alloc] initWithKey: @"id" ascending:YES],
-						];
-				fetchRequest.fetchBatchSize = batchSize;
-
-				NSArray *allLocalEntities = [localContext executeFetchRequest:fetchRequest error:&error];
-
-				NSUInteger index = 0;
-				NSUInteger localIndex = 0;
-				NSUInteger serverIndex = 0;
-
-				while (localIndex<allLocalEntities.count && serverIndex<sortedDictionaries.count) {
-					TRNCategory *localEntity = allLocalEntities[localIndex];
-	
-					NSDictionary *serverEntityDic = sortedDictionaries[serverIndex];
-	
-					NSComparisonResult comparisonResult = [TRNCategoryParserInstance compareDictionary:@{
-						@"id" : @(localEntity.id)
-
-						} withDictionary:serverEntityDic];
 		
-					if (comparisonResult==NSOrderedAscending) {
-						// Remove local object
-						[localContext deleteObject:localEntity];
-
-						localIndex++;
-					}
-					else {
+			[self calculateTotalUnitCount:dictionaries];
 		
-						TRNCategory *entity = localEntity;
-		
-						if (comparisonResult==NSOrderedDescending) {
-							// Add object
-							entity = nil;
-						}
-						else {
-							localIndex++;
-						}
-		
-						serverIndex++;
-
-		
-						entity = [self parseDictionary:serverEntityDic class:[TRNCategory class] entity:entity context:localContext parser:TRNCategoryParserInstance];
-						if (entity) {
-							[results addObject:entity];	
-						}
-						else {
-							DDLogError(@"Error updating entity: %@",error);
-						}
-					}
-	
-					index++;
-	
-					if (index%batchSize==0) {
-						[localContext MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *saveError) {
-							if (saveError) {
-								DDLogError(@"Error saving sync context: %@",saveError);
-							}
-							else {
-								DDLogInfo(@"Sync context saved");
-							}
-						}];
-					}
-				}
-
-				// Delete all these objects
-				while (localIndex<allLocalEntities.count) {
-					TRNCategory *localEntity = allLocalEntities[localIndex];
-					[localContext deleteObject:localEntity];
-					localIndex++;
-				}
-
-				// Add all these objects
-				while (serverIndex<sortedDictionaries.count) {
-	
-					NSDictionary *serverEntityDic = sortedDictionaries[serverIndex];
-
-					// Add all these objects
-					TRNCategory *entity = [self parseDictionary:serverEntityDic class:[TRNCategory class] entity:nil context:localContext parser:TRNCategoryParserInstance];
-
-					if (entity) {
-						[results addObject:entity];						
-					}
-					else {
-						DDLogError(@"Error updating entity: %@",error);
-					}
-
-					serverIndex++;
-				}
+			self.localContext = localContext;				
+			self.strategy = [[BMFCompareParserStrategy alloc] init];
+			self.strategy.batchSize = 100;
 
 
-			} completion:^(BOOL success, NSError *error) {
-				[self.progress stop:nil];
+			self.TRNCategoryParserInstance = [[TRNCategoryParser alloc] initWithContext:localContext];
+			self.TRNCategoryParserInstance.delegate = self;
 
-				if (completionBlock) completionBlock(results,nil);
-			}];
-		
+			results = [self.strategy parseDictionaries:dictionaries localObjects:[self.TRNCategoryParserInstance fetchAllLocalObjectsSortedById] objectParser:self.TRNCategoryParserInstance];
 		}
+		
 		
 		dictionaries = rawObject[@"books"];
 		if (dictionaries.count>0) {
-			
-			NSUInteger batchSize = 100;
-			
-			[MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-				NSError *error = nil;
-
-				NSArray *sortedDictionaries = [dictionaries sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2) {
-					return [TRNBookParserInstance compareDictionary:obj1 withDictionary:obj2];
-				}];
-
-				NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"TRNBook"];
-
-				fetchRequest.includesPropertyValues = NO;
-				fetchRequest.sortDescriptors = @[
-					[[NSSortDescriptor alloc] initWithKey: @"id" ascending:YES],
-						];
-				fetchRequest.fetchBatchSize = batchSize;
-
-				NSArray *allLocalEntities = [localContext executeFetchRequest:fetchRequest error:&error];
-
-				NSUInteger index = 0;
-				NSUInteger localIndex = 0;
-				NSUInteger serverIndex = 0;
-
-				while (localIndex<allLocalEntities.count && serverIndex<sortedDictionaries.count) {
-					TRNBook *localEntity = allLocalEntities[localIndex];
-	
-					NSDictionary *serverEntityDic = sortedDictionaries[serverIndex];
-	
-					NSComparisonResult comparisonResult = [TRNBookParserInstance compareDictionary:@{
-						@"id" : @(localEntity.id)
-
-						} withDictionary:serverEntityDic];
 		
-					if (comparisonResult==NSOrderedAscending) {
-						// Remove local object
-						[localContext deleteObject:localEntity];
-
-						localIndex++;
-					}
-					else {
+			[self calculateTotalUnitCount:dictionaries];
 		
-						TRNBook *entity = localEntity;
-		
-						if (comparisonResult==NSOrderedDescending) {
-							// Add object
-							entity = nil;
-						}
-						else {
-							localIndex++;
-						}
-		
-						serverIndex++;
-
-		
-						entity = [self parseDictionary:serverEntityDic class:[TRNBook class] entity:entity context:localContext parser:TRNBookParserInstance];
-						if (entity) {
-							[results addObject:entity];	
-						}
-						else {
-							DDLogError(@"Error updating entity: %@",error);
-						}
-					}
-	
-					index++;
-	
-					if (index%batchSize==0) {
-						[localContext MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *saveError) {
-							if (saveError) {
-								DDLogError(@"Error saving sync context: %@",saveError);
-							}
-							else {
-								DDLogInfo(@"Sync context saved");
-							}
-						}];
-					}
-				}
-
-				// Delete all these objects
-				while (localIndex<allLocalEntities.count) {
-					TRNBook *localEntity = allLocalEntities[localIndex];
-					[localContext deleteObject:localEntity];
-					localIndex++;
-				}
-
-				// Add all these objects
-				while (serverIndex<sortedDictionaries.count) {
-	
-					NSDictionary *serverEntityDic = sortedDictionaries[serverIndex];
-
-					// Add all these objects
-					TRNBook *entity = [self parseDictionary:serverEntityDic class:[TRNBook class] entity:nil context:localContext parser:TRNBookParserInstance];
-
-					if (entity) {
-						[results addObject:entity];						
-					}
-					else {
-						DDLogError(@"Error updating entity: %@",error);
-					}
-
-					serverIndex++;
-				}
+			self.localContext = localContext;				
+			self.strategy = [[BMFCompareParserStrategy alloc] init];
+			self.strategy.batchSize = 100;
 
 
-			} completion:^(BOOL success, NSError *error) {
-				[self.progress stop:nil];
+			self.TRNBookParserInstance = [[TRNBookParser alloc] initWithContext:localContext];
+			self.TRNBookParserInstance.delegate = self;
 
-				if (completionBlock) completionBlock(results,nil);
-			}];
-		
+			results = [self.strategy parseDictionaries:dictionaries localObjects:[self.TRNBookParserInstance fetchAllLocalObjectsSortedById] objectParser:self.TRNBookParserInstance];
 		}
-
+		
+	}
+	completion:^(BOOL success, NSError *error) {
 		[self.progress stop:nil];
 
 		if (completionBlock) completionBlock(results,nil);
-	}
-	@catch (NSException *exception) {
-		DDLogError(@"Exception in parse: %@",exception);
-	}
+	}];
 }
 
 - (void) cancel {

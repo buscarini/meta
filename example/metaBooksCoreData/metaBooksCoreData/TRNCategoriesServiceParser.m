@@ -25,17 +25,17 @@
 	
 @implementation TRNCategoriesServiceParser
 
-
-#pragma mark BMFObjectParserDelegateProtocol
-
 - (instancetype)init
 {
     self = [super init];
     if (self) {
         _progress = [BMFProgress new];
+		_progress.key = @"TRNCategoriesServiceParser";
     }
     return self;
 }
+
+#pragma mark BMFObjectParserDelegateProtocol
 
 - (void) didParseObject:(id)object withDictionary:(NSDictionary *)dictionary {
 	if ([object isKindOfClass:[TRNCategory class]]) {
@@ -44,20 +44,26 @@
 		TRNBookParserInstance.delegate = self;
 		
 		entity.books = [NSSet setWithArray:[self.strategy parseDictionaries:dictionary[@"books"] localObjects:entity.books.allObjects objectParser:TRNBookParserInstance]];
-		
-		self.progress.completedUnitCount++;
-		DDLogInfo(@"Progress: %@",self.progress);
 	}
 	
+	self.progress.completedUnitCount++;
+}
+
+
+- (void) calculateTotalUnitCount:(NSArray *) dictionaries {
+	int64_t totalObjects = dictionaries.count;
+	NSArray *items = nil;
+	for (NSDictionary *dic in dictionaries) {
+		items = dic[@"books"];
+		totalObjects += items.count;
+	}
 	
-	[NSThread sleepForTimeInterval:0.5];
+	self.progress.totalUnitCount = totalObjects;
 }
 
 - (void) parse:(NSDictionary *) rawObject completion:(BMFCompletionBlock) completionBlock {
 	
-	self.progress.totalUnitCount = 1;
-
-	[self.progress start];
+	[self.progress start:@"TRNCategoriesServiceParser"];
 		
 	/// Check result
 	id result = rawObject[@"result"];
@@ -80,7 +86,9 @@
 		dictionaries = rawObject[@"categories"];
 		if (dictionaries.count>0) {
 		
-			self.progress.totalUnitCount = dictionaries.count;
+			[self calculateTotalUnitCount:dictionaries];
+			
+			[self.progress start:@"TRNCategoriesServiceParser"];
 		
 			self.localContext = localContext;				
 			self.strategy = [[BMFCompareParserStrategy alloc] init];
@@ -99,11 +107,6 @@
 
 		if (completionBlock) completionBlock(results,nil);
 	}];
-
-//	[self.progress stop:nil];
-//
-//	if (completionBlock) completionBlock(results,nil);
-		
 }
 
 - (void) cancel {

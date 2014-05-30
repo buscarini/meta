@@ -21,7 +21,6 @@
 		AC75C7DC192B70AE0065E671 /* TRNCategoryObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7D6192B70AE0065E671 /* TRNCategoryObjectStore.m */; };
 		AC75C7E2192B70CD0065E671 /* example_spec.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7E0192B70CD0065E671 /* example_spec.xcdatamodeld */; };
 		AC83EDC9192F3D40008EAE74 /* TRNCategoryCellConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = AC83EDC8192F3D40008EAE74 /* TRNCategoryCellConfigurator.m */; };
-		AC83EDCC192F4120008EAE74 /* TRNNavigationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AC83EDCB192F4120008EAE74 /* TRNNavigationManager.m */; };
 		AC83EDF2192F964A008EAE74 /* TRNCategoriesServiceParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AC83EDF1192F964A008EAE74 /* TRNCategoriesServiceParser.m */; };
 		ACA139D61923C3760054B80C /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA139D51923C3760054B80C /* Storyboard.storyboard */; };
 		ACCD7134192F381100D96681 /* TRNCategoryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = ACCD7133192F381100D96681 /* TRNCategoryParser.m */; };
@@ -69,8 +68,6 @@
 		AC75C7E1192B70CD0065E671 /* example_spec.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = example_spec.xcdatamodel; sourceTree = "<group>"; };
 		AC83EDC7192F3D40008EAE74 /* TRNCategoryCellConfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNCategoryCellConfigurator.h; sourceTree = "<group>"; };
 		AC83EDC8192F3D40008EAE74 /* TRNCategoryCellConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNCategoryCellConfigurator.m; sourceTree = "<group>"; };
-		AC83EDCA192F4120008EAE74 /* TRNNavigationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNNavigationManager.h; sourceTree = "<group>"; };
-		AC83EDCB192F4120008EAE74 /* TRNNavigationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNNavigationManager.m; sourceTree = "<group>"; };
 		AC83EDF0192F964A008EAE74 /* TRNCategoriesServiceParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNCategoriesServiceParser.h; sourceTree = "<group>"; };
 		AC83EDF1192F964A008EAE74 /* TRNCategoriesServiceParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNCategoriesServiceParser.m; sourceTree = "<group>"; };
 		ACA139D51923C3760054B80C /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
@@ -312,8 +309,6 @@
 				AC60C967192356E9008D9C91 /* TRNBookListViewController.h */,
 				AC60C968192356E9008D9C91 /* TRNBookListViewController.m */,
 				848E6856B20648A6BCAF3AEB /* Behaviors */,
-				AC83EDCA192F4120008EAE74 /* TRNNavigationManager.h */,
-				AC83EDCB192F4120008EAE74 /* TRNNavigationManager.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -524,7 +519,6 @@
 				AC83EDC9192F3D40008EAE74 /* TRNCategoryCellConfigurator.m in Sources */,
 				AC75C7E2192B70CD0065E671 /* example_spec.xcdatamodeld in Sources */,
 				ACCD713B192F3BE900D96681 /* TRNCategoryListViewController.m in Sources */,
-				AC83EDCC192F4120008EAE74 /* TRNNavigationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
