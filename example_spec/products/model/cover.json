@@ -1,0 +1,32 @@
+{
+	"entityName" : "Cover",
+	"primaryKeys" : [
+		{
+			"name" : "id"
+		}
+	],
+	"properties" : [
+		{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true
+		},
+		{
+			"name" : "url",
+			"type" : "string"
+		},
+		{
+			"name" : "image",
+			"type" : "image"
+		}
+	],
+	"relationships" : [
+		{
+			"name" : "book",
+			"type" : "toOne",
+			"entityName" : "Book",
+			"required" : true,
+			"inverse" : "cover"
+		}
+	]
+}

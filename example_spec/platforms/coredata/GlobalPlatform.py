@@ -59,6 +59,10 @@ class GlobalPlatform(MetaProcessor):
             property['type'] = 'NSDate'
             property['object'] = True
             property['storage'] = 'strong'
+        elif type=='image':
+            property['type'] = 'BMFIXImage'
+            property['object'] = True
+            property['storage'] = 'strong'
         else:
             raise SyntaxError("Unknown property type: " + type)
     

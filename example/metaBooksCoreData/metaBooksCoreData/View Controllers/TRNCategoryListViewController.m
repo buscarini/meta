@@ -17,7 +17,7 @@
 
 #import "TRNCategory.h"
 
-#import <BMF/BMFPresentViewControllerBehavior.h>
+#import <BMF/BMFItemTapPresentsViewControllerBehavior.h>
 #import <BMF/BMFM13NavigationBarProgressView.h>
 #import <BMF/BMFM13ProgressView.h>
 
@@ -59,7 +59,7 @@
 	
 	[self load];
 	
-	BMFPresentViewControllerBehavior *itemBehavior = [BMFPresentViewControllerBehavior new];
+	BMFItemTapPresentsViewControllerBehavior *itemBehavior = [BMFItemTapPresentsViewControllerBehavior new];
 	itemBehavior.segueIdentifier = @"books";
 	[self addBehavior:itemBehavior];
 }

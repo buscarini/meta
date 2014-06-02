@@ -40,6 +40,13 @@
 			"entityName" : "Category",
 			"required" : true,
 			"inverse" : "books"
+		},
+		{
+			"name" : "cover",
+			"type" : "toOne",
+			"entityName" : "Cover",
+			"required" : false,
+			"inverse" : "book"
 		}
 	]
 }

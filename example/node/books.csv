@@ -1,8 +1,561 @@
 id;title;author;numPages;purchased;category
-1;El Quijote;Cervantes;1000;07/10/2000;1
-2;Game of Thrones;George;600;08/10/2000;2
-3;Dune;Frank;300;09/10/2000;3
-4;The lord of the rings;Tolkien;1400;10/10/2000;2
-5;The hobbit;Tolkien;150;11/10/2000;2
-6;La Ilíada;Homero;400;05/01/2005;1
-7;Fundación;Asimov;670;15/10/2005;3
+001;001 El Quijote;Cervantes;1000;07/10/2000;1
+001;001 Game of Thrones;George;600;08/10/2000;2
+002;002 Dune;Frank;300;09/10/2000;3
+003;003 The lord of the rings;Tolkien;1400;10/10/2000;2
+004;004 The hobbit;Tolkien;150;11/10/2000;2
+005;005 La Ilíada;Homero;400;05/01/2005;1
+006;006 Fundación;Asimov;670;15/10/2005;3
+007;007 El Quijote;Cervantes;1000;07/10/2000;1
+010;010 Game of Thrones;George;600;08/10/2000;2
+011;011 Dune;Frank;300;09/10/2000;3
+012;012 The lord of the rings;Tolkien;1400;10/10/2000;2
+013;013 The hobbit;Tolkien;150;11/10/2000;2
+014;014 La Ilíada;Homero;400;05/01/2005;1
+015;015 Fundación;Asimov;670;15/10/2005;3
+016;016 El Quijote;Cervantes;1000;07/10/2000;1
+017;017 Game of Thrones;George;600;08/10/2000;2
+018;018 Dune;Frank;300;09/10/2000;3
+019;019 The lord of the rings;Tolkien;1400;10/10/2000;2
+020;020 The hobbit;Tolkien;150;11/10/2000;2
+021;021 La Ilíada;Homero;400;05/01/2005;1
+022;022 Fundación;Asimov;670;15/10/2005;3
+023;023 El Quijote;Cervantes;1000;07/10/2000;1
+024;024 Game of Thrones;George;600;08/10/2000;2
+025;025 Dune;Frank;300;09/10/2000;3
+026;026 The lord of the rings;Tolkien;1400;10/10/2000;2
+027;027 The hobbit;Tolkien;150;11/10/2000;2
+028;028 La Ilíada;Homero;400;05/01/2005;1
+029;029 Fundación;Asimov;670;15/10/2005;3
+030;030 El Quijote;Cervantes;1000;07/10/2000;1
+031;031 Game of Thrones;George;600;08/10/2000;2
+032;032 Dune;Frank;300;09/10/2000;3
+033;033 The lord of the rings;Tolkien;1400;10/10/2000;2
+034;034 The hobbit;Tolkien;150;11/10/2000;2
+035;035 La Ilíada;Homero;400;05/01/2005;1
+036;036 Fundación;Asimov;670;15/10/2005;3
+037;037 El Quijote;Cervantes;1000;07/10/2000;1
+038;038 Game of Thrones;George;600;08/10/2000;2
+039;039 Dune;Frank;300;09/10/2000;3
+040;040 The lord of the rings;Tolkien;1400;10/10/2000;2
+041;041 The hobbit;Tolkien;150;11/10/2000;2
+042;042 La Ilíada;Homero;400;05/01/2005;1
+043;043 Fundación;Asimov;670;15/10/2005;3
+044;044 El Quijote;Cervantes;1000;07/10/2000;1
+045;045 Game of Thrones;George;600;08/10/2000;2
+046;046 Dune;Frank;300;09/10/2000;3
+047;047 The lord of the rings;Tolkien;1400;10/10/2000;2
+048;048 The hobbit;Tolkien;150;11/10/2000;2
+049;049 La Ilíada;Homero;400;05/01/2005;1
+050;050 Fundación;Asimov;670;15/10/2005;3
+051;051 El Quijote;Cervantes;1000;07/10/2000;1
+052;052 Game of Thrones;George;600;08/10/2000;2
+053;053 Dune;Frank;300;09/10/2000;3
+054;054 The lord of the rings;Tolkien;1400;10/10/2000;2
+055;055 The hobbit;Tolkien;150;11/10/2000;2
+056;056 La Ilíada;Homero;400;05/01/2005;1
+057;057 Fundación;Asimov;670;15/10/2005;3
+058;058 El Quijote;Cervantes;1000;07/10/2000;1
+059;059 Game of Thrones;George;600;08/10/2000;2
+060;060 Dune;Frank;300;09/10/2000;3
+061;061 The lord of the rings;Tolkien;1400;10/10/2000;2
+062;062 The hobbit;Tolkien;150;11/10/2000;2
+063;063 La Ilíada;Homero;400;05/01/2005;1
+064;064 Fundación;Asimov;670;15/10/2005;3
+065;065 El Quijote;Cervantes;1000;07/10/2000;1
+066;066 Game of Thrones;George;600;08/10/2000;2
+067;067 Dune;Frank;300;09/10/2000;3
+068;068 The lord of the rings;Tolkien;1400;10/10/2000;2
+069;069 The hobbit;Tolkien;150;11/10/2000;2
+070;070 La Ilíada;Homero;400;05/01/2005;1
+071;071 Fundación;Asimov;670;15/10/2005;3
+072;072 El Quijote;Cervantes;1000;07/10/2000;1
+073;073 Game of Thrones;George;600;08/10/2000;2
+074;074 Dune;Frank;300;09/10/2000;3
+075;075 The lord of the rings;Tolkien;1400;10/10/2000;2
+076;076 The hobbit;Tolkien;150;11/10/2000;2
+077;077 La Ilíada;Homero;400;05/01/2005;1
+078;078 Fundación;Asimov;670;15/10/2005;3
+079;079 El Quijote;Cervantes;1000;07/10/2000;1
+080;080 Game of Thrones;George;600;08/10/2000;2
+081;081 Dune;Frank;300;09/10/2000;3
+082;082 The lord of the rings;Tolkien;1400;10/10/2000;2
+083;083 The hobbit;Tolkien;150;11/10/2000;2
+084;084 La Ilíada;Homero;400;05/01/2005;1
+085;085 Fundación;Asimov;670;15/10/2005;3
+086;086 El Quijote;Cervantes;1000;07/10/2000;1
+087;087 Game of Thrones;George;600;08/10/2000;2
+088;088 Dune;Frank;300;09/10/2000;3
+089;089 The lord of the rings;Tolkien;1400;10/10/2000;2
+090;090 The hobbit;Tolkien;150;11/10/2000;2
+091;091 La Ilíada;Homero;400;05/01/2005;1
+092;092 Fundación;Asimov;670;15/10/2005;3
+093;093 El Quijote;Cervantes;1000;07/10/2000;1
+094;094 Game of Thrones;George;600;08/10/2000;2
+095;095 Dune;Frank;300;09/10/2000;3
+096;096 The lord of the rings;Tolkien;1400;10/10/2000;2
+097;097 The hobbit;Tolkien;150;11/10/2000;2
+098;098 La Ilíada;Homero;400;05/01/2005;1
+099;099 Fundación;Asimov;670;15/10/2005;3
+100;100 El Quijote;Cervantes;1000;07/10/2000;1
+101;101 Game of Thrones;George;600;08/10/2000;2
+102;102 Dune;Frank;300;09/10/2000;3
+103;103 The lord of the rings;Tolkien;1400;10/10/2000;2
+104;104 The hobbit;Tolkien;150;11/10/2000;2
+105;105 La Ilíada;Homero;400;05/01/2005;1
+106;106 Fundación;Asimov;670;15/10/2005;3
+107;107 El Quijote;Cervantes;1000;07/10/2000;1
+108;108 Game of Thrones;George;600;08/10/2000;2
+109;109 Dune;Frank;300;09/10/2000;3
+110;110 The lord of the rings;Tolkien;1400;10/10/2000;2
+111;111 The hobbit;Tolkien;150;11/10/2000;2
+112;112 La Ilíada;Homero;400;05/01/2005;1
+113;113 Fundación;Asimov;670;15/10/2005;3
+114;114 El Quijote;Cervantes;1000;07/10/2000;1
+115;115 Game of Thrones;George;600;08/10/2000;2
+116;116 Dune;Frank;300;09/10/2000;3
+117;117 The lord of the rings;Tolkien;1400;10/10/2000;2
+118;118 The hobbit;Tolkien;150;11/10/2000;2
+119;119 La Ilíada;Homero;400;05/01/2005;1
+120;120 Fundación;Asimov;670;15/10/2005;3
+121;121 El Quijote;Cervantes;1000;07/10/2000;1
+122;122 Game of Thrones;George;600;08/10/2000;2
+123;123 Dune;Frank;300;09/10/2000;3
+124;124 The lord of the rings;Tolkien;1400;10/10/2000;2
+125;125 The hobbit;Tolkien;150;11/10/2000;2
+126;126 La Ilíada;Homero;400;05/01/2005;1
+127;127 Fundación;Asimov;670;15/10/2005;3
+128;128 El Quijote;Cervantes;1000;07/10/2000;1
+129;129 Game of Thrones;George;600;08/10/2000;2
+130;130 Dune;Frank;300;09/10/2000;3
+131;131 The lord of the rings;Tolkien;1400;10/10/2000;2
+132;132 The hobbit;Tolkien;150;11/10/2000;2
+133;133 La Ilíada;Homero;400;05/01/2005;1
+134;134 Fundación;Asimov;670;15/10/2005;3
+135;135 El Quijote;Cervantes;1000;07/10/2000;1
+136;136 Game of Thrones;George;600;08/10/2000;2
+137;137 Dune;Frank;300;09/10/2000;3
+138;138 The lord of the rings;Tolkien;1400;10/10/2000;2
+139;139 The hobbit;Tolkien;150;11/10/2000;2
+140;140 La Ilíada;Homero;400;05/01/2005;1
+141;141 Fundación;Asimov;670;15/10/2005;3
+142;142 El Quijote;Cervantes;1000;07/10/2000;1
+143;143 Game of Thrones;George;600;08/10/2000;2
+144;144 Dune;Frank;300;09/10/2000;3
+145;145 The lord of the rings;Tolkien;1400;10/10/2000;2
+146;146 The hobbit;Tolkien;150;11/10/2000;2
+147;147 La Ilíada;Homero;400;05/01/2005;1
+148;148 Fundación;Asimov;670;15/10/2005;3
+149;149 El Quijote;Cervantes;1000;07/10/2000;1
+150;150 Game of Thrones;George;600;08/10/2000;2
+151;151 Dune;Frank;300;09/10/2000;3
+152;152 The lord of the rings;Tolkien;1400;10/10/2000;2
+153;153 The hobbit;Tolkien;150;11/10/2000;2
+154;154 La Ilíada;Homero;400;05/01/2005;1
+155;155 Fundación;Asimov;670;15/10/2005;3
+156;156 El Quijote;Cervantes;1000;07/10/2000;1
+157;157 Game of Thrones;George;600;08/10/2000;2
+158;158 Dune;Frank;300;09/10/2000;3
+159;159 The lord of the rings;Tolkien;1400;10/10/2000;2
+160;160 The hobbit;Tolkien;150;11/10/2000;2
+161;161 La Ilíada;Homero;400;05/01/2005;1
+162;162 Fundación;Asimov;670;15/10/2005;3
+163;163 El Quijote;Cervantes;1000;07/10/2000;1
+164;164 Game of Thrones;George;600;08/10/2000;2
+165;165 Dune;Frank;300;09/10/2000;3
+166;166 The lord of the rings;Tolkien;1400;10/10/2000;2
+167;167 The hobbit;Tolkien;150;11/10/2000;2
+168;168 La Ilíada;Homero;400;05/01/2005;1
+169;169 Fundación;Asimov;670;15/10/2005;3
+170;170 El Quijote;Cervantes;1000;07/10/2000;1
+171;171 Game of Thrones;George;600;08/10/2000;2
+172;172 Dune;Frank;300;09/10/2000;3
+173;173 The lord of the rings;Tolkien;1400;10/10/2000;2
+174;174 The hobbit;Tolkien;150;11/10/2000;2
+175;175 La Ilíada;Homero;400;05/01/2005;1
+176;176 Fundación;Asimov;670;15/10/2005;3
+177;177 El Quijote;Cervantes;1000;07/10/2000;1
+178;178 Game of Thrones;George;600;08/10/2000;2
+179;179 Dune;Frank;300;09/10/2000;3
+180;180 The lord of the rings;Tolkien;1400;10/10/2000;2
+181;181 The hobbit;Tolkien;150;11/10/2000;2
+182;182 La Ilíada;Homero;400;05/01/2005;1
+183;183 Fundación;Asimov;670;15/10/2005;3
+184;184 El Quijote;Cervantes;1000;07/10/2000;1
+185;185 Game of Thrones;George;600;08/10/2000;2
+186;186 Dune;Frank;300;09/10/2000;3
+187;187 The lord of the rings;Tolkien;1400;10/10/2000;2
+188;188 The hobbit;Tolkien;150;11/10/2000;2
+189;189 La Ilíada;Homero;400;05/01/2005;1
+190;190 Fundación;Asimov;670;15/10/2005;3
+191;191 El Quijote;Cervantes;1000;07/10/2000;1
+192;192 Game of Thrones;George;600;08/10/2000;2
+193;193 Dune;Frank;300;09/10/2000;3
+194;194 The lord of the rings;Tolkien;1400;10/10/2000;2
+195;195 The hobbit;Tolkien;150;11/10/2000;2
+196;196 La Ilíada;Homero;400;05/01/2005;1
+197;197 Fundación;Asimov;670;15/10/2005;3
+198;198 El Quijote;Cervantes;1000;07/10/2000;1
+199;199 Game of Thrones;George;600;08/10/2000;2
+200;200 Dune;Frank;300;09/10/2000;3
+201;201 The lord of the rings;Tolkien;1400;10/10/2000;2
+202;202 The hobbit;Tolkien;150;11/10/2000;2
+203;203 La Ilíada;Homero;400;05/01/2005;1
+204;204 Fundación;Asimov;670;15/10/2005;3
+205;205 El Quijote;Cervantes;1000;07/10/2000;1
+206;206 Game of Thrones;George;600;08/10/2000;2
+207;207 Dune;Frank;300;09/10/2000;3
+208;208 The lord of the rings;Tolkien;1400;10/10/2000;2
+209;209 The hobbit;Tolkien;150;11/10/2000;2
+210;210 La Ilíada;Homero;400;05/01/2005;1
+211;211 Fundación;Asimov;670;15/10/2005;3
+212;212 El Quijote;Cervantes;1000;07/10/2000;1
+213;213 Game of Thrones;George;600;08/10/2000;2
+214;214 Dune;Frank;300;09/10/2000;3
+215;215 The lord of the rings;Tolkien;1400;10/10/2000;2
+216;216 The hobbit;Tolkien;150;11/10/2000;2
+217;217 La Ilíada;Homero;400;05/01/2005;1
+218;218 Fundación;Asimov;670;15/10/2005;3
+219;219 El Quijote;Cervantes;1000;07/10/2000;1
+220;220 Game of Thrones;George;600;08/10/2000;2
+221;221 Dune;Frank;300;09/10/2000;3
+222;222 The lord of the rings;Tolkien;1400;10/10/2000;2
+223;223 The hobbit;Tolkien;150;11/10/2000;2
+224;224 La Ilíada;Homero;400;05/01/2005;1
+225;225 Fundación;Asimov;670;15/10/2005;3
+226;226 El Quijote;Cervantes;1000;07/10/2000;1
+227;227 Game of Thrones;George;600;08/10/2000;2
+228;228 Dune;Frank;300;09/10/2000;3
+229;229 The lord of the rings;Tolkien;1400;10/10/2000;2
+230;230 The hobbit;Tolkien;150;11/10/2000;2
+231;231 La Ilíada;Homero;400;05/01/2005;1
+232;232 Fundación;Asimov;670;15/10/2005;3
+233;233 El Quijote;Cervantes;1000;07/10/2000;1
+234;234 Game of Thrones;George;600;08/10/2000;2
+235;235 Dune;Frank;300;09/10/2000;3
+236;236 The lord of the rings;Tolkien;1400;10/10/2000;2
+237;237 The hobbit;Tolkien;150;11/10/2000;2
+238;238 La Ilíada;Homero;400;05/01/2005;1
+239;239 Fundación;Asimov;670;15/10/2005;3
+240;240 El Quijote;Cervantes;1000;07/10/2000;1
+241;241 Game of Thrones;George;600;08/10/2000;2
+242;242 Dune;Frank;300;09/10/2000;3
+243;243 The lord of the rings;Tolkien;1400;10/10/2000;2
+244;244 The hobbit;Tolkien;150;11/10/2000;2
+245;245 La Ilíada;Homero;400;05/01/2005;1
+246;246 Fundación;Asimov;670;15/10/2005;3
+247;247 El Quijote;Cervantes;1000;07/10/2000;1
+248;248 Game of Thrones;George;600;08/10/2000;2
+249;249 Dune;Frank;300;09/10/2000;3
+250;250 The lord of the rings;Tolkien;1400;10/10/2000;2
+251;251 The hobbit;Tolkien;150;11/10/2000;2
+252;252 La Ilíada;Homero;400;05/01/2005;1
+253;253 Fundación;Asimov;670;15/10/2005;3
+254;254 El Quijote;Cervantes;1000;07/10/2000;1
+255;255 Game of Thrones;George;600;08/10/2000;2
+256;256 Dune;Frank;300;09/10/2000;3
+257;257 The lord of the rings;Tolkien;1400;10/10/2000;2
+258;258 The hobbit;Tolkien;150;11/10/2000;2
+259;259 La Ilíada;Homero;400;05/01/2005;1
+260;260 Fundación;Asimov;670;15/10/2005;3
+261;261 El Quijote;Cervantes;1000;07/10/2000;1
+262;262 Game of Thrones;George;600;08/10/2000;2
+263;263 Dune;Frank;300;09/10/2000;3
+264;264 The lord of the rings;Tolkien;1400;10/10/2000;2
+265;265 The hobbit;Tolkien;150;11/10/2000;2
+266;266 La Ilíada;Homero;400;05/01/2005;1
+267;267 Fundación;Asimov;670;15/10/2005;3
+268;268 El Quijote;Cervantes;1000;07/10/2000;1
+269;269 Game of Thrones;George;600;08/10/2000;2
+270;270 Dune;Frank;300;09/10/2000;3
+271;271 The lord of the rings;Tolkien;1400;10/10/2000;2
+272;272 The hobbit;Tolkien;150;11/10/2000;2
+273;273 La Ilíada;Homero;400;05/01/2005;1
+274;274 Fundación;Asimov;670;15/10/2005;3
+275;275 El Quijote;Cervantes;1000;07/10/2000;1
+276;276 Game of Thrones;George;600;08/10/2000;2
+277;277 Dune;Frank;300;09/10/2000;3
+278;278 The lord of the rings;Tolkien;1400;10/10/2000;2
+279;279 The hobbit;Tolkien;150;11/10/2000;2
+280;280 La Ilíada;Homero;400;05/01/2005;1
+281;281 Fundación;Asimov;670;15/10/2005;3
+282;282 El Quijote;Cervantes;1000;07/10/2000;1
+283;283 Game of Thrones;George;600;08/10/2000;2
+284;284 Dune;Frank;300;09/10/2000;3
+285;285 The lord of the rings;Tolkien;1400;10/10/2000;2
+286;286 The hobbit;Tolkien;150;11/10/2000;2
+287;287 La Ilíada;Homero;400;05/01/2005;1
+288;288 Fundación;Asimov;670;15/10/2005;3
+289;289 El Quijote;Cervantes;1000;07/10/2000;1
+290;290 Game of Thrones;George;600;08/10/2000;2
+291;291 Dune;Frank;300;09/10/2000;3
+292;292 The lord of the rings;Tolkien;1400;10/10/2000;2
+293;293 The hobbit;Tolkien;150;11/10/2000;2
+294;294 La Ilíada;Homero;400;05/01/2005;1
+295;295 Fundación;Asimov;670;15/10/2005;3
+296;296 El Quijote;Cervantes;1000;07/10/2000;1
+297;297 Game of Thrones;George;600;08/10/2000;2
+298;298 Dune;Frank;300;09/10/2000;3
+299;299 The lord of the rings;Tolkien;1400;10/10/2000;2
+300;300 The hobbit;Tolkien;150;11/10/2000;2
+301;301 La Ilíada;Homero;400;05/01/2005;1
+302;302 Fundación;Asimov;670;15/10/2005;3
+303;303 El Quijote;Cervantes;1000;07/10/2000;1
+304;304 Game of Thrones;George;600;08/10/2000;2
+305;305 Dune;Frank;300;09/10/2000;3
+306;306 The lord of the rings;Tolkien;1400;10/10/2000;2
+307;307 The hobbit;Tolkien;150;11/10/2000;2
+308;308 La Ilíada;Homero;400;05/01/2005;1
+309;309 Fundación;Asimov;670;15/10/2005;3
+310;310 El Quijote;Cervantes;1000;07/10/2000;1
+311;311 Game of Thrones;George;600;08/10/2000;2
+312;312 Dune;Frank;300;09/10/2000;3
+313;313 The lord of the rings;Tolkien;1400;10/10/2000;2
+314;314 The hobbit;Tolkien;150;11/10/2000;2
+315;315 La Ilíada;Homero;400;05/01/2005;1
+316;316 Fundación;Asimov;670;15/10/2005;3
+317;317 El Quijote;Cervantes;1000;07/10/2000;1
+318;318 Game of Thrones;George;600;08/10/2000;2
+319;319 Dune;Frank;300;09/10/2000;3
+320;320 The lord of the rings;Tolkien;1400;10/10/2000;2
+321;321 The hobbit;Tolkien;150;11/10/2000;2
+322;322 La Ilíada;Homero;400;05/01/2005;1
+323;323 Fundación;Asimov;670;15/10/2005;3
+324;324 El Quijote;Cervantes;1000;07/10/2000;1
+325;325 Game of Thrones;George;600;08/10/2000;2
+326;326 Dune;Frank;300;09/10/2000;3
+327;327 The lord of the rings;Tolkien;1400;10/10/2000;2
+328;328 The hobbit;Tolkien;150;11/10/2000;2
+329;329 La Ilíada;Homero;400;05/01/2005;1
+330;330 Fundación;Asimov;670;15/10/2005;3
+331;331 El Quijote;Cervantes;1000;07/10/2000;1
+332;332 Game of Thrones;George;600;08/10/2000;2
+333;333 Dune;Frank;300;09/10/2000;3
+334;334 The lord of the rings;Tolkien;1400;10/10/2000;2
+335;335 The hobbit;Tolkien;150;11/10/2000;2
+336;336 La Ilíada;Homero;400;05/01/2005;1
+337;337 Fundación;Asimov;670;15/10/2005;3
+338;338 El Quijote;Cervantes;1000;07/10/2000;1
+339;339 Game of Thrones;George;600;08/10/2000;2
+340;340 Dune;Frank;300;09/10/2000;3
+341;341 The lord of the rings;Tolkien;1400;10/10/2000;2
+342;342 The hobbit;Tolkien;150;11/10/2000;2
+343;343 La Ilíada;Homero;400;05/01/2005;1
+344;344 Fundación;Asimov;670;15/10/2005;3
+345;345 El Quijote;Cervantes;1000;07/10/2000;1
+346;346 Game of Thrones;George;600;08/10/2000;2
+347;347 Dune;Frank;300;09/10/2000;3
+348;348 The lord of the rings;Tolkien;1400;10/10/2000;2
+349;349 The hobbit;Tolkien;150;11/10/2000;2
+350;350 La Ilíada;Homero;400;05/01/2005;1
+351;351 Fundación;Asimov;670;15/10/2005;3
+352;352 El Quijote;Cervantes;1000;07/10/2000;1
+353;353 Game of Thrones;George;600;08/10/2000;2
+354;354 Dune;Frank;300;09/10/2000;3
+355;355 The lord of the rings;Tolkien;1400;10/10/2000;2
+356;356 The hobbit;Tolkien;150;11/10/2000;2
+357;357 La Ilíada;Homero;400;05/01/2005;1
+358;358 Fundación;Asimov;670;15/10/2005;3
+359;359 El Quijote;Cervantes;1000;07/10/2000;1
+360;360 Game of Thrones;George;600;08/10/2000;2
+361;361 Dune;Frank;300;09/10/2000;3
+362;362 The lord of the rings;Tolkien;1400;10/10/2000;2
+363;363 The hobbit;Tolkien;150;11/10/2000;2
+364;364 La Ilíada;Homero;400;05/01/2005;1
+365;365 Fundación;Asimov;670;15/10/2005;3
+366;366 El Quijote;Cervantes;1000;07/10/2000;1
+367;367 Game of Thrones;George;600;08/10/2000;2
+368;368 Dune;Frank;300;09/10/2000;3
+369;369 The lord of the rings;Tolkien;1400;10/10/2000;2
+370;370 The hobbit;Tolkien;150;11/10/2000;2
+371;371 La Ilíada;Homero;400;05/01/2005;1
+372;372 Fundación;Asimov;670;15/10/2005;3
+373;373 El Quijote;Cervantes;1000;07/10/2000;1
+374;374 Game of Thrones;George;600;08/10/2000;2
+375;375 Dune;Frank;300;09/10/2000;3
+376;376 The lord of the rings;Tolkien;1400;10/10/2000;2
+377;377 The hobbit;Tolkien;150;11/10/2000;2
+378;378 La Ilíada;Homero;400;05/01/2005;1
+379;379 Fundación;Asimov;670;15/10/2005;3
+380;380 El Quijote;Cervantes;1000;07/10/2000;1
+381;381 Game of Thrones;George;600;08/10/2000;2
+382;382 Dune;Frank;300;09/10/2000;3
+383;383 The lord of the rings;Tolkien;1400;10/10/2000;2
+384;384 The hobbit;Tolkien;150;11/10/2000;2
+385;385 La Ilíada;Homero;400;05/01/2005;1
+386;386 Fundación;Asimov;670;15/10/2005;3
+387;387 El Quijote;Cervantes;1000;07/10/2000;1
+388;388 Game of Thrones;George;600;08/10/2000;2
+389;389 Dune;Frank;300;09/10/2000;3
+390;390 The lord of the rings;Tolkien;1400;10/10/2000;2
+391;391 The hobbit;Tolkien;150;11/10/2000;2
+392;392 La Ilíada;Homero;400;05/01/2005;1
+393;393 Fundación;Asimov;670;15/10/2005;3
+394;394 El Quijote;Cervantes;1000;07/10/2000;1
+395;395 Game of Thrones;George;600;08/10/2000;2
+396;396 Dune;Frank;300;09/10/2000;3
+397;397 The lord of the rings;Tolkien;1400;10/10/2000;2
+398;398 The hobbit;Tolkien;150;11/10/2000;2
+399;399 La Ilíada;Homero;400;05/01/2005;1
+400;400 Fundación;Asimov;670;15/10/2005;3
+401;401 El Quijote;Cervantes;1000;07/10/2000;1
+402;402 Game of Thrones;George;600;08/10/2000;2
+403;403 Dune;Frank;300;09/10/2000;3
+404;404 The lord of the rings;Tolkien;1400;10/10/2000;2
+405;405 The hobbit;Tolkien;150;11/10/2000;2
+406;406 La Ilíada;Homero;400;05/01/2005;1
+407;407 Fundación;Asimov;670;15/10/2005;3
+408;408 El Quijote;Cervantes;1000;07/10/2000;1
+409;409 Game of Thrones;George;600;08/10/2000;2
+410;410 Dune;Frank;300;09/10/2000;3
+411;411 The lord of the rings;Tolkien;1400;10/10/2000;2
+412;412 The hobbit;Tolkien;150;11/10/2000;2
+413;413 La Ilíada;Homero;400;05/01/2005;1
+414;414 Fundación;Asimov;670;15/10/2005;3
+415;415 El Quijote;Cervantes;1000;07/10/2000;1
+416;416 Game of Thrones;George;600;08/10/2000;2
+417;417 Dune;Frank;300;09/10/2000;3
+418;418 The lord of the rings;Tolkien;1400;10/10/2000;2
+419;419 The hobbit;Tolkien;150;11/10/2000;2
+420;420 La Ilíada;Homero;400;05/01/2005;1
+421;421 Fundación;Asimov;670;15/10/2005;3
+422;422 El Quijote;Cervantes;1000;07/10/2000;1
+423;423 Game of Thrones;George;600;08/10/2000;2
+424;424 Dune;Frank;300;09/10/2000;3
+425;425 The lord of the rings;Tolkien;1400;10/10/2000;2
+426;426 The hobbit;Tolkien;150;11/10/2000;2
+427;427 La Ilíada;Homero;400;05/01/2005;1
+428;428 Fundación;Asimov;670;15/10/2005;3
+429;429 El Quijote;Cervantes;1000;07/10/2000;1
+430;430 Game of Thrones;George;600;08/10/2000;2
+431;431 Dune;Frank;300;09/10/2000;3
+432;432 The lord of the rings;Tolkien;1400;10/10/2000;2
+433;433 The hobbit;Tolkien;150;11/10/2000;2
+434;434 La Ilíada;Homero;400;05/01/2005;1
+435;435 Fundación;Asimov;670;15/10/2005;3
+436;436 El Quijote;Cervantes;1000;07/10/2000;1
+437;437 Game of Thrones;George;600;08/10/2000;2
+438;438 Dune;Frank;300;09/10/2000;3
+439;439 The lord of the rings;Tolkien;1400;10/10/2000;2
+440;440 The hobbit;Tolkien;150;11/10/2000;2
+441;441 La Ilíada;Homero;400;05/01/2005;1
+442;442 Fundación;Asimov;670;15/10/2005;3
+443;443 El Quijote;Cervantes;1000;07/10/2000;1
+444;444 Game of Thrones;George;600;08/10/2000;2
+445;445 Dune;Frank;300;09/10/2000;3
+446;446 The lord of the rings;Tolkien;1400;10/10/2000;2
+447;447 The hobbit;Tolkien;150;11/10/2000;2
+448;448 La Ilíada;Homero;400;05/01/2005;1
+449;449 Fundación;Asimov;670;15/10/2005;3
+450;450 El Quijote;Cervantes;1000;07/10/2000;1
+451;451 Game of Thrones;George;600;08/10/2000;2
+452;452 Dune;Frank;300;09/10/2000;3
+453;453 The lord of the rings;Tolkien;1400;10/10/2000;2
+454;454 The hobbit;Tolkien;150;11/10/2000;2
+455;455 La Ilíada;Homero;400;05/01/2005;1
+456;456 Fundación;Asimov;670;15/10/2005;3
+457;457 El Quijote;Cervantes;1000;07/10/2000;1
+458;458 Game of Thrones;George;600;08/10/2000;2
+459;459 Dune;Frank;300;09/10/2000;3
+460;460 The lord of the rings;Tolkien;1400;10/10/2000;2
+461;461 The hobbit;Tolkien;150;11/10/2000;2
+462;462 La Ilíada;Homero;400;05/01/2005;1
+463;463 Fundación;Asimov;670;15/10/2005;3
+464;464 El Quijote;Cervantes;1000;07/10/2000;1
+465;465 Game of Thrones;George;600;08/10/2000;2
+466;466 Dune;Frank;300;09/10/2000;3
+467;467 The lord of the rings;Tolkien;1400;10/10/2000;2
+468;468 The hobbit;Tolkien;150;11/10/2000;2
+469;469 La Ilíada;Homero;400;05/01/2005;1
+470;470 Fundación;Asimov;670;15/10/2005;3
+471;471 El Quijote;Cervantes;1000;07/10/2000;1
+472;472 Game of Thrones;George;600;08/10/2000;2
+473;473 Dune;Frank;300;09/10/2000;3
+474;474 The lord of the rings;Tolkien;1400;10/10/2000;2
+475;475 The hobbit;Tolkien;150;11/10/2000;2
+476;476 La Ilíada;Homero;400;05/01/2005;1
+477;477 Fundación;Asimov;670;15/10/2005;3
+478;478 El Quijote;Cervantes;1000;07/10/2000;1
+479;479 Game of Thrones;George;600;08/10/2000;2
+480;480 Dune;Frank;300;09/10/2000;3
+481;481 The lord of the rings;Tolkien;1400;10/10/2000;2
+482;482 The hobbit;Tolkien;150;11/10/2000;2
+483;483 La Ilíada;Homero;400;05/01/2005;1
+484;484 Fundación;Asimov;670;15/10/2005;3
+485;485 El Quijote;Cervantes;1000;07/10/2000;1
+486;486 Game of Thrones;George;600;08/10/2000;2
+487;487 Dune;Frank;300;09/10/2000;3
+488;488 The lord of the rings;Tolkien;1400;10/10/2000;2
+489;489 The hobbit;Tolkien;150;11/10/2000;2
+490;490 La Ilíada;Homero;400;05/01/2005;1
+491;491 Fundación;Asimov;670;15/10/2005;3
+492;492 El Quijote;Cervantes;1000;07/10/2000;1
+493;493 Game of Thrones;George;600;08/10/2000;2
+494;494 Dune;Frank;300;09/10/2000;3
+495;495 The lord of the rings;Tolkien;1400;10/10/2000;2
+496;496 The hobbit;Tolkien;150;11/10/2000;2
+497;497 La Ilíada;Homero;400;05/01/2005;1
+498;498 Fundación;Asimov;670;15/10/2005;3
+499;499 El Quijote;Cervantes;1000;07/10/2000;1
+500;500 Game of Thrones;George;600;08/10/2000;2
+501;501 Dune;Frank;300;09/10/2000;3
+502;502 The lord of the rings;Tolkien;1400;10/10/2000;2
+503;503 The hobbit;Tolkien;150;11/10/2000;2
+504;504 La Ilíada;Homero;400;05/01/2005;1
+505;505 Fundación;Asimov;670;15/10/2005;3
+506;506 El Quijote;Cervantes;1000;07/10/2000;1
+507;507 Game of Thrones;George;600;08/10/2000;2
+508;508 Dune;Frank;300;09/10/2000;3
+509;509 The lord of the rings;Tolkien;1400;10/10/2000;2
+510;510 The hobbit;Tolkien;150;11/10/2000;2
+511;511 La Ilíada;Homero;400;05/01/2005;1
+512;512 Fundación;Asimov;670;15/10/2005;3
+513;513 El Quijote;Cervantes;1000;07/10/2000;1
+514;514 Game of Thrones;George;600;08/10/2000;2
+515;515 Dune;Frank;300;09/10/2000;3
+516;516 The lord of the rings;Tolkien;1400;10/10/2000;2
+517;517 The hobbit;Tolkien;150;11/10/2000;2
+518;518 La Ilíada;Homero;400;05/01/2005;1
+519;519 Fundación;Asimov;670;15/10/2005;3
+520;520 El Quijote;Cervantes;1000;07/10/2000;1
+521;521 Game of Thrones;George;600;08/10/2000;2
+522;522 Dune;Frank;300;09/10/2000;3
+523;523 The lord of the rings;Tolkien;1400;10/10/2000;2
+524;524 The hobbit;Tolkien;150;11/10/2000;2
+525;525 La Ilíada;Homero;400;05/01/2005;1
+526;526 Fundación;Asimov;670;15/10/2005;3
+527;527 El Quijote;Cervantes;1000;07/10/2000;1
+528;528 Game of Thrones;George;600;08/10/2000;2
+529;529 Dune;Frank;300;09/10/2000;3
+530;530 The lord of the rings;Tolkien;1400;10/10/2000;2
+531;531 The hobbit;Tolkien;150;11/10/2000;2
+532;532 La Ilíada;Homero;400;05/01/2005;1
+533;533 Fundación;Asimov;670;15/10/2005;3
+534;534 El Quijote;Cervantes;1000;07/10/2000;1
+535;535 Game of Thrones;George;600;08/10/2000;2
+536;536 Dune;Frank;300;09/10/2000;3
+537;537 The lord of the rings;Tolkien;1400;10/10/2000;2
+538;538 The hobbit;Tolkien;150;11/10/2000;2
+539;539 La Ilíada;Homero;400;05/01/2005;1
+540;540 Fundación;Asimov;670;15/10/2005;3
+541;541 El Quijote;Cervantes;1000;07/10/2000;1
+542;542 Game of Thrones;George;600;08/10/2000;2
+543;543 Dune;Frank;300;09/10/2000;3
+544;544 The lord of the rings;Tolkien;1400;10/10/2000;2
+545;545 The hobbit;Tolkien;150;11/10/2000;2
+546;546 La Ilíada;Homero;400;05/01/2005;1
+547;547 Fundación;Asimov;670;15/10/2005;3
+548;548 El Quijote;Cervantes;1000;07/10/2000;1
+549;549 Game of Thrones;George;600;08/10/2000;2
+550;550 Dune;Frank;300;09/10/2000;3
+551;551 The lord of the rings;Tolkien;1400;10/10/2000;2
+552;552 The hobbit;Tolkien;150;11/10/2000;2
+553;553 La Ilíada;Homero;400;05/01/2005;1
+554;554 Fundación;Asimov;670;15/10/2005;3
+555;555 El Quijote;Cervantes;1000;07/10/2000;1
+556;556 Game of Thrones;George;600;08/10/2000;2
+557;557 Dune;Frank;300;09/10/2000;3
+558;558 The lord of the rings;Tolkien;1400;10/10/2000;2
+559;559 The hobbit;Tolkien;150;11/10/2000;2
+560;560 La Ilíada;Homero;400;05/01/2005;1
+561;561 Fundación;Asimov;670;15/10/2005;3
