@@ -20,9 +20,13 @@ class Platform(MetaProcessor):
             return 'Boolean'
         elif type=='date':
             return 'Date'
+        elif type=='image':
+            return False
         else:
             print("Error: unknown property type: " + type)
             sys.exit()
+
+        return True
         
     def preprocessPrimaryKeys(self,primaryKeys,properties):
         """docstring for preprocessPrimaryKeys"""
@@ -48,7 +52,10 @@ class Platform(MetaProcessor):
         if 'default' in property:
             property['_has_default_'] = True
      
+     
         property['type'] = self.preprocessType(type)
+        if not property['type']:
+            return False
                         
         return True
    
@@ -93,7 +100,7 @@ class Platform(MetaProcessor):
             propertiesToDelete = []
             for property in properties:
                 keepProperty = self.preprocessProperty(property,hash,hashes)
-                if not keepProperty:
+                if keepProperty==False:
                     propertiesToDelete.append(property)
             
             for property in propertiesToDelete:
