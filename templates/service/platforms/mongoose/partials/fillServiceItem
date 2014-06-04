@@ -1,69 +1,76 @@
 var serviceItem = {}
 
-{{#model.properties}}
+{{#properties}}
 {{^type_date}}
 serviceItem.{{destination}} = item.{{name}}
 {{/type_date}}
 {{#type_date}}
 serviceItem.{{destination}} = moment(item.{{name}}).format("{{format}}")
 {{/type_date}}
-{{/model.properties}}
+{{/properties}}
 
-{{#model.relationships}}
+{{#relationships}}
 {{#_toMany_}}
-var populated = item.{{name}};
-var related = [];
+var unpopulated = item.{{name}};
+var populated = [];
 
-var fillRelated = function(populated,related,serviceItem) {
-	if (populated instanceof Array) {
-		for (var index=0;index<populated.length;index++) {
-			var populatedObj = populated[index];
-			var relatedObj = {};
-		
+var fillRelated = function(model,path,item,serviceItem,serviceItem) {
+
+	var promise = model.populate(item,{ path: path });
+	
+	if (item instanceof Array) {
+		var items = item;
+		for (var index=0;index<items.length;index++) {
+			var item = items[index];
+			
+			{{> fillServiceItem}}
+			
+			var serviceItemObj = {};
+
 			{{#properties}}
-				relatedObj.{{destination}} = populatedObj.{{name}};
+				serviceItemObj.{{destination}} = item.{{name}};
 			{{/properties}}
 
-			related.push(relatedObj);
+			serviceItem.push(serviceItemObj);
 		}
 	}
 	else {
 		{{#properties}}
-			related.{{destination}} = populated.{{name}};
+			serviceItem.{{destination}} = item.{{name}};
 		{{/properties}}
 	}
 
-	serviceItem.{{name}} = related;
+	serviceItem.{{name}} = serviceItem;
 	contentObject.{{key}}.push(serviceItem);
 	finished(null);
 };
 
-if (populated.length==0) {
-	{{entityName}}.find({ {{inverse}}: item.{{#model.primaryKeys}}{{name}}{{/model.primaryKeys}} }).exec(function (err, items) {
+if (unpopulated.length==0) {
+	{{entityName}}.find({ {{inverse}}: item.{{#primaryKeys}}{{name}}{{/primaryKeys}} }).exec(function (err, items) {
 		if (err) {
 			res.send({"result": "1", "errorMessage":err.message});
 		}
 		else {
-			populated = items;
+			unpopulated = items;
 		}
 		
-		fillRelated(populated,related,serviceItem);
+		fillRelated({{model.entityName}},"{{#relationships}}{{name}}{{^_last_}} {{/_last_}}{{/relationships}}",unpopulated,populated,serviceItem);
 	});
 }
 else {
-	fillRelated(populated,related,serviceItem);
+	fillRelated({{model.entityName}},"{{#relationships}}{{name}}{{^_last_}} {{/_last_}}{{/relationships}}",unpopulated,populated,serviceItem);
 }
 {{/_toMany_}}
 {{^_toMany_}}
-var populated = item.{{name}};
-var related = {};
+var unpopulated = item.{{name}};
+var populated = {};
 {{#properties}}
-related.{{destination}} = populated.{{name}};
+populated.{{destination}} = unpopulated.{{name}};
 {{/properties}}
-serviceItem.{{name}} = related;
+serviceItem.{{name}} = populated;
 contentObject.{{key}}.push(serviceItem);
 finished(null);
 {{/_toMany_}}
-{{/model.relationships}}
+{{/relationships}}
 
 

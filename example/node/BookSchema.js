@@ -8,5 +8,6 @@ module.exports.schema = mongoose.Schema({
 	numPages: { type: Number },
 	purchaseDate: { type: Date },
 	deleted: { type: Boolean,default: false },
-	category : { type: Number, ref: 'Category' }
+	category : { type: Number, ref: 'Category' },
+	cover : { type: Number, ref: 'Cover' }
 })

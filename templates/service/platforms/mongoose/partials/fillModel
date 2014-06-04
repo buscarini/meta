@@ -1,0 +1,58 @@
+{{#properties}}
+{{^type_date}}
+populated.{{destination}} = unpopulated.{{name}}
+{{/type_date}}
+{{#type_date}}
+populated.{{destination}} = moment(unpopulated.{{name}}).format("{{format}}")
+{{/type_date}}
+{{/properties}}
+
+{{#relationships}}
+{{#_toMany_}}
+var relatedUnpopulated = unpopulated.{{name}};
+var relatedPopulated = [];
+
+var fillRelated{{entityName}} = function(model,path,relatedUnpopulated,relatedPopulated,parent) {
+
+	var promise = model.populate(relatedUnpopulated,{ path: path });
+	
+	if (!(relatedUnpopulated instanceof Array)) {
+		relatedUnpopulated = [relatedUnpopulated]
+	}
+	
+	for (var index=0;index<relatedUnpopulated.length;index++) {
+		var unpopulated = relatedUnpopulated[index];
+		var populated = {}
+		
+		{{> fillModel}}
+
+		relatedPopulated.push(populated);
+	}
+
+	parent.{{name}} = relatedPopulated;
+	finished(null);
+};
+
+if (relatedUnpopulated.length==0) {
+	{{entityName}}.find({ {{inverse}}: item.{{#primaryKeys}}{{name}}{{/primaryKeys}} }).exec(function (err, items) {
+		if (err) {
+			res.send({"result": "1", "errorMessage":err.message});
+		}
+		else {
+			relatedUnpopulated = items;
+		}
+		
+		fillRelated({{model.entityName}},"{{#relationships}}{{name}}{{^_last_}} {{/_last_}}{{/relationships}}",relatedUnpopulated,relatedPopulated,populated);
+	});
+}
+else {
+	fillRelated({{model.entityName}},"{{#relationships}}{{name}}{{^_last_}} {{/_last_}}{{/relationships}}",relatedUnpopulated,relatedPopulated,populated);
+}
+{{/_toMany_}}
+{{^_toMany_}}
+var relatedUnpopulated = item.{{name}};
+var relatedPopulated = {};
+{{> fillModel}}
+finished(null);
+{{/_toMany_}}
+{{/relationships}}

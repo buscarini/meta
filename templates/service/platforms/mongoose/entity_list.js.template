@@ -96,7 +96,7 @@ module.exports.findAll = function(req, res,callback) {
 		{{/model.filters}}
 	})
 	.sort({ {{#model.sortBy}} {{property}} : {{ascending}}{{^_last_}},{{/_last_}} {{/model.sortBy}} })
-	.populate('{{#model.relationships}}{{name}}{{^_last_}} {{/_last_}}{{/model.relationships}}')
+	// .populate('{{#model.relationships}}{{name}}{{^_last_}} {{/_last_}}{{/model.relationships}}')
 	.exec(function (err, items) {
 		if (!err) {
 			contentObject.{{key}} = new Array();
@@ -108,9 +108,13 @@ module.exports.findAll = function(req, res,callback) {
 				}
 			};
 			
-			items.forEach(function(item) {
-				{{> fillServiceItem}}
+			{{#model}}
+			items.forEach(function(unpopulated) {
+				var populated = {}
+				{{> fillModel}}
+				content.{{key}}.push(populated);
 			})
+			{{/model}}
 		}
 	})
 	

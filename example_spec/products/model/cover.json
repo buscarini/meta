@@ -12,7 +12,7 @@
 			"required" : true
 		},
 		{
-			"name" : "url",
+			"name" : "imageUrl",
 			"type" : "url"
 		},
 		{

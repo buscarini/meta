@@ -6,16 +6,20 @@ var bookImporter = require('./BookImporter')
 var books_list = require('./BooksService_list')
 var categoryImporter = require('./CategoryImporter')
 var categories_list = require('./CategoriesService_list')
+
+var coverImporter = require('./CoverImporter')
+
 var fs = require('fs')
 	
 var app = express();
 
 var booksCSVFile = __dirname+"/books.csv";
 var categoriesCSVFile = __dirname+"/categories.csv";
+var coversCSVFile = __dirname+"/covers.csv";
 
 app.get('/import', function(req, res) {
 
-	var numTasks = 2;
+	var numTasks = 3;
 	
 	var finished = function(response) {
 		if (numTasks>0) return;
@@ -23,7 +27,6 @@ app.get('/import', function(req, res) {
 	}
 	
 	bookImporter.importFile(booksCSVFile,function(err,books) {
-
 		var response = ''
 		
 		if (!err) {
@@ -37,12 +40,24 @@ app.get('/import', function(req, res) {
 	})
 	
 	categoryImporter.importFile(categoriesCSVFile,function(err,categories) {
-
 		var response = ''
 		
 		if (!err) {
 			categories.forEach(function(category) {
 				response = response + category.id + " " + category.title + "</br>"
+			});
+		}
+		
+		numTasks--;
+		finished(response);
+	})
+	
+	coverImporter.importFile(coversCSVFile,function(err,covers) {
+		var response = ''
+		
+		if (!err) {
+			covers.forEach(function(cover) {
+				response = response + cover.id + " " + cover.url + "</br>"
 			});
 		}
 		
@@ -68,6 +83,18 @@ fs.watchFile(categoriesCSVFile, function(curr,prev) {
 	if (prev.mtime.getTime()!=curr.mtime.getTime()) {
 		console.log("importing csv")
 		categoryImporter.importFile(categoriesCSVFile,function(err,books) {
+			if (err) {
+				console.log(err);
+			}
+		});		
+	}
+});
+
+fs.watchFile(coversCSVFile, function(curr,prev) {
+	console.log("watching file")
+	if (prev.mtime.getTime()!=curr.mtime.getTime()) {
+		console.log("importing csv")
+		coverImporter.importFile(coversCSVFile,function(err,covers) {
 			if (err) {
 				console.log(err);
 			}
