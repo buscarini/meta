@@ -8,7 +8,7 @@ class Platform(MetaProcessor):
     
     def preprocessType(self,type):
         """docstring for preprocessType"""
-        if type=='string':
+        if type=='string' or type=='url':
             return 'String'
         elif type=='integer':
             return 'Number'

@@ -83,6 +83,32 @@
 							"destination" : "deleted",
 							"type" : "bool"
 						}
+					],
+					"relationships" : [
+						{
+							"name" : "cover",
+							"entityName" : "Cover",
+							"type" : "toOne",
+							"inverse" : "book",
+							"primaryKeys" : [
+								{
+									"name" : "id"
+								}
+							],
+							"properties" : [
+								{
+									"name" : "id",
+									"destination" : "id",
+									"type" : "integer",
+									"required" : true
+								},
+								{
+									"name" : "url",
+									"destination" : "imageUrl",
+									"type" : "url"
+								}
+							]
+						}
 					]
 				}
 			]

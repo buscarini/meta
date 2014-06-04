@@ -36,37 +36,29 @@ class GlobalPlatform(MetaProcessor):
         property['type_' + type] = True
      
         if type=='string':
-            property['type'] = 'NSString'
+            property['type'] = 'String'
             property['object'] = True
-            property['storage'] = 'copy'
         elif type=='integer':
-            property['type'] = 'NSInteger'
+            property['type'] = 'Int'
             property['object'] = False
-            property['storage'] = 'assign'
         elif type=='float':
-            property['type'] = 'CGFloat'
+            property['type'] = 'Float'
             property['object'] = False
-            property['storage'] = 'assign'
         elif type=='double':
-            property['type'] = 'double'
+            property['type'] = 'Double'
             property['object'] = False
-            property['storage'] = 'assign'            
         elif type=='bool':
-            property['type'] = 'BOOL'
+            property['type'] = 'Bool'
             property['object'] = False
-            property['storage'] = 'assign'
         elif type=='date':
             property['type'] = 'NSDate'
             property['object'] = True
-            property['storage'] = 'strong'
         elif type=='url':
             property['type'] = 'NSURL'
             property['object'] = True
-            property['storage'] = 'strong'
         elif type=='image':
             property['type'] = 'BMFIXImage'
             property['object'] = True
-            property['storage'] = 'strong'
         else:
             raise SyntaxError("Unknown property type: " + type)
     

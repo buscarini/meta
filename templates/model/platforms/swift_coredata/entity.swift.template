@@ -1,0 +1,9 @@
+// Generated Automatically: Any changes will be overwritten
+
+import "{{> entityName}}.h"
+
+#import <MagicalRecord/CoreData+MagicalRecord.h>
+
+class {{> entityName}} : _{{> entityName}} {
+
+}

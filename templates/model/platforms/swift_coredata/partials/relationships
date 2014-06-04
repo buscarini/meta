@@ -1,0 +1,3 @@
+{{#relationships}}
+@property (nonatomic, strong) {{type}} *{{name}};
+{{/relationships}}

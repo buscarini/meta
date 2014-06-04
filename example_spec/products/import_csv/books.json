@@ -36,6 +36,12 @@
 			"type" : "relationship",
 			"entityName" : "Category",
 			"required" : true
+		},
+		{
+			"name" : "cover",
+			"type" : "relationship",
+			"entityName" : "Cover",
+			"required" : false
 		}
 	]
 }

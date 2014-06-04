@@ -1,0 +1,3 @@
+{{#properties}}
+var {{name}}:{{> type}}{{#default}}= {{default}}{{/default}}
+{{/properties}}

@@ -1,0 +1,4 @@
+{{#forward_classes}}
+@class {{class}};
+{{/forward_classes}}
+@class {{#relationships}}{{entityName}}{{^_last_}}, {{/_last_}}{{/relationships}};

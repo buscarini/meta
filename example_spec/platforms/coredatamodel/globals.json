@@ -1,3 +1,4 @@
 {
-	"prefix" : "TRN"
+	"prefix" : "TRN",
+	"allowExternalStorage" : true
 }

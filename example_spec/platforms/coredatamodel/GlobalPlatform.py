@@ -27,7 +27,7 @@ class GlobalPlatform(MetaProcessor):
         return hashDic
         
     def platformTypeForType(self,type):
-        if type=='string':
+        if type=='string' or type=='url':
             return 'String'
         elif type=='integer':
             return 'Integer 32'
@@ -39,6 +39,8 @@ class GlobalPlatform(MetaProcessor):
             return 'Boolean'
         elif type=='date':
             return 'Date'
+        elif type=='image':
+            return 'Binary'
         else:
             return None
             

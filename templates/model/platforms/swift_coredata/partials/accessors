@@ -1,0 +1,13 @@
+{{#properties}}
+- (void) set{{_capitalized_}}:({{> type}}) {{name}} {
+	[self willChangeValueForKey:@"{{name}}"];
+	if (_{{name}}!={{name}}) {
+		_{{name}} = {{name}};
+	}
+	[self didChangeValueForKey:@"{{name}}"];
+}
+
+- ({{> type}}) {{name}} {
+	return _{{name}};
+}
+{{/properties}}
