@@ -18,7 +18,7 @@ module.exports.findOneCategory = function(req, res,callback) {
 	var Category = mongoose.model('Category', CategorySchema.schema)
 
 	Category.find({
-		_id : req._id
+		id : req.id
 	})
 	//.populate('')
 	.exec(function (err, items) {
@@ -45,8 +45,10 @@ module.exports.findOneCategory = function(req, res,callback) {
 			
 			items.forEach(function(unpopulated) {
 				var populated = {}
-				populated.id = unpopulated._id
+				populated.id = unpopulated.id
 				populated.title = unpopulated.title
+
+				var promise = Category.populate(unpopulated,{ path: "" });
 
 				content.categories.push(populated);
 				//
@@ -61,7 +63,7 @@ module.exports.findOneBook = function(req, res,callback) {
 	var Category = mongoose.model('Category', CategorySchema.schema)
 
 	Book.find({
-		_id : req._id,
+		id : req.id,
 		deleted : { $eq: false }
 	})
 	//.populate('category')
@@ -89,20 +91,30 @@ module.exports.findOneBook = function(req, res,callback) {
 			
 			items.forEach(function(unpopulated) {
 				var populated = {}
-				populated.id = unpopulated._id
+				populated.id = unpopulated.id
 				populated.title = unpopulated.title
 				populated.author = unpopulated.author
 				populated.numPages = unpopulated.numPages
 				populated.purchaseDate = moment(unpopulated.purchaseDate).format("DD.MM.YYYY")
 				populated.deleted = unpopulated.deleted
 
-				var promise = Category.populate(unpopulated,{ path: "" });
-				var relatedUnpopulated = unpopulated.category;
-				var relatedPopulated = {};
-				populated.category = relatedPopulated;
-				populated.id = unpopulated._id
+				var promise = Book.populate(unpopulated,{ path: "category" });
 
-				finished(null);
+				var fillRelatedCategory = function(relatedUnpopulated,relatedPopulated,parent) {
+					var relatedUnpopulated = unpopulated.category;
+					var relatedPopulated = {};
+					populated.id = unpopulated.id
+
+					var promise = Category.populate(unpopulated,{ path: "" });
+
+					
+					parent.category = relatedPopulated;
+					
+					finished(null);	
+				}
+
+				fillRelatedCategory(relatedUnpopulated,relatedPopulated,populated);
+
 				content.books.push(populated);
 				//
 			})
@@ -153,8 +165,10 @@ module.exports.findAll = function(req, res,callback) {
 			
 			items.forEach(function(unpopulated) {
 				var populated = {}
-				populated.id = unpopulated._id
+				populated.id = unpopulated.id
 				populated.title = unpopulated.title
+
+				var promise = Category.populate(unpopulated,{ path: "" });
 
 				contentObject.categories.push(populated);
 			})
@@ -184,20 +198,30 @@ module.exports.findAll = function(req, res,callback) {
 			
 			items.forEach(function(unpopulated) {
 				var populated = {}
-				populated.id = unpopulated._id
+				populated.id = unpopulated.id
 				populated.title = unpopulated.title
 				populated.author = unpopulated.author
 				populated.numPages = unpopulated.numPages
 				populated.purchaseDate = moment(unpopulated.purchaseDate).format("DD.MM.YYYY")
 				populated.deleted = unpopulated.deleted
 
-				var promise = Category.populate(unpopulated,{ path: "" });
-				var relatedUnpopulated = unpopulated.category;
-				var relatedPopulated = {};
-				populated.category = relatedPopulated;
-				populated.id = unpopulated._id
+				var promise = Book.populate(unpopulated,{ path: "category" });
 
-				finished(null);
+				var fillRelatedCategory = function(relatedUnpopulated,relatedPopulated,parent) {
+					var relatedUnpopulated = unpopulated.category;
+					var relatedPopulated = {};
+					populated.id = unpopulated.id
+
+					var promise = Category.populate(unpopulated,{ path: "" });
+
+					
+					parent.category = relatedPopulated;
+					
+					finished(null);	
+				}
+
+				fillRelatedCategory(relatedUnpopulated,relatedPopulated,populated);
+
 				contentObject.books.push(populated);
 			})
 		}

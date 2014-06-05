@@ -61,6 +61,10 @@ class Platform(MetaProcessor):
                 relationship['_toMany_'] = False
                 if type=='toMany':
                     relationship['_toMany_'] = True
+                    
+            
+            if 'relationships' in relationship:    
+                self.preprocessRelationships(relationship['relationships'])
 
             self.preprocessPrimaryKeys(relationship['primaryKeys'],relationship['properties'])
             
