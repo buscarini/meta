@@ -1,0 +1,86 @@
+var mongoose = require('mongoose');
+
+{{#content}}
+{{#model}}
+{{> importSchema}}
+{{/model}}
+{{/content}}
+
+{{#content}}
+{{#model}}
+module.exports.populate = function(items,finished) {
+	
+	var {{entityName}} = mongoose.model('{{entityName}}', {{entityName}}Schema.schema)
+	
+	var results = []
+	var numItems = items.length;
+	
+	var modelItemFinished = function() {
+		numItems--;
+		if (numItems<=0) {
+			finished(results);
+		}
+	};
+	
+	items.forEach(function(unpopulated) {
+
+		{{entityName}}.populate(unpopulated,{ path: "books" }).then(function(unpopulated) {
+			
+			var numRelated = 0
+			
+			var populated = {}
+			populated.id = unpopulated.id
+			populated.title = unpopulated.title
+			results.push(populated)
+
+			var itemFinished = function() {
+				numRelated--;
+				if (numRelated<=0) {
+					modelItemFinished();					
+				}
+			}
+			
+			{{#relationships}}
+			{{#_toMany_}}
+			if ( (unpopulated.{{name}} instanceof Array) && (unpopulated.{{name}}.length>0) ) {				
+				numRelated++;
+				{{entityName}}Population.populate(unpopulated.{{name}},function(relatedItems) {
+					populated.{{name}} = relatedItems;
+					itemFinished();					
+				});
+			}
+			else {
+				var {{entityName}} = mongoose.model('{{entityName}}', {{entityName}}Schema.schema)
+
+				{{entityName}}.find({ {{inverse}}: unpopulated.id }).exec(function (err, items) {
+					numRelated++;
+										
+					if (err) {
+						res.send({"result": "1", "errorMessage":err.message});
+					}
+					else {
+						{{entityName}}Population.populate(items,function(relatedItems) {
+							populated.{{name}} = relatedItems;
+							itemFinished();					
+						});
+					}
+				});
+			}
+			{{/_toMany_}}
+			{{^_toMany_}}
+			
+			numRelated++;
+					
+			{{entityName}}Population.populate(unpopulated.{{name}},function(relatedItems) {
+				populated.{{name}} = relatedItems[0]
+				itemFinished();
+			});
+			
+			{{/_toMany_}}
+			{{/relationships}}
+		});
+	});
+}
+
+{{/model}}
+{{/content}}

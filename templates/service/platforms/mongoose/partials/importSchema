@@ -2,5 +2,5 @@ var {{entityName}}Schema = require('./{{entityName}}Schema');
 {{entityName}}Schema.schema.set('autoIndex', false);
 
 {{#relationships}}
-{{> importSchema}}
+var {{entityName}}Population = require('./{{entityName}}Population');
 {{/relationships}}
