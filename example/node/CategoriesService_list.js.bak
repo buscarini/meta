@@ -11,7 +11,6 @@ BookSchema.schema.set('autoIndex', false);
 var CoverSchema = require('./CoverSchema');
 CoverSchema.schema.set('autoIndex', false);
 
-var categoryPopulation = require('./CategoryPopulation')
 
 module.exports.findOneCategory = function(req, res,callback) {
 	res.setHeader('Content-Type', 'application/json');
@@ -151,19 +150,98 @@ module.exports.findAll = function(req, res,callback) {
 	
 	var Category = mongoose.model('Category', CategorySchema.schema)
 	var Book = mongoose.model('Book', BookSchema.schema)
+	var Cover = mongoose.model('Cover', CoverSchema.schema)
 
 	Category.find({
 	})
 	.sort({  id : 1  })
 	// .populate('books')
 	.exec(function (err, items) {
-		if (!err) {		
-			categoryPopulation.populate(items,function(populated) {
-				contentObject.result = "0";
-				contentObject.categories = populated;
-				res.send(contentObject);
-				if (callback) callback()
-			});
+		if (!err) {
+			contentObject.categories = new Array();
+			var numOps = items.length;
+			var finished = function(error) {
+				numOps--;
+				if (numOps==0) {
+					foundFunction(err);
+				};
+			};
+			
+			items.forEach(function(unpopulated) {
+				var populated = {}
+				populated.id = unpopulated.id
+				populated.title = unpopulated.title
+
+				var promise = Category.populate(unpopulated,{ path: "books" });
+
+
+				var relatedUnpopulated = unpopulated.books;
+				var relatedPopulated = [];
+
+				var fillRelatedBook = function(relatedUnpopulated,relatedPopulated,parent) {
+
+					// var promise = model.populate(parent,{ path: path });
+					
+					if (!(relatedUnpopulated instanceof Array)) {
+						relatedUnpopulated = [relatedUnpopulated]
+					}
+					
+					for (var index=0;index<relatedUnpopulated.length;index++) {
+						var unpopulated = relatedUnpopulated[index];
+						var populated = {}
+						
+						populated.id = unpopulated.id
+						populated.title = unpopulated.title
+						populated.author = unpopulated.author
+						populated.numPages = unpopulated.numPages
+						populated.purchaseDate = unpopulated.purchaseDate
+						populated.deleted = unpopulated.deleted
+
+						Book.populate(unpopulated,{ path: "cover" }).then(function(unpopulated) {				
+							console.log(unpopulated)
+
+							var fillRelatedCover = function(relatedUnpopulated,relatedPopulated,parent,parentPopulated) {
+								var unpopulated = parent.cover;
+								var populated = {};
+								populated.id = unpopulated.id
+								populated.imageUrl = unpopulated.url
+							
+								console.log(populated)
+							
+								parentPopulated.cover = populated;
+							
+								// finished(null);	
+							}
+
+							fillRelatedCover(relatedUnpopulated,relatedPopulated,unpopulated,populated);
+
+
+							relatedPopulated.push(populated);
+						});
+					}
+
+					parent.books = relatedPopulated;
+
+					finished(null);
+				};
+
+				if (relatedUnpopulated.length==0) {
+					Book.find({ category: populated.id }).exec(function (err, items) {
+						if (err) {
+							res.send({"result": "1", "errorMessage":err.message});
+						}
+						else {
+							relatedUnpopulated = items;
+						}
+						
+						fillRelatedBook(relatedUnpopulated,relatedPopulated,populated);
+					});
+				}
+				else {
+					fillRelatedBook(relatedUnpopulated,relatedPopulated,populated);
+				}
+				contentObject.categories.push(populated);
+			})
 		}
 	})
 	

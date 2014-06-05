@@ -5,14 +5,12 @@ var moment = require('moment');
 var schema = require('./CategorySchema');
 schema.schema.set('autoIndex', false);
 
-var booksSchema = require('./BookSchema');
-booksSchema.schema.set('autoIndex', false);
+var categoryPopulation = require('./CategoryPopulation')
 
 module.exports.findOne = function(req, res,callback) {
 	res.setHeader('Content-Type', 'application/json');
 
 	var Category = mongoose.model('Category', schema.schema)
-	var Book = mongoose.model('Book', booksSchema.schema);
 
 	Category.find({
 		_id : req._id
@@ -21,39 +19,13 @@ module.exports.findOne = function(req, res,callback) {
 			res.send({"result": "1", "errorMessage":err.message});
 		}
 		else {
-			
 			var contentObject = { "result" :"0" }
-			contentObject.categories = new Array()
-			items.forEach(function(item) {
-				var serviceItem = {}
-
-				serviceItem.id = item._id
-				serviceItem.title = item.title
-
-				var populated = item.books
-				var related = []
-				for (var index=0;index<populated.length;index++) {
-					var populatedObj = populated[index]
-					var relatedObj = {}
-
-					relatedObj.id = populatedObj._id
-					relatedObj.title = populatedObj.title
-					relatedObj.author = populatedObj.author
-					relatedObj.numPages = populatedObj.numPages
-					relatedObj.purchaseDate = populatedObj.purchaseDate
-					relatedObj.deleted = populatedObj.deleted
-
-					related.push(relatedObj)
-				}
-
-				serviceItem.books = related;
-
-				contentObject.categories.push(serviceItem)
-			})
 			
-			res.send(contentObject)
-					
-			if (callback) callback()
+			categoryPopulation.populate(items,function(populated) {
+				contentObject.categories = populated;
+				res.send(contentObject);
+				if (callback) callback()
+			});
 		}
 	})
 };
@@ -75,37 +47,16 @@ module.exports.findAll = function(req, res,callback) {
 		else {
 			
 			var contentObject = { "result" :"0" }
-			contentObject.categories = new Array()
-			items.forEach(function(item) {
-				var serviceItem = {}
 
-				serviceItem.id = item._id
-				serviceItem.title = item.title
-
-				var populated = item.books
-				var related = []
-				for (var index=0;index<populated.length;index++) {
-					var populatedObj = populated[index]
-					var relatedObj = {}
-
-					relatedObj.id = populatedObj._id
-					relatedObj.title = populatedObj.title
-					relatedObj.author = populatedObj.author
-					relatedObj.numPages = populatedObj.numPages
-					relatedObj.purchaseDate = populatedObj.purchaseDate
-					relatedObj.deleted = populatedObj.deleted
-
-					related.push(relatedObj)
-				}
-
-				serviceItem.books = related;
-
-				contentObject.categories.push(serviceItem)
-			})
+			console.log("populate categories");
 			
-			res.send(contentObject)
-					
-			if (callback) callback()
+			categoryPopulation.populate(items,function(populated) {
+				console.log("categories populated");
+				
+				contentObject.categories = populated;
+				res.send(contentObject);
+				if (callback) callback()
+			});
 		}
 	})
 };
