@@ -112,7 +112,8 @@
 								"destination" : "id",
 								"type" : "integer"
 							}
-						]
+						],
+						"relationships" : []
 					}
 				]
 			}

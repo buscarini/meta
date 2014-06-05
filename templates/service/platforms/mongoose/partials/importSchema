@@ -1,0 +1,6 @@
+var {{entityName}}Schema = require('./{{entityName}}Schema');
+{{entityName}}Schema.schema.set('autoIndex', false);
+
+{{#relationships}}
+{{> importSchema}}
+{{/relationships}}

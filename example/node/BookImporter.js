@@ -26,8 +26,8 @@ module.exports.importFile = function(filePath,callback) {
 	.on('record', function(row,index) {
 	
 		var properties = {}
-		if (row.length<6) {
-			console.log("Error: number of columns not valid: " + row.length + " should be " + 6);
+		if (row.length<7) {
+			console.log("Error: number of columns not valid: " + row.length + " should be " + 7);
 			return;
 		}
 		
@@ -37,6 +37,7 @@ module.exports.importFile = function(filePath,callback) {
 		properties.numPages = row[3]
 		properties.purchaseDate = moment(row[4],"DD/MM/YYYY")
 		properties.category = row[5]
+		properties.cover = row[6]
 		
 		schema.schema.eachPath(function(key) {
 			if (key instanceof Object) return;

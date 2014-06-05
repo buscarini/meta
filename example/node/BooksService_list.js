@@ -7,8 +7,9 @@ CategorySchema.schema.set('autoIndex', false);
 
 var BookSchema = require('./BookSchema');
 BookSchema.schema.set('autoIndex', false);
-var categorySchema = require('./CategorySchema');
-categorySchema.schema.set('autoIndex', false);
+
+var CategorySchema = require('./CategorySchema');
+CategorySchema.schema.set('autoIndex', false);
 
 
 module.exports.findOneCategory = function(req, res,callback) {
@@ -19,7 +20,7 @@ module.exports.findOneCategory = function(req, res,callback) {
 	Category.find({
 		_id : req._id
 	})
-	.populate('')
+	//.populate('')
 	.exec(function (err, items) {
 		if (err) {
 			res.send({"result": "1", "errorMessage":err.message});
@@ -42,14 +43,13 @@ module.exports.findOneCategory = function(req, res,callback) {
 				}
 			};
 			
-			items.forEach(function(item) {
-				var serviceItem = {}
+			items.forEach(function(unpopulated) {
+				var populated = {}
+				populated.id = unpopulated._id
+				populated.title = unpopulated.title
 
-				serviceItem.id = item._id
-				serviceItem.title = item.title
-
-
-
+				content.categories.push(populated);
+				//
 			})
 		}
 	})
@@ -58,13 +58,13 @@ module.exports.findOneBook = function(req, res,callback) {
 	res.setHeader('Content-Type', 'application/json');
 
 	var Book = mongoose.model('Book', BookSchema.schema)
-	var Category = mongoose.model('Category', categorySchema.schema);
+	var Category = mongoose.model('Category', CategorySchema.schema)
 
 	Book.find({
 		_id : req._id,
 		deleted : { $eq: false }
 	})
-	.populate('category')
+	//.populate('category')
 	.exec(function (err, items) {
 		if (err) {
 			res.send({"result": "1", "errorMessage":err.message});
@@ -87,24 +87,24 @@ module.exports.findOneBook = function(req, res,callback) {
 				}
 			};
 			
-			items.forEach(function(item) {
-				var serviceItem = {}
+			items.forEach(function(unpopulated) {
+				var populated = {}
+				populated.id = unpopulated._id
+				populated.title = unpopulated.title
+				populated.author = unpopulated.author
+				populated.numPages = unpopulated.numPages
+				populated.purchaseDate = moment(unpopulated.purchaseDate).format("DD.MM.YYYY")
+				populated.deleted = unpopulated.deleted
 
-				serviceItem.id = item._id
-				serviceItem.title = item.title
-				serviceItem.author = item.author
-				serviceItem.numPages = item.numPages
-				serviceItem.purchaseDate = moment(item.purchaseDate).format("DD.MM.YYYY")
-				serviceItem.deleted = item.deleted
+				var promise = Category.populate(unpopulated,{ path: "" });
+				var relatedUnpopulated = unpopulated.category;
+				var relatedPopulated = {};
+				populated.category = relatedPopulated;
+				populated.id = unpopulated._id
 
-				var populated = item.category;
-				var related = {};
-				related.id = populated._id;
-				serviceItem.category = related;
-				contentObject.books.push(serviceItem);
 				finished(null);
-
-
+				content.books.push(populated);
+				//
 			})
 		}
 	})
@@ -139,7 +139,7 @@ module.exports.findAll = function(req, res,callback) {
 	Category.find({
 	})
 	.sort({  id : 1  })
-	.populate('')
+	// .populate('')
 	.exec(function (err, items) {
 		if (!err) {
 			contentObject.categories = new Array();
@@ -148,17 +148,15 @@ module.exports.findAll = function(req, res,callback) {
 				numOps--;
 				if (numOps==0) {
 					foundFunction(err);
-				}
+				};
 			};
 			
-			items.forEach(function(item) {
-				var serviceItem = {}
+			items.forEach(function(unpopulated) {
+				var populated = {}
+				populated.id = unpopulated._id
+				populated.title = unpopulated.title
 
-				serviceItem.id = item._id
-				serviceItem.title = item.title
-
-
-
+				contentObject.categories.push(populated);
 			})
 		}
 	})
@@ -166,13 +164,13 @@ module.exports.findAll = function(req, res,callback) {
 	numFinds++;
 	
 	var Book = mongoose.model('Book', BookSchema.schema)
-	var Category = mongoose.model('Category', categorySchema.schema);
+	var Category = mongoose.model('Category', CategorySchema.schema)
 
 	Book.find({
 		deleted : { $eq: false }
 	})
 	.sort({  id : 1  })
-	.populate('category')
+	// .populate('category')
 	.exec(function (err, items) {
 		if (!err) {
 			contentObject.books = new Array();
@@ -181,27 +179,26 @@ module.exports.findAll = function(req, res,callback) {
 				numOps--;
 				if (numOps==0) {
 					foundFunction(err);
-				}
+				};
 			};
 			
-			items.forEach(function(item) {
-				var serviceItem = {}
+			items.forEach(function(unpopulated) {
+				var populated = {}
+				populated.id = unpopulated._id
+				populated.title = unpopulated.title
+				populated.author = unpopulated.author
+				populated.numPages = unpopulated.numPages
+				populated.purchaseDate = moment(unpopulated.purchaseDate).format("DD.MM.YYYY")
+				populated.deleted = unpopulated.deleted
 
-				serviceItem.id = item._id
-				serviceItem.title = item.title
-				serviceItem.author = item.author
-				serviceItem.numPages = item.numPages
-				serviceItem.purchaseDate = moment(item.purchaseDate).format("DD.MM.YYYY")
-				serviceItem.deleted = item.deleted
+				var promise = Category.populate(unpopulated,{ path: "" });
+				var relatedUnpopulated = unpopulated.category;
+				var relatedPopulated = {};
+				populated.category = relatedPopulated;
+				populated.id = unpopulated._id
 
-				var populated = item.category;
-				var related = {};
-				related.id = populated._id;
-				serviceItem.category = related;
-				contentObject.books.push(serviceItem);
 				finished(null);
-
-
+				contentObject.books.push(populated);
 			})
 		}
 	})

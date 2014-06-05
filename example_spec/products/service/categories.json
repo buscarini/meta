@@ -107,7 +107,8 @@
 									"destination" : "imageUrl",
 									"type" : "url"
 								}
-							]
+							],
+							"relationships" : []
 						}
 					]
 				}

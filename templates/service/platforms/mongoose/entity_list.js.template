@@ -3,23 +3,18 @@ var mongoose = require('mongoose');
 var moment = require('moment');
 
 {{#content}}
-var {{model.entityName}}Schema = require('./{{model.entityName}}Schema');
-{{model.entityName}}Schema.schema.set('autoIndex', false);
-{{#model.relationships}}
-var {{name}}Schema = require('./{{entityName}}Schema');
-{{name}}Schema.schema.set('autoIndex', false);
-{{/model.relationships}}
-
+{{#model}}
+{{> importSchema}}
+{{/model}}
 {{/content}}
 
 {{#content}}
 module.exports.findOne{{model.entityName}} = function(req, res,callback) {
 	res.setHeader('Content-Type', 'application/json');
 
-	var {{model.entityName}} = mongoose.model('{{model.entityName}}', {{model.entityName}}Schema.schema)
-	{{#model.relationships}}
-	var {{entityName}} = mongoose.model('{{entityName}}', {{name}}Schema.schema);
-	{{/model.relationships}}
+	{{#model}}
+	{{> schema}}
+	{{/model}}
 
 	{{model.entityName}}.find({
 		{{#model.primaryKeys}}
@@ -29,7 +24,7 @@ module.exports.findOne{{model.entityName}} = function(req, res,callback) {
 		{{property}} : { ${{relation}}: {{value}} }{{^_last_}},{{/_last_}}
 		{{/model.filters}}
 	})
-	.populate('{{#model.relationships}}{{name}}{{^_last_}} {{/_last_}}{{/model.relationships}}')
+	//.populate('{{#model.relationships}}{{name}}{{^_last_}} {{/_last_}}{{/model.relationships}}')
 	.exec(function (err, items) {
 		if (err) {
 			res.send({"{{resultValue.key}}": {{{resultValue.errorValue}}}, "{{errorMessage.key}}":err.message});
@@ -52,9 +47,14 @@ module.exports.findOne{{model.entityName}} = function(req, res,callback) {
 				}
 			};
 			
-			items.forEach(function(item) {
-				{{> fillServiceItem}}
+			{{#model}}
+			items.forEach(function(unpopulated) {
+				var populated = {}
+				{{> fillModel}}
+				content.{{key}}.push(populated);
+				//{{!> fillServiceItem}}
 			})
+			{{/model}}
 		}
 	})
 };
@@ -85,10 +85,9 @@ module.exports.findAll = function(req, res,callback) {
 	{{#content}}
 	numFinds++;
 	
-	var {{model.entityName}} = mongoose.model('{{model.entityName}}', {{model.entityName}}Schema.schema)
-	{{#model.relationships}}
-	var {{entityName}} = mongoose.model('{{entityName}}', {{name}}Schema.schema);
-	{{/model.relationships}}
+	{{#model}}
+	{{> schema}}
+	{{/model}}
 
 	{{model.entityName}}.find({
 		{{#model.filters}}
@@ -105,14 +104,14 @@ module.exports.findAll = function(req, res,callback) {
 				numOps--;
 				if (numOps==0) {
 					foundFunction(err);
-				}
+				};
 			};
 			
 			{{#model}}
 			items.forEach(function(unpopulated) {
 				var populated = {}
 				{{> fillModel}}
-				content.{{key}}.push(populated);
+				contentObject.{{key}}.push(populated);
 			})
 			{{/model}}
 		}

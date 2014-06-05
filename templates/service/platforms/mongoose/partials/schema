@@ -1,0 +1,4 @@
+var {{entityName}} = mongoose.model('{{entityName}}', {{entityName}}Schema.schema)
+{{#relationships}}
+{{> schema}}
+{{/relationships}}

@@ -9,12 +9,15 @@ populated.{{destination}} = moment(unpopulated.{{name}}).format("{{format}}")
 
 {{#relationships}}
 {{#_toMany_}}
+var promise = {{entityName}}.populate(unpopulated,{ path: "{{#relationships}}{{name}}{{^_last_}} {{/_last_}}{{/relationships}}" });
+
 var relatedUnpopulated = unpopulated.{{name}};
 var relatedPopulated = [];
+populated.{{name}} = relatedPopulated;
 
-var fillRelated{{entityName}} = function(model,path,relatedUnpopulated,relatedPopulated,parent) {
+var fillRelated{{entityName}} = function(relatedUnpopulated,relatedPopulated,parent) {
 
-	var promise = model.populate(relatedUnpopulated,{ path: path });
+	// var promise = model.populate(parent,{ path: path });
 	
 	if (!(relatedUnpopulated instanceof Array)) {
 		relatedUnpopulated = [relatedUnpopulated]
@@ -29,12 +32,11 @@ var fillRelated{{entityName}} = function(model,path,relatedUnpopulated,relatedPo
 		relatedPopulated.push(populated);
 	}
 
-	parent.{{name}} = relatedPopulated;
 	finished(null);
 };
 
 if (relatedUnpopulated.length==0) {
-	{{entityName}}.find({ {{inverse}}: item.{{#primaryKeys}}{{name}}{{/primaryKeys}} }).exec(function (err, items) {
+	{{entityName}}.find({ {{inverse}}: populated.{{#primaryKeys}}{{name}}{{/primaryKeys}} }).exec(function (err, items) {
 		if (err) {
 			res.send({"result": "1", "errorMessage":err.message});
 		}
@@ -42,16 +44,18 @@ if (relatedUnpopulated.length==0) {
 			relatedUnpopulated = items;
 		}
 		
-		fillRelated({{model.entityName}},"{{#relationships}}{{name}}{{^_last_}} {{/_last_}}{{/relationships}}",relatedUnpopulated,relatedPopulated,populated);
+		fillRelated{{entityName}}(relatedUnpopulated,relatedPopulated);
 	});
 }
 else {
-	fillRelated({{model.entityName}},"{{#relationships}}{{name}}{{^_last_}} {{/_last_}}{{/relationships}}",relatedUnpopulated,relatedPopulated,populated);
+	fillRelated{{entityName}}(relatedUnpopulated,relatedPopulated);
 }
 {{/_toMany_}}
 {{^_toMany_}}
-var relatedUnpopulated = item.{{name}};
+var promise = {{entityName}}.populate(unpopulated,{ path: "{{#relationships}}{{name}}{{^_last_}} {{/_last_}}{{/relationships}}" });
+var relatedUnpopulated = unpopulated.{{name}};
 var relatedPopulated = {};
+populated.{{name}} = relatedPopulated;
 {{> fillModel}}
 finished(null);
 {{/_toMany_}}
