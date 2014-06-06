@@ -51,6 +51,62 @@ class MetaProcessor(object):
         
         return partials
         
+    def findValuesForKey(self,hash,key):
+        """docstring for findValuesForKey"""
+        values = []
+        
+        if isinstance(hash,dict):
+            values += self.findValuesForKeyInDic(hash,key)
+        elif isinstance(hash, list):
+            values += self.findValuesForKeyInArray(hash,key)
+                    
+        return values
+        
+    def findValuesForKeyInArray(self,array,key):
+        """docstring for findValuesForKeyInArray"""
+        values = []
+        for item in array:
+            values += self.findValuesForKey(hash,key)
+        return values
+        
+    def findValuesForKeyInDic(self,dic,key):
+        """docstring for findValuesForKeyInDic"""
+        values = []
+        for dicKey,value in dic.iteritems():
+            if key==dicKey:
+                values.append(value)
+            else:
+                values += self.findValuesForKey(hash,key)
+        return values
+        
+    def findDictsWithKey(self,hash,key):
+        """docstring for findDictsWithKey"""
+        values = []
+    
+        if isinstance(hash,dict):
+            values += self.findDictsWithKeyInDic(hash,key)
+        elif isinstance(hash, list):
+            values += self.findDictsWithKeyInArray(hash,key)
+                
+        return values
+        
+    def findDictsWithKeyInArray(self,array,key):
+        """docstring for findValuesForKeyInArray"""                
+        values = []
+        for item in array:
+            values += self.findDictsWithKey(item,key)
+        return values
+    
+    def findDictsWithKeyInDic(self,dic,key):
+        """docstring for findValuesForKeyInDic"""
+        values = []
+        for dicKey,value in dic.iteritems():
+            if key==dicKey:
+                values.append(dic)
+            else:
+                values += self.findDictsWithKey(value,key)
+        return values
+        
     def outputDir(self,product,platform,template):
         """returns the final output directory"""
         assert product

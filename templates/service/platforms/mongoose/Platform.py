@@ -1,5 +1,6 @@
 import sys
 from meta.MetaProcessor import MetaProcessor
+from meta.utils import Utils
 
 class Platform(MetaProcessor):
     """docstring for Platform"""
@@ -116,7 +117,65 @@ class Platform(MetaProcessor):
         if hash!=None and 'serviceName' in hash:
             serviceName = hash['serviceName']
         if (serviceName):
-            fileName = fileName.replace("entity",serviceName)
+            fileName = fileName.replace("service",serviceName)
+        
+        if 'entityName' in hash:
+            entityName = hash['entityName']
+            fileName = fileName.replace("entity",entityName)
             
         return fileName
             
+    def findEntities(self,hash):
+        """docstring for findEntities"""
+        return self.findDictsWithKey(hash,"entityName")
+            
+    def process(self,hashes,templates,product,platform,platformDir):
+        assert hashes
+        assert templates
+        assert product
+        assert platform
+        assert platformDir
+            
+        self.globalPlatform = self.globalProcessor(platform)
+        
+        hashes = self.sortHashes(hashes)
+            
+        for hashFile in hashes:
+            hash = self.readHash(hashFile)
+            
+            entities = self.findEntities(hash)
+
+            for templateFile in templates:
+                if 'entity' in templateFile:
+                    for entity in entities:
+                        self.continueProcess(entity,hashFile,hashes,templateFile,product,platform,platformDir)
+                else:
+                    self.continueProcess(hash,hashFile,hashes,templateFile,product,platform,platformDir)
+                    
+                        
+    def continueProcess(self,hash,hashFile,hashes,templateFile,product,platform,platformDir):
+        
+            # Global Platform preprocess
+            if self.globalPlatform!=None:
+                if self.config.verbose:
+                    print('Global Preprocessing')
+                
+                self.globalPlatform.preprocess(hash,hashes)
+
+            if self.config.verbose:
+                print("Hash after global preprocess: " + str(hash))
+
+
+            self.preprocess(hash,hashes)
+            
+            if self.config.verbose:
+                print("Hash after product preprocess: " + str(hash))
+
+            if self.config.verbose:
+                with open("/tmp/final_hash" + os.path.basename(hashFile) + "_" + product + "_" + platform, "w") as f:
+                    f.write(str(hash))
+    
+            renderer = self.renderer(platformDir)
+        
+            self.renderTemplate(renderer,templateFile,hash,hashes,product,platform,platformDir)
+               

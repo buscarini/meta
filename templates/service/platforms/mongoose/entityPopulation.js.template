@@ -1,18 +1,15 @@
 var mongoose = require('mongoose');
 
-{{#content}}
-{{#model}}
 {{> importSchema}}
-{{/model}}
-{{/content}}
 
-{{#content}}
-{{#model}}
 module.exports.populate = function(items,finished) {
 	
 	var {{entityName}} = mongoose.model('{{entityName}}', {{entityName}}Schema.schema)
 	
 	var results = []
+	
+	if (!(items instanceof Array)) items = [items]
+	
 	var numItems = items.length;
 	
 	var modelItemFinished = function() {
@@ -24,8 +21,8 @@ module.exports.populate = function(items,finished) {
 	
 	items.forEach(function(unpopulated) {
 
-		{{entityName}}.populate(unpopulated,{ path: "books" }).then(function(unpopulated) {
-			
+		{{entityName}}.populate(unpopulated,{ path: "{{#relationships}}{{name}}{{^_last_}} {{/_last_}}{{/relationships}}" }).then(function(unpopulated) {
+						
 			var numRelated = 0
 			
 			var populated = {}
@@ -78,9 +75,10 @@ module.exports.populate = function(items,finished) {
 			
 			{{/_toMany_}}
 			{{/relationships}}
-		});
+			
+			if (numRelated<=0) {
+				modelItemFinished();					
+			}
+		});		
 	});
 }
-
-{{/model}}
-{{/content}}

@@ -3,58 +3,55 @@ var mongoose = require('mongoose');
 var BookSchema = require('./BookSchema');
 BookSchema.schema.set('autoIndex', false);
 
-var CoverSchema = require('./CoverSchema');
-CoverSchema.schema.set('autoIndex', false);
-
 var CoverPopulation = require('./CoverPopulation');
 
-module.exports.populate = function(books,finished) {
+module.exports.populate = function(items,finished) {
 	
 	var Book = mongoose.model('Book', BookSchema.schema)
-	var Cover = mongoose.model('Cover', CoverSchema.schema)
 	
 	var results = []
-	var numItems = books.length;
-	console.log("books to populate: " + numItems)
 	
-	var booksFinished = function() {
+	if (!(items instanceof Array)) items = [items]
+	
+	var numItems = items.length;
+	
+	var modelItemFinished = function() {
 		numItems--;
-		console.log("finished " + numItems + " books");
 		if (numItems<=0) {
 			finished(results);
 		}
 	};
 	
-	books.forEach(function(unpopulated) {
-		
-		Book.populate(unpopulated,{ path: "cover" }).then(function(unpopulated) {
+	items.forEach(function(unpopulated) {
+
+		Book.populate(unpopulated,{ path: "cover " }).then(function(unpopulated) {
+						
+			var numRelated = 0
 			
 			var populated = {}
-			
-			var numRelated = 0;
-
 			populated.id = unpopulated.id
 			populated.title = unpopulated.title
-			populated.author = unpopulated.author
-			populated.numPages = unpopulated.numPages
-			populated.purchaseDate = unpopulated.purchaseDate
-			populated.deleted = unpopulated.deleted
-			
 			results.push(populated)
-		
-			numRelated++;
-			
+
 			var itemFinished = function() {
-				numRelated--;				
-				if (numRelated<=0)	{
-					booksFinished();
+				numRelated--;
+				if (numRelated<=0) {
+					modelItemFinished();					
 				}
 			}
-						
-			CoverPopulation.populate(unpopulated.cover,function(covers) {
-				populated.cover = covers[0]
+			
+			
+			numRelated++;
+					
+			CoverPopulation.populate(unpopulated.cover,function(relatedItems) {
+				populated.cover = relatedItems[0]
 				itemFinished();
 			});
-		});
+			
+			
+			if (numRelated<=0) {
+				modelItemFinished();					
+			}
+		});		
 	});
 }

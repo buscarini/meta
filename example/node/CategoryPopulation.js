@@ -3,38 +3,29 @@ var mongoose = require('mongoose');
 var CategorySchema = require('./CategorySchema');
 CategorySchema.schema.set('autoIndex', false);
 
-var BookSchema = require('./BookSchema');
-BookSchema.schema.set('autoIndex', false);
-
 var BookPopulation = require('./BookPopulation');
 
-
-module.exports.populate = function(categories,finished) {
-	
-	console.log("populating categories");
-	console.log(categories)
+module.exports.populate = function(items,finished) {
 	
 	var Category = mongoose.model('Category', CategorySchema.schema)
 	
 	var results = []
-	var numItems = categories.length;
 	
-	var categoryFinished = function() {
+	if (!(items instanceof Array)) items = [items]
+	
+	var numItems = items.length;
+	
+	var modelItemFinished = function() {
 		numItems--;
-		console.log("category finished: " + numItems);
 		if (numItems<=0) {
 			finished(results);
 		}
 	};
 	
-	categories.forEach(function(unpopulated) {
-			
-		console.log("Populate category");
+	items.forEach(function(unpopulated) {
 
-		Category.populate(unpopulated,{ path: "books" }).then(function(unpopulated) {
-			
-			console.log("category populated")
-			
+		Category.populate(unpopulated,{ path: "books " }).then(function(unpopulated) {
+						
 			var numRelated = 0
 			
 			var populated = {}
@@ -44,42 +35,23 @@ module.exports.populate = function(categories,finished) {
 
 			var itemFinished = function() {
 				numRelated--;
-				console.log("book finished: " + numRelated);
 				if (numRelated<=0) {
-					categoryFinished();					
+					modelItemFinished();					
 				}
 			}
 			
-			if ( (unpopulated.books instanceof Array) && (unpopulated.books.length>0) ) {
-				console.log("Populate books")
-				
-				numRelated++;
-				BookPopulation.populate(unpopulated.books,function(books) {
-					populated.books = books;
-					itemFinished();					
-				});
-			}
-			else {
-				var Book = mongoose.model('Book', BookSchema.schema)
-				console.log("Find books")
-				Book.find({ category: unpopulated.id }).exec(function (err, items) {
-					numRelated++;
+			
+			numRelated++;
 					
-					console.log("Populate books")
-					
-					if (err) {
-						res.send({"result": "1", "errorMessage":err.message});
-					}
-					else {
-						BookPopulation.populate(items,function(books) {
-							console.log("populated books")
-							populated.books = books;
-							console.log(books)
-							itemFinished();					
-						});
-					}
-				});
+			BookPopulation.populate(unpopulated.books,function(relatedItems) {
+				populated.books = relatedItems[0]
+				itemFinished();
+			});
+			
+			
+			if (numRelated<=0) {
+				modelItemFinished();					
 			}
-		});
+		});		
 	});
 }
