@@ -1,3 +1,4 @@
+var moment = require('moment');
 var mongoose = require('mongoose');
 
 var CategorySchema = require('./CategorySchema');
@@ -35,8 +36,8 @@ module.exports.populate = function(items,finished) {
 			var numRelated = 0
 			
 			var populated = {}
-			serviceItem.id = item.id
-			serviceItem.title = item.title
+			populated.id = unpopulated.id
+			populated.title = unpopulated.title
 			results.push(populated)
 
 			var itemFinished = function() {

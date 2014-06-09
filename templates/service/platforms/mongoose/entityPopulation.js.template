@@ -1,3 +1,4 @@
+var moment = require('moment');
 var mongoose = require('mongoose');
 
 {{> importSchema}}
@@ -33,10 +34,10 @@ module.exports.populate = function(items,finished) {
 			var populated = {}
 			{{#properties}}
 			{{^type_date}}
-			serviceItem.{{destination}} = item.{{name}}
+			populated.{{destination}} = unpopulated.{{name}}
 			{{/type_date}}
 			{{#type_date}}
-			serviceItem.{{destination}} = moment(item.{{name}}).format("{{format}}")
+			populated.{{destination}} = moment(unpopulated.{{name}}).format("{{format}}")
 			{{/type_date}}
 			{{/properties}}
 			results.push(populated)

@@ -1,3 +1,4 @@
+var moment = require('moment');
 var mongoose = require('mongoose');
 
 var BookSchema = require('./BookSchema');
@@ -35,12 +36,12 @@ module.exports.populate = function(items,finished) {
 			var numRelated = 0
 			
 			var populated = {}
-			serviceItem.id = item.id
-			serviceItem.title = item.title
-			serviceItem.author = item.author
-			serviceItem.numPages = item.numPages
-			serviceItem.purchaseDate = moment(item.purchaseDate).format("DD.MM.YYYY")
-			serviceItem.deleted = item.deleted
+			populated.id = unpopulated.id
+			populated.title = unpopulated.title
+			populated.author = unpopulated.author
+			populated.numPages = unpopulated.numPages
+			populated.purchaseDate = moment(unpopulated.purchaseDate).format("DD.MM.YYYY")
+			populated.deleted = unpopulated.deleted
 			results.push(populated)
 
 			var itemFinished = function() {

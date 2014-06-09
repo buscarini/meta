@@ -1,0 +1,9 @@
+var {{entityName}}Schema = require('./{{entityName}}Schema');
+{{entityName}}Schema.schema.set('autoIndex', false);
+
+{{#relationships}}
+var {{entityName}}Schema = require('./{{entityName}}Schema');
+{{entityName}}Schema.schema.set('autoIndex', false);
+
+var {{entityName}}Population = require('./{{entityName}}Population');
+{{/relationships}}

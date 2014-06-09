@@ -1,3 +1,4 @@
+var moment = require('moment');
 var mongoose = require('mongoose');
 
 var CoverSchema = require('./CoverSchema');
@@ -30,8 +31,8 @@ module.exports.populate = function(items,finished) {
 			var numRelated = 0
 			
 			var populated = {}
-			serviceItem.id = item.id
-			serviceItem.imageUrl = item.imageUrl
+			populated.id = unpopulated.id
+			populated.imageUrl = unpopulated.imageUrl
 			results.push(populated)
 
 			var itemFinished = function() {
