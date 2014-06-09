@@ -6,6 +6,11 @@ module.exports.populate = function(items,finished) {
 	
 	var {{entityName}} = mongoose.model('{{entityName}}', {{entityName}}Schema.schema)
 	
+	{{#relationships}}
+	var {{entityName}} = mongoose.model('{{entityName}}', {{entityName}}Schema.schema)
+	{{/relationships}}
+	
+	
 	var results = []
 	
 	if (!(items instanceof Array)) items = [items]
@@ -26,8 +31,14 @@ module.exports.populate = function(items,finished) {
 			var numRelated = 0
 			
 			var populated = {}
-			populated.id = unpopulated.id
-			populated.title = unpopulated.title
+			{{#properties}}
+			{{^type_date}}
+			serviceItem.{{destination}} = item.{{name}}
+			{{/type_date}}
+			{{#type_date}}
+			serviceItem.{{destination}} = moment(item.{{name}}).format("{{format}}")
+			{{/type_date}}
+			{{/properties}}
 			results.push(populated)
 
 			var itemFinished = function() {
@@ -49,8 +60,8 @@ module.exports.populate = function(items,finished) {
 			else {
 				var {{entityName}} = mongoose.model('{{entityName}}', {{entityName}}Schema.schema)
 
-				{{entityName}}.find({ {{inverse}}: unpopulated.id }).exec(function (err, items) {
-					numRelated++;
+				numRelated++;
+				{{entityName}}.find({ {{inverse}}: unpopulated.id }).exec(function (err, items) {	
 										
 					if (err) {
 						res.send({"result": "1", "errorMessage":err.message});

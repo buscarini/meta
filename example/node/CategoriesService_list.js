@@ -158,7 +158,12 @@ module.exports.findAll = function(req, res,callback) {
 	// .populate('books')
 	.exec(function (err, items) {
 		if (!err) {		
+			console.log("populated categories");
 			categoryPopulation.populate(items,function(populated) {
+
+				console.log("Before returning: " + JSON.stringify(populated, null, 2));
+				
+				console.log("categories populated");
 				contentObject.result = "0";
 				contentObject.categories = populated;
 				res.send(contentObject);

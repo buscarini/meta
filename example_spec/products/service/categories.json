@@ -103,7 +103,7 @@
 									"required" : true
 								},
 								{
-									"name" : "url",
+									"name" : "imageUrl",
 									"destination" : "imageUrl",
 									"type" : "url"
 								}

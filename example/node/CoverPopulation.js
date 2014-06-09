@@ -8,6 +8,8 @@ module.exports.populate = function(items,finished) {
 	
 	var Cover = mongoose.model('Cover', CoverSchema.schema)
 	
+	
+	
 	var results = []
 	
 	if (!(items instanceof Array)) items = [items]
@@ -28,8 +30,8 @@ module.exports.populate = function(items,finished) {
 			var numRelated = 0
 			
 			var populated = {}
-			populated.id = unpopulated.id
-			populated.title = unpopulated.title
+			serviceItem.id = item.id
+			serviceItem.imageUrl = item.imageUrl
 			results.push(populated)
 
 			var itemFinished = function() {

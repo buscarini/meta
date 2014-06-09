@@ -57,12 +57,16 @@ class Platform(MetaProcessor):
         """docstring for preprocessRelationships"""
         self.preprocessList(relationships)
         for relationship in relationships:
+            print("process relationship")
             if 'type' in relationship:
                 type = relationship['type']
+                print("type " + type)
                 relationship['_toMany_'] = False
                 if type=='toMany':
+                    print("is to many")
                     relationship['_toMany_'] = True
-                    
+            else:
+                print("no type")
             
             if 'relationships' in relationship:    
                 self.preprocessRelationships(relationship['relationships'])
@@ -90,27 +94,33 @@ class Platform(MetaProcessor):
             resultValue = hash['resultValue']
             self.preprocessResultValue(resultValue,hash,hashes)
         
+        entity = hash
         if hash!=None and 'content' in hash:
             contents = hash['content']
             for content in contents:
                 if content!=None and 'model' in content:
-                    model = content['model']
-                    if 'primaryKeys' in model:
-                        self.preprocessPrimaryKeys(model['primaryKeys'],model['properties'])
-                    if 'filters' in model:
-                        filters = model['filters']
-                        self.preprocessFilters(filters,hash)
-                        if (len(filters)>0):
-                            model['_has_filters_'] = True
-                    if 'sortBy' in model:
-                        self.preprocessSort(model['sortBy'],hash)
-                    if 'properties' in model:
-                        self.preprocessProperties(model['properties'],hash)
-                    if 'relationships' in model:
-                        relationships = model['relationships']
-                        self.preprocessRelationships(relationships)
+                    entity = content['model']
+                    
+        self.preprocessEntity(entity,hashes)
 
-                
+
+    def preprocessEntity(self,hash,hashes):
+        """docstring for preprocessEntity"""
+        if 'primaryKeys' in hash:
+            self.preprocessPrimaryKeys(hash['primaryKeys'],hash['properties'])
+        if 'filters' in hash:
+            filters = hash['filters']
+            self.preprocessFilters(filters,hash)
+            if (len(filters)>0):
+                hash['_has_filters_'] = True
+        if 'sortBy' in hash:
+            self.preprocessSort(hash['sortBy'],hash)
+        if 'properties' in hash:
+            self.preprocessProperties(hash['properties'],hash)
+        if 'relationships' in hash:
+            relationships = hash['relationships']
+            self.preprocessRelationships(relationships)
+    
     def finalFileName(self,fileName,hash):
         """docstring for finalFileName"""
         serviceName = None
@@ -148,7 +158,7 @@ class Platform(MetaProcessor):
             for templateFile in templates:
                 if 'entity' in templateFile:
                     for entity in entities:
-                        self.continueProcess(entity,hashFile,hashes,templateFile,product,platform,platformDir)
+                        self.continueProcess(entity,entity['entityName'],hashes,templateFile,product,platform,platformDir)
                 else:
                     self.continueProcess(hash,hashFile,hashes,templateFile,product,platform,platformDir)
                     

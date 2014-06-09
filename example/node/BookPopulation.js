@@ -3,11 +3,17 @@ var mongoose = require('mongoose');
 var BookSchema = require('./BookSchema');
 BookSchema.schema.set('autoIndex', false);
 
+var CoverSchema = require('./CoverSchema');
+CoverSchema.schema.set('autoIndex', false);
+
 var CoverPopulation = require('./CoverPopulation');
 
 module.exports.populate = function(items,finished) {
 	
 	var Book = mongoose.model('Book', BookSchema.schema)
+	
+	var Cover = mongoose.model('Cover', CoverSchema.schema)
+	
 	
 	var results = []
 	
@@ -24,13 +30,17 @@ module.exports.populate = function(items,finished) {
 	
 	items.forEach(function(unpopulated) {
 
-		Book.populate(unpopulated,{ path: "cover " }).then(function(unpopulated) {
+		Book.populate(unpopulated,{ path: "cover" }).then(function(unpopulated) {
 						
 			var numRelated = 0
 			
 			var populated = {}
-			populated.id = unpopulated.id
-			populated.title = unpopulated.title
+			serviceItem.id = item.id
+			serviceItem.title = item.title
+			serviceItem.author = item.author
+			serviceItem.numPages = item.numPages
+			serviceItem.purchaseDate = moment(item.purchaseDate).format("DD.MM.YYYY")
+			serviceItem.deleted = item.deleted
 			results.push(populated)
 
 			var itemFinished = function() {

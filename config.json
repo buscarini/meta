@@ -5,6 +5,6 @@
 	"preprocessorFile" : "GlobalPlatform",
 	"platformFile" : "Platform",
 	"partialsPath" : "partials",
-	"verbose" : false,
+	"verbose" : true,
 	"platforms" : [ "mongoose" ]
 }

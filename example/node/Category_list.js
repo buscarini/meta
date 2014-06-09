@@ -51,7 +51,7 @@ module.exports.findAll = function(req, res,callback) {
 			console.log("populate categories");
 			
 			categoryPopulation.populate(items,function(populated) {
-				console.log("categories populated");
+				console.log("Category populated: " + JSON.stringify(populated, null, 2));
 				
 				contentObject.categories = populated;
 				res.send(contentObject);
