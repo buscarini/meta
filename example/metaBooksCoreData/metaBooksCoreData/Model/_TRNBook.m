@@ -12,5 +12,7 @@
 @dynamic deleted;
 
 @dynamic category;
+@dynamic cover;
+
 
 @end

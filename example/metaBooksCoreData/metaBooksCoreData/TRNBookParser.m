@@ -2,7 +2,6 @@
 
 #import <MagicalRecord/CoreData+MagicalRecord.h>
 
-
 #import "TRNBook.h"
 
 @interface TRNBookParser()
@@ -121,6 +120,5 @@
 - (BOOL) deleteAllLocalObjects {
 	return [TRNBook MR_truncateAllInContext:self.context];
 }
-
 
 @end

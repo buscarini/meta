@@ -8,10 +8,9 @@
 
 #import <MagicalRecord/CoreData+MagicalRecord.h>
 
-#import "TRNCategory.h"
-#import "TRNBook.h"
+#import "Book.h"
 #import "TRNCategoryParser.h"
-#import "TRNBookParser.h"
+#import "BookParser.h"
 
 @interface TRNCategoriesServiceParser() <BMFObjectParserDelegateProtocol>
 	
@@ -19,7 +18,7 @@
 @property (nonatomic, strong) BMFParserStrategy *strategy;
 
 @property (nonatomic, strong) TRNCategoryParser *TRNCategoryParserInstance;
-@property (nonatomic, strong) TRNBookParser *TRNBookParserInstance;
+@property (nonatomic, strong) BookParser *BookParserInstance;
 	
 @end
 	
@@ -38,12 +37,12 @@
 #pragma mark BMFObjectParserDelegateProtocol
 
 - (void) didParseObject:(id)object withDictionary:(NSDictionary *)dictionary {
-	if ([object isKindOfClass:[TRNCategory class]]) {
+	else if ([object isKindOfClass:[TRNCategory class]]) {
 		TRNCategory *entity = object;
-		TRNBookParser *TRNBookParserInstance = [[TRNBookParser alloc] initWithContext:self.localContext];
-		TRNBookParserInstance.delegate = self;
+		BookParser *BookParserInstance = [[BookParser alloc] initWithContext:self.localContext];
+		BookParserInstance.delegate = self;
 		
-		entity.books = [NSSet setWithArray:[self.strategy parseDictionaries:dictionary[@"books"] localObjects:entity.books.allObjects objectParser:TRNBookParserInstance]];
+		entity.books = [NSSet setWithArray:[self.strategy parseDictionaries:dictionary[@"books"] localObjects:entity.books.allObjects objectParser:BookParserInstance]];
 	}
 	
 	self.progress.completedUnitCount++;
@@ -103,7 +102,7 @@
 		
 	}
 	completion:^(BOOL success, NSError *error) {
-		[self.progress stop:nil];
+		[self.progress stop:error];
 
 		if (completionBlock) completionBlock(results,nil);
 	}];

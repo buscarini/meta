@@ -2,8 +2,6 @@
 
 #import <MagicalRecord/CoreData+MagicalRecord.h>
 
-{{#_current_model_}}
-
 #import "{{> entityName}}.h"
 
 @interface {{_globals_.fileBaseName}}()
@@ -101,7 +99,5 @@
 - (BOOL) deleteAllLocalObjects {
 	return [{{> entityName}} MR_truncateAllInContext:self.context];
 }
-
-{{/_current_model_}}
 
 @end

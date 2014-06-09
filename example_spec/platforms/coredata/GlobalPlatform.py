@@ -35,7 +35,7 @@ class GlobalPlatform(MetaProcessor):
         type = property['type']
         property['type_' + type] = True
      
-        if type=='string':
+        if type=='string' or type=='url':
             property['type'] = 'NSString'
             property['object'] = True
             property['storage'] = 'copy'

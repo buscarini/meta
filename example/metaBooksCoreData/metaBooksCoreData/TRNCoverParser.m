@@ -1,15 +1,15 @@
-#import "TRNCategoryParser.h"
+#import "TRNCoverParser.h"
 
 #import <MagicalRecord/CoreData+MagicalRecord.h>
 
-#import "TRNCategory.h"
+#import "TRNCover.h"
 
-@interface TRNCategoryParser()
+@interface TRNCoverParser()
 
 
 @end
 
-@implementation TRNCategoryParser
+@implementation TRNCoverParser
 
 - (instancetype) initWithContext:(NSManagedObjectContext *)context {
 	self = [super initWithContext:context];
@@ -19,7 +19,7 @@
 }
 
 - (NSArray *) fetchAllLocalObjectsSortedById {
-	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"TRNCategory"];
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"TRNCover"];
 	
 	fetchRequest.includesPropertyValues = NO;
 	fetchRequest.sortDescriptors = @[
@@ -45,14 +45,14 @@
 	return result;
 }
 
-- (NSComparisonResult) compareObject:(TRNCategory *)obj1 withDictionary:(NSDictionary *)obj2 {
+- (NSComparisonResult) compareObject:(TRNCover *)obj1 withDictionary:(NSDictionary *)obj2 {
 	return [self compareDictionary:@{ 
 			@"id" : [obj1 valueForKey:@"id"]
 		} 
 		withDictionary:obj2];
 }
 
-- (NSComparisonResult) compareObject:(TRNCategory *)obj1 withObject:(TRNCategory *)obj2 {
+- (NSComparisonResult) compareObject:(TRNCover *)obj1 withObject:(TRNCover *)obj2 {
 	NSComparisonResult result;
 
 	id id1 = [obj1 valueForKey:@"id"];
@@ -63,7 +63,7 @@
 }
 
 
-- (BOOL) updateObject:(TRNCategory *)object withDictionary:(NSDictionary *) dic error:(NSError **) error {
+- (BOOL) updateObject:(TRNCover *)object withDictionary:(NSDictionary *) dic error:(NSError **) error {
 	id value;
 	value = dic[@"id"];
 	if ([value isKindOfClass:[NSNumber class]]) {
@@ -75,24 +75,23 @@
 		return NO;
 	}
 
-	value = dic[@"title"];
+	value = dic[@"imageUrl"];
 	if ([value isKindOfClass:[NSString class]]) {
-		object.title = value;
+		object.imageUrl = [NSURL URLWithString:value];
 	}
 	else {
-		DDLogWarn(@"Invalid type or missing key for property title: %@",value);
+		DDLogWarn(@"Invalid type or missing key for property imageUrl: %@",value);
 	}
-
 	if ([self.delegate respondsToSelector:@selector(didParseObject:withDictionary:)]) [self.delegate didParseObject:object withDictionary:dic];
 	return YES;
 }
 
 - (id) newObject {
-	return [TRNCategory MR_createInContext:self.context];
+	return [TRNCover MR_createInContext:self.context];
 }
 
 - (BOOL) deleteAllLocalObjects {
-	return [TRNCategory MR_truncateAllInContext:self.context];
+	return [TRNCover MR_truncateAllInContext:self.context];
 }
 
 @end

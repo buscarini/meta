@@ -3,7 +3,7 @@
 #import <Foundation/Foundation.h>
 
 
-@class _TRNCategory;
+@class _TRNCategory, _TRNCover;
 
 @interface _TRNBook : NSManagedObject
 
@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSDate *purchaseDate;
 @property (nonatomic, assign) BOOL deleted;
 @property (nonatomic, strong) _TRNCategory *category;
+@property (nonatomic, strong) _TRNCover *cover;
 
 @end
 

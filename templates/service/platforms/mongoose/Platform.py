@@ -1,4 +1,5 @@
 import sys
+import re
 from meta.MetaProcessor import MetaProcessor
 from meta.utils import Utils
 
@@ -156,7 +157,7 @@ class Platform(MetaProcessor):
             entities = self.findEntities(hash)
 
             for templateFile in templates:
-                if 'entity' in templateFile:
+                if re.search('entity', templateFile, re.IGNORECASE):
                     for entity in entities:
                         self.continueProcess(entity,entity['entityName'],hashes,templateFile,product,platform,platformDir)
                 else:
