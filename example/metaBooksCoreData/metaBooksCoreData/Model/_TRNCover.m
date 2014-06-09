@@ -12,12 +12,12 @@
 
 - (void) setImage:(BMFIXImage *) value {
 	[self willChangeValueForKey:@"image"];
-	[self setPrimitiveValue:[self archiveImage:value] forKey:@"image"];
+	[self setPrimitiveValue:[self.class archiveImage:value] forKey:@"image"];
 	[self didChangeValueForKey:@"image"];
 }
 
 - (BMFIXImage *) image {
-	return [self unarchiveImage:self.image];
+	return [self.class unarchiveImage:self.image];
 }
 
 @end

@@ -2,11 +2,12 @@
 
 #import <Foundation/Foundation.h>
 
+#import <BMF/BMFManagedObject.h>
 
 {{> imports}}
 {{> forward}}
 
-@interface {{> entityName}} : NSManagedObject
+@interface {{> entityName}} : BMFManagedObject
 
 {{> properties}}
 {{> relationships}}

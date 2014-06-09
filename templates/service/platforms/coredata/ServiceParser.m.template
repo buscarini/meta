@@ -24,7 +24,7 @@
 {{#model}}
 @property (nonatomic, strong) {{> parserName}} *{{> parserName}}Instance;
 {{#relationships}}
-@property (nonatomic, strong) {{entityName}}Parser *{{entityName}}ParserInstance;
+@property (nonatomic, strong) {{> entityName}}Parser *{{> entityName}}ParserInstance;
 {{/relationships}}
 {{/model}}
 {{/content}}
@@ -51,14 +51,14 @@
 	{{^_first_}}else {{/_first_}}if ([object isKindOfClass:[{{> entityName}} class]]) {
 		{{> entityName}} *entity = object;
 		{{#relationships}}
-		{{entityName}}Parser *{{entityName}}ParserInstance = [[{{entityName}}Parser alloc] initWithContext:self.localContext];
-		{{entityName}}ParserInstance.delegate = self;
+		{{> entityName}}Parser *{{> entityName}}ParserInstance = [[{{> entityName}}Parser alloc] initWithContext:self.localContext];
+		{{> entityName}}ParserInstance.delegate = self;
 		
 		{{#_toMany_}}
-		entity.{{name}} = [NSSet setWithArray:[self.strategy parseDictionaries:dictionary[@"{{name}}"] localObjects:entity.{{name}}.allObjects objectParser:{{entityName}}ParserInstance]];
+		entity.{{name}} = [NSSet setWithArray:[self.strategy parseDictionaries:dictionary[@"{{name}}"] localObjects:entity.{{name}}.allObjects objectParser:{{> entityName}}ParserInstance]];
 		{{/_toMany_}}
 		{{^_toMany_}}
-		entity.{{name}} = [self.strategy parseDictionaries:@[dictionary[@"{{name}}"]] localObjects:@[entity.{{name}}] objectParser:{{entityName}}ParserInstance]].firstObject;
+		entity.{{name}} = [self.strategy parseDictionaries:@[dictionary[@"{{name}}"]] localObjects:@[entity.{{name}}] objectParser:{{> entityName}}ParserInstance]].firstObject;
 		{{/_toMany_}}
 		{{/relationships}}
 	}

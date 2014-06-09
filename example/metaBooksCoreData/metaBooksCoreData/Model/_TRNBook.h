@@ -2,10 +2,11 @@
 
 #import <Foundation/Foundation.h>
 
+#import <BMF/BMFManagedObject.h>
 
 @class _TRNCategory, _TRNCover;
 
-@interface _TRNBook : NSManagedObject
+@interface _TRNBook : BMFManagedObject
 
 @property (nonatomic, assign) NSInteger id;
 @property (nonatomic, copy) NSString *title;

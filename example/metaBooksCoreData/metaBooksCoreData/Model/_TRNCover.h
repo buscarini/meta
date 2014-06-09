@@ -2,13 +2,14 @@
 
 #import <Foundation/Foundation.h>
 
+#import <BMF/BMFManagedObject.h>
 
 @class _TRNBook;
 
-@interface _TRNCover : NSManagedObject
+@interface _TRNCover : BMFManagedObject
 
 @property (nonatomic, assign) NSInteger id;
-@property (nonatomic, strong) NSURL *imageUrl;
+@property (nonatomic, copy) NSString *imageUrl;
 @property (nonatomic, strong) BMFIXImage *image;
 @property (nonatomic, strong) _TRNBook *book;
 

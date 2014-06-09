@@ -10,12 +10,12 @@
 {{#type_image}}
 - (void) set{{_capitalized_}}:(BMFIXImage *) value {
 	[self willChangeValueForKey:@"{{name}}"];
-	[self setPrimitiveValue:[self archiveImage:value] forKey:@"{{name}}"];
+	[self setPrimitiveValue:[self.class archiveImage:value] forKey:@"{{name}}"];
 	[self didChangeValueForKey:@"{{name}}"];
 }
 
 - (BMFIXImage *) {{name}} {
-	return [self unarchiveImage:self.{{name}}];
+	return [self.class unarchiveImage:self.{{name}}];
 }
 {{/type_image}}
 {{/properties}}

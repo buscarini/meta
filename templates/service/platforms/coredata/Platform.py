@@ -122,7 +122,10 @@ class Platform(MetaProcessor):
         if 'primaryKeys' in model:
             self.preprocessPrimaryKeys(model['primaryKeys'],model,hashes)
         
-        # model['_entity_imports_'].append({ "name" : self.finalEntityFileName(model['entityName'],hash) + '.h' })
+        if not '_entity_imports_' in model:
+            model['_entity_imports_'] = []
+        model['_entity_imports_'].append({ "name" : model['entityName'] })# self.finalEntityFileName(model['entityName'],model) + '.h' })
+        
         for property in model['properties']:
             self.preprocessProperty(property,model,hashes)
 
@@ -172,6 +175,7 @@ class Platform(MetaProcessor):
         entity = hash
         if hash!=None and 'content' in hash:
             contents = hash['content']
+            self.preprocessList(contents)
             for content in contents:
                 if content!=None and 'model' in content:
                     entity = content['model']

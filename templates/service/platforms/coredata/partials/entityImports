@@ -1,3 +1,3 @@
 {{#model._entity_imports_}}
-#import "{{name}}"
+#import "{{_globals_.prefix}}{{name}}.h"
 {{/model._entity_imports_}}
