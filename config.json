@@ -6,5 +6,5 @@
 	"platformFile" : "Platform",
 	"partialsPath" : "partials",
 	"verbose" : true,
-	"platforms" : [ "mongoose" ]
+	"platforms" : [ "mongoose","coredata", "coredatamodel" ]
 }

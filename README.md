@@ -22,9 +22,9 @@ Download the project. You'll need these:
 - [pip][]:
 	http://pip.readthedocs.org/en/latest/installing.html
 - [Pystache][]:
-	pip install pystache
+	(sudo) pip install pystache
 - [Inflect][] (Pluralizes words):
-	pip install -e git+https://github.com/benthor/inflect.py#egg=inflect
+	(sudo) pip install -e git+https://github.com/benthor/inflect.py#egg=inflect
 
 
 
