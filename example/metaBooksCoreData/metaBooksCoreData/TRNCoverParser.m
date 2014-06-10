@@ -77,7 +77,7 @@
 
 	value = dic[@"imageUrl"];
 	if ([value isKindOfClass:[NSString class]]) {
-		object.imageUrl = [NSURL URLWithString:value];
+		object.imageUrl = value;
 	}
 	else {
 		DDLogWarn(@"Invalid type or missing key for property imageUrl: %@",value);

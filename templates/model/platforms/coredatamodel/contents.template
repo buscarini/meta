@@ -3,7 +3,7 @@
 	{{#_entities_}}
     <entity name="{{> entityName}}" representedClassName="{{> entityName}}" syncable="YES">
 		{{#properties}}
-		<attribute name="{{name}}" optional="{{optional}}" attributeType="{{type}}" {{#_globals_.allowExternalStorage}}{{#type_image}}allowsExternalBinaryDataStorage="YES"{{/type_image}}{{/_globals_.allowExternalStorage}} {{#default}}defaultValueString="{{default}}"{{/default}} syncable="YES"/>
+		<attribute name="{{> propertyName}}" optional="{{optional}}" attributeType="{{type}}" {{#_globals_.allowExternalStorage}}{{#type_image}}allowsExternalBinaryDataStorage="YES"{{/type_image}}{{/_globals_.allowExternalStorage}} {{#default}}defaultValueString="{{default}}"{{/default}} syncable="YES"/>
 		{{/properties}}
 		{{#relationships}}
         <relationship name="{{name}}" optional="{{_optional_}}" {{#min}}minCount="{{min}}"{{/min}} {{#max}}maxCount="{{max}}"{{/max}} {{#_toMany_}}toMany="YES"{{/_toMany_}} deletionRule="{{#required}}Nullify{{/required}}{{^required}}Cascade{{/required}}" destinationEntity="{{> entityName}}" inverseName="{{inverse}}" inverseEntity="{{> entityName}}" syncable="YES"/>

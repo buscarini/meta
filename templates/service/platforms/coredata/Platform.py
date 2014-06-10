@@ -140,12 +140,14 @@ class Platform(MetaProcessor):
         if 'relationships' in model:
             relationships = model['relationships']
             self.preprocessList(relationships)
-            for relationship in relationships:    
+            for relationship in relationships:
                 relationship['entityName'] = self.finalEntityFileName(relationship['entityName'],model)
                 if (relationship['type']=='toMany'):
                     relationship['_toMany_'] = True
                 else:
                     relationship['_toMany_'] = False
+
+                self.preprocessModel(relationship,hashes)
         
         
     def preprocessResultValue(self,resultValue):

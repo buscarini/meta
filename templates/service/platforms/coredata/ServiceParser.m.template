@@ -12,7 +12,9 @@
 {{> entityImports}}
 {{> relationshipImports}}
 {{> entityParserImports}}
+{{#model}}
 {{> relationshipParserImports}}
+{{/model}}
 {{/content}}
 
 @interface {{_globals_.fileBaseName}}() <BMFObjectParserDelegateProtocol>
@@ -48,20 +50,14 @@
 - (void) didParseObject:(id)object withDictionary:(NSDictionary *)dictionary {
 	{{#content}}
 	{{#model}}
-	{{^_first_}}else {{/_first_}}if ([object isKindOfClass:[{{> entityName}} class]]) {
-		{{> entityName}} *entity = object;
-		{{#relationships}}
-		{{> entityName}}Parser *{{> entityName}}ParserInstance = [[{{> entityName}}Parser alloc] initWithContext:self.localContext];
-		{{> entityName}}ParserInstance.delegate = self;
-		
-		{{#_toMany_}}
-		entity.{{name}} = [NSSet setWithArray:[self.strategy parseDictionaries:dictionary[@"{{name}}"] localObjects:entity.{{name}}.allObjects objectParser:{{> entityName}}ParserInstance]];
-		{{/_toMany_}}
-		{{^_toMany_}}
-		entity.{{name}} = [self.strategy parseDictionaries:@[dictionary[@"{{name}}"]] localObjects:@[entity.{{name}}] objectParser:{{> entityName}}ParserInstance]].firstObject;
-		{{/_toMany_}}
-		{{/relationships}}
+	if ([object isKindOfClass:[{{> entityName}} class]]) {
+		{{> parseServiceRelationships}}
 	}
+	{{#relationships}}
+	else if ([object isKindOfClass:[{{> entityName}} class]]) {
+		{{> parseServiceRelationships}}
+	}
+	{{/relationships}}
 	{{/model}}
 	{{/content}}
 	

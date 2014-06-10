@@ -1,0 +1,1 @@
+{{#type_image}}{{name}}Data{{/type_image}}{{^type_image}}{{name}}{{/type_image}}

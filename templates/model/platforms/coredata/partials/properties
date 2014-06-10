@@ -1,4 +1,10 @@
 {{#properties}}
+{{#type_imageUrl}}
+@property (nonatomic, copy) NSString *{{name}}UrlString;
+@property (nonatomic, {{storage}}) NSData *{{name}}Data;
+@property (nonatomic, {{storage}}) BMFIXImage *{{name}};
+{{/type_imageUrl}}
+{{^type_imageUrl}}
 {{#type_image}}
 @property (nonatomic, {{storage}}) NSData *{{name}}Data;
 @property (nonatomic, {{storage}}) BMFIXImage *{{name}};
@@ -6,4 +12,5 @@
 {{^type_image}}
 @property (nonatomic, {{storage}}) {{> type}}{{^object}} {{/object}}{{name}};
 {{/type_image}}
+{{/type_imageUrl}}
 {{/properties}}

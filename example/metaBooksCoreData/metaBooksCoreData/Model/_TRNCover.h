@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSData *imageData;
 @property (nonatomic, strong) BMFIXImage *image;
 @property (nonatomic, strong) _TRNBook *book;
+
 - (void) loadImage: (BMFCompletionBlock) block;
 
 @end

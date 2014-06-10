@@ -1,0 +1,16 @@
+{{> entityName}} *entity = object;
+{{#relationships}}
+{{> entityName}}Parser *{{> entityName}}ParserInstance = [[{{> entityName}}Parser alloc] initWithContext:self.localContext];
+{{> entityName}}ParserInstance.delegate = self;
+
+{{#_toMany_}}
+entity.{{name}} = [NSSet setWithArray:[self.strategy parseDictionaries:dictionary[@"{{name}}"] localObjects:entity.{{name}}.allObjects objectParser:{{> entityName}}ParserInstance]];
+{{/_toMany_}}
+{{^_toMany_}}
+NSArray *dictionaries = @[];
+if (dictionary[@"{{name}}"]) dictionaries = @[dictionary[@"{{name}}"]];
+NSArray *relatedEntity = @[];
+if (entity.{{name}}) relatedEntity = @[ entity.{{name}} ];
+entity.{{name}} = [self.strategy parseDictionaries:dictionaries localObjects:relatedEntity objectParser:{{> entityName}}ParserInstance].firstObject;
+{{/_toMany_}}
+{{/relationships}}

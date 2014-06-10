@@ -24,7 +24,7 @@
 			"required" : false,
 			"inverse" : "category",
 			"min" : "0",
-			"max" : "50"
+			"max" : "5000"
 		}
 	]
 }

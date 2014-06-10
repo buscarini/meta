@@ -25,18 +25,22 @@
 	return [UITableViewCell class];
 }
 
-+ (void) configure:(id)view kind:(BMFViewKind)kind withItem:(id)item inView:(UIView *)containerView atIndexPath:(NSIndexPath *)indexPath controller:(id)controller {
++ (void) configure:(id)view kind:(BMFViewKind)kind withItem:(id)item inView:(UITableView *)containerView atIndexPath:(NSIndexPath *)indexPath controller:(id)controller {
 	
 	UITableViewCell *cell = view;
 	TRNBook *book = item;
 	
 	cell.textLabel.text = book.title;
 	cell.detailTextLabel.text = book.author;
-	
+
 	[book.cover loadImage:^(UIImage *result, NSError *error) {
-		cell.imageView.image = result;
+		dispatch_async(dispatch_get_main_queue(), ^{
+			cell.imageView.image = result;
+		});
+//		[cell setNeedsDisplay];
+//		[containerView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationAutomatic];
 	}];
-	
+
 //	DDLogInfo(@"%@",book);
 }
 

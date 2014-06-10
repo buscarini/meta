@@ -1,9 +1,19 @@
 {{#object}}
 {{^type_date}}
+{{#type_imageUrl}}
+value = dic[@"{{name}}"];
+if ([value isKindOfClass:[NSString class]]) {
+	object.{{destination}} = value;
+}
+else {
+	{{> logError}}
+}
+{{/type_imageUrl}}
+{{^type_imageUrl}}
 {{#type_url}}
 value = dic[@"{{name}}"];
 if ([value isKindOfClass:[NSString class]]) {
-	object.{{destination}} = [NSURL URLWithString:value];
+	object.{{destination}} = value;
 }
 else {
 	{{> logError}}
@@ -18,5 +28,6 @@ else {
 	{{> logError}}
 }
 {{/type_url}}
+{{/type_imageUrl}}
 {{/type_date}}
 {{/object}}

@@ -67,6 +67,10 @@ class GlobalPlatform(MetaProcessor):
             property['type'] = 'NSData'
             property['object'] = True
             property['storage'] = 'strong'
+        elif type=='imageUrl':
+            property['type'] = 'NSURL'
+            property['object'] = True
+            property['storage'] = 'strong'
         else:
             raise SyntaxError("Unknown property type: " + type)
     

@@ -12,6 +12,7 @@
 #import "TRNBook.h"
 #import "TRNCategoryParser.h"
 #import "TRNBookParser.h"
+#import "TRNCoverParser.h"
 
 @interface TRNCategoriesServiceParser() <BMFObjectParserDelegateProtocol>
 	
@@ -42,8 +43,19 @@
 		TRNCategory *entity = object;
 		TRNBookParser *TRNBookParserInstance = [[TRNBookParser alloc] initWithContext:self.localContext];
 		TRNBookParserInstance.delegate = self;
-		
+
 		entity.books = [NSSet setWithArray:[self.strategy parseDictionaries:dictionary[@"books"] localObjects:entity.books.allObjects objectParser:TRNBookParserInstance]];
+	}
+	else if ([object isKindOfClass:[TRNBook class]]) {
+		TRNBook *entity = object;
+		TRNCoverParser *TRNCoverParserInstance = [[TRNCoverParser alloc] initWithContext:self.localContext];
+		TRNCoverParserInstance.delegate = self;
+
+		NSArray *dictionaries = @[];
+		if (dictionary[@"cover"]) dictionaries = @[dictionary[@"cover"]];
+		NSArray *relatedEntity = @[];
+		if (entity.cover) relatedEntity = @[ entity.cover ];
+		entity.cover = [self.strategy parseDictionaries:dictionaries localObjects:relatedEntity objectParser:TRNCoverParserInstance].firstObject;
 	}
 	
 	self.progress.completedUnitCount++;

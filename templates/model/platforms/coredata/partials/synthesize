@@ -13,6 +13,10 @@
 {{/relationships}}
 
 {{#properties}}
+{{#type_imageUrl}}
+
+{{/type_imageUrl}}
+{{^type_imageUrl}}
 {{#type_image}}
 - (void) set{{_capitalized_}}Data:(NSData *) value {
 	[self willChangeValueForKey:@"{{name}}Data"];
@@ -51,4 +55,5 @@
 	});
 }
 {{/type_image}}
+{{/type_imageUrl}}
 {{/properties}}

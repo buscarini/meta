@@ -1,3 +1,4 @@
-{{#model.relationships}}
+{{#relationships}}
 #import "{{> entityName}}Parser.h"
-{{/model.relationships}}
+{{> relationshipParserImports}}
+{{/relationships}}
