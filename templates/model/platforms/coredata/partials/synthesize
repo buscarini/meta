@@ -1,5 +1,11 @@
 {{#properties}}
+{{#type_image}}
+@dynamic {{name}}Data;
+@synthesize {{name}};
+{{/type_image}}
+{{^type_image}}
 @dynamic {{name}};
+{{/type_image}}
 {{/properties}}
 
 {{#relationships}}
@@ -8,14 +14,41 @@
 
 {{#properties}}
 {{#type_image}}
+- (void) set{{_capitalized_}}Data:(NSData *) value {
+	[self willChangeValueForKey:@"{{name}}Data"];
+	if (!value) {
+		[self setPrimitiveValue:nil forKey:@"{{name}}Data"];
+		[self didChangeValueForKey:@"{{name}}Data"];
+	}
+	else {
+		dispatch_async(dispatch_get_global_queue(0, 0), ^{	
+			UIImage *{{name}}ImageValue = [UIImage imageWithData:value];
+			[self.managedObjectContext performBlock:^() {
+				[self setPrimitiveValue:[BMFUtils archiveImage:{{name}}ImageValue] forKey:@"{{name}}Data"];
+				[self didChangeValueForKey:@"{{name}}Data"];
+			}];
+		});
+	}
+}
+
 - (void) set{{_capitalized_}}:(BMFIXImage *) value {
 	[self willChangeValueForKey:@"{{name}}"];
-	[self setPrimitiveValue:[self.class archiveImage:value] forKey:@"{{name}}"];
+	[self setPrimitiveValue:[BMFUtils archiveImage:value] forKey:@"{{name}}"];
 	[self didChangeValueForKey:@"{{name}}"];
 }
 
 - (BMFIXImage *) {{name}} {
-	return [self.class unarchiveImage:self.{{name}}];
+	return [BMFUtils unarchiveImage:self.{{name}}Data];
+}
+
+- (void) load{{_capitalized_}}: (BMFCompletionBlock) block {
+	NSData *data = self.{{name}}Data;
+	dispatch_async(dispatch_get_global_queue(0, 0), ^{
+		BMFIXImage *{{name}}ImageValue = [BMFUtils unarchiveImage:data];
+		dispatch_async(dispatch_get_main_queue(),^{
+			block({{name}}ImageValue,nil);
+		});
+	});
 }
 {{/type_image}}
 {{/properties}}

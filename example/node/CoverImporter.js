@@ -8,7 +8,7 @@ var eventEmitter = new events.EventEmitter();
 
 var compareEntities = function(a,b) {
 	var result = 0;
-	result = a._id-b._id;
+	result = a.id-b.id;
 	if (result!=0) return result;
 	
 	return result;	
@@ -31,7 +31,7 @@ module.exports.importFile = function(filePath,callback) {
 			return;
 		}
 		
-		properties._id = row[0]
+		properties.id = parseInt(row[0],10)
 		properties.imageUrl = row[1]
 		
 		schema.schema.eachPath(function(key) {
@@ -48,14 +48,14 @@ module.exports.importFile = function(filePath,callback) {
 		});
 	
 		Cover.update({
-			_id : row[0]
+			id : row[0]
 		}, properties,{ upsert: true, multi: true },function(err) {
 			if (err) {
 				console.log("Error updating Cover: " + err)
 			}
 			else {
 				numEntitiesImported++;
-				Cover.findOne({ _id : row[0]
+				Cover.findOne({ id : row[0]
 										}).exec(function (err, entity) {
 					imported.push(entity);
 					eventEmitter.emit('entityImported');
@@ -73,7 +73,7 @@ module.exports.importFile = function(filePath,callback) {
 		
 			var importedSorted = imported;
 	
-			Cover.find().sort("_id").exec(function(err,allEntities) {
+			Cover.find().sort("id").exec(function(err,allEntities) {
 				if (!err) {
 								
 					var importedIndex = 0;

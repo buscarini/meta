@@ -64,7 +64,7 @@ class GlobalPlatform(MetaProcessor):
             property['object'] = True
             property['storage'] = 'strong'
         elif type=='image':
-            property['type'] = 'BMFIXImage'
+            property['type'] = 'NSData'
             property['object'] = True
             property['storage'] = 'strong'
         else:

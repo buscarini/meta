@@ -45,7 +45,12 @@ module.exports.importFile = function(filePath,callback) {
 		properties.{{name}} = {{default}}
 		{{/_has_default_}}
 		{{^type_date}}
+		{{#type_integer}}
+		properties.{{name}} = parseInt(row[{{index}}],10)
+		{{/type_integer}}
+		{{^type_integer}}
 		properties.{{name}} = row[{{index}}]
+		{{/type_integer}}
 		{{/type_date}}
 		{{#type_date}}
 		properties.{{name}} = moment(row[{{index}}],"{{format}}")

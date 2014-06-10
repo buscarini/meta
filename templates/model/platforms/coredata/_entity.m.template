@@ -2,6 +2,8 @@
 
 #import "{{> entityName}}.h"
 
+#import <BMF/BMFUtils.h>
+
 @implementation {{> entityName}}
 
 {{> synthesize}}

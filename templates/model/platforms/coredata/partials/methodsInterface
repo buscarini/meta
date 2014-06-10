@@ -1,0 +1,5 @@
+{{#properties}}
+{{#type_image}}
+- (void) load{{_capitalized_}}: (BMFCompletionBlock) block;
+{{/type_image}}
+{{/properties}}

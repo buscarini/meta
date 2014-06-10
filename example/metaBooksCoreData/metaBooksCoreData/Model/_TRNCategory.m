@@ -2,6 +2,8 @@
 
 #import "_TRNCategory.h"
 
+#import <BMF/BMFUtils.h>
+
 @implementation _TRNCategory
 
 @dynamic id;

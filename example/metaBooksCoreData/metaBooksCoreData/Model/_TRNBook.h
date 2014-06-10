@@ -3,6 +3,7 @@
 #import <Foundation/Foundation.h>
 
 #import <BMF/BMFManagedObject.h>
+#import <BMF/BMF.h>
 
 @class _TRNCategory, _TRNCover;
 

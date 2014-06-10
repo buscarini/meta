@@ -36,10 +36,10 @@ module.exports.populate = function(items,finished) {
 			var numRelated = 0
 			
 			var populated = {}
-			populated.id = unpopulated.id
+			populated.id = parseInt(unpopulated.id,10)
 			populated.title = unpopulated.title
 			populated.author = unpopulated.author
-			populated.numPages = unpopulated.numPages
+			populated.numPages = parseInt(unpopulated.numPages,10)
 			populated.purchaseDate = moment(unpopulated.purchaseDate).format("DD.MM.YYYY")
 			populated.deleted = unpopulated.deleted
 			results.push(populated)

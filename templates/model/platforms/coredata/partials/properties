@@ -1,3 +1,9 @@
 {{#properties}}
+{{#type_image}}
+@property (nonatomic, {{storage}}) NSData *{{name}}Data;
+@property (nonatomic, {{storage}}) BMFIXImage *{{name}};
+{{/type_image}}
+{{^type_image}}
 @property (nonatomic, {{storage}}) {{> type}}{{^object}} {{/object}}{{name}};
+{{/type_image}}
 {{/properties}}

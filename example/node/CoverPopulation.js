@@ -31,7 +31,7 @@ module.exports.populate = function(items,finished) {
 			var numRelated = 0
 			
 			var populated = {}
-			populated.id = unpopulated.id
+			populated.id = parseInt(unpopulated.id,10)
 			populated.imageUrl = unpopulated.imageUrl
 			results.push(populated)
 

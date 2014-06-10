@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C1021" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="TRNBook" representedClassName="TRNBook" syncable="YES">
-		<attribute name="id" optional="NO" attributeType="Integer 32"   syncable="YES"/>
-		<attribute name="title" optional="YES" attributeType="String"   syncable="YES"/>
-		<attribute name="author" optional="YES" attributeType="String"   syncable="YES"/>
-		<attribute name="numPages" optional="YES" attributeType="Integer 32"   syncable="YES"/>
-		<attribute name="purchaseDate" optional="YES" attributeType="Date"   syncable="YES"/>
-		<attribute name="deleted" optional="YES" attributeType="Boolean"  defaultValueString="NO" syncable="YES"/>
-        <relationship name="category" optional="NO" minCount="1" maxCount="1"  deletionRule="Nullify" destinationEntity="TRNCategory" inverseName="books" inverseEntity="TRNCategory" syncable="YES"/>
-        <relationship name="cover" optional="YES" minCount="1" maxCount="1"  deletionRule="Cascade" destinationEntity="TRNCover" inverseName="book" inverseEntity="TRNCover" syncable="YES"/>
-	</entity>
+        <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deleted" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="id" attributeType="Integer 32" syncable="YES"/>
+        <attribute name="numPages" optional="YES" attributeType="Integer 32" syncable="YES"/>
+        <attribute name="purchaseDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="category" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="TRNCategory" inverseName="books" inverseEntity="TRNCategory" syncable="YES"/>
+        <relationship name="cover" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="TRNCover" inverseName="book" inverseEntity="TRNCover" syncable="YES"/>
+    </entity>
     <entity name="TRNCategory" representedClassName="TRNCategory" syncable="YES">
-		<attribute name="id" optional="NO" attributeType="Integer 32"   syncable="YES"/>
-		<attribute name="title" optional="YES" attributeType="String"   syncable="YES"/>
-        <relationship name="books" optional="YES" minCount="0" maxCount="50" toMany="YES" deletionRule="Cascade" destinationEntity="TRNBook" inverseName="category" inverseEntity="TRNBook" syncable="YES"/>
-	</entity>
+        <attribute name="id" attributeType="Integer 32" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="books" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TRNBook" inverseName="category" inverseEntity="TRNBook" syncable="YES"/>
+    </entity>
     <entity name="TRNCover" representedClassName="TRNCover" syncable="YES">
-		<attribute name="id" optional="NO" attributeType="Integer 32"   syncable="YES"/>
-		<attribute name="imageUrl" optional="YES" attributeType="String"   syncable="YES"/>
-		<attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"  syncable="YES"/>
-        <relationship name="book" optional="NO" minCount="1" maxCount="1"  deletionRule="Nullify" destinationEntity="TRNBook" inverseName="cover" inverseEntity="TRNBook" syncable="YES"/>
-	</entity>
+        <attribute name="id" attributeType="Integer 32" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="book" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="TRNBook" inverseName="cover" inverseEntity="TRNBook" syncable="YES"/>
+    </entity>
     <elements>
-		<element name="TRNBook" positionX="0" positionY="0" width="200" height="500"/>
-		<element name="TRNCategory" positionX="0" positionY="0" width="200" height="500"/>
-		<element name="TRNCover" positionX="0" positionY="0" width="200" height="500"/>
+        <element name="TRNBook" positionX="0" positionY="0" width="200" height="500"/>
+        <element name="TRNCategory" positionX="-261" positionY="-0" width="200" height="88"/>
+        <element name="TRNCover" positionX="387" positionY="36" width="200" height="500"/>
     </elements>
 </model>

@@ -34,7 +34,12 @@ module.exports.populate = function(items,finished) {
 			var populated = {}
 			{{#properties}}
 			{{^type_date}}
+			{{#type_integer}}
+			populated.{{destination}} = parseInt(unpopulated.{{name}},10)
+			{{/type_integer}}
+			{{^type_integer}}
 			populated.{{destination}} = unpopulated.{{name}}
+			{{/type_integer}}
 			{{/type_date}}
 			{{#type_date}}
 			populated.{{destination}} = moment(unpopulated.{{name}}).format("{{format}}")

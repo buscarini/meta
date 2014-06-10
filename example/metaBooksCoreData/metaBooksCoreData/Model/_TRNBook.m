@@ -2,6 +2,8 @@
 
 #import "_TRNBook.h"
 
+#import <BMF/BMFUtils.h>
+
 @implementation _TRNBook
 
 @dynamic id;

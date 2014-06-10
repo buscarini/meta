@@ -11,6 +11,7 @@
 		4D7A7279DB7746059732669C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63675356600C4C1AB03878BC /* main.m */; };
 		56BCA12F6D574096AAEC465F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD5B06EE51F34FC5B7B79069 /* Foundation.framework */; };
 		864051FBD14F455B811F8D82 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 379A16FE291542EC9482C128 /* libPods.a */; };
+		AC5B4FE61946F309000B5D87 /* TRNCoverParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AC5B4FE51946F309000B5D87 /* TRNCoverParser.m */; };
 		AC60C969192356E9008D9C91 /* TRNBookListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC60C968192356E9008D9C91 /* TRNBookListViewController.m */; };
 		AC60C96C192356F2008D9C91 /* TRNBookCellConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = AC60C96B192356F2008D9C91 /* TRNBookCellConfigurator.m */; };
 		AC75C7E2192B70CD0065E671 /* example_spec.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AC75C7E0192B70CD0065E671 /* example_spec.xcdatamodeld */; };
@@ -51,6 +52,8 @@
 		63675356600C4C1AB03878BC /* main.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6EA1D800ED444495A603DAE8 /* Images.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9211FC982E4444D4AB6DDFB6 /* TRNAppDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = TRNAppDelegate.h; sourceTree = "<group>"; };
+		AC5B4FE41946F309000B5D87 /* TRNCoverParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNCoverParser.h; sourceTree = "<group>"; };
+		AC5B4FE51946F309000B5D87 /* TRNCoverParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNCoverParser.m; sourceTree = "<group>"; };
 		AC5E18916BC042B2B10F77FD /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
 		AC60C967192356E9008D9C91 /* TRNBookListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRNBookListViewController.h; sourceTree = "<group>"; };
 		AC60C968192356E9008D9C91 /* TRNBookListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRNBookListViewController.m; sourceTree = "<group>"; };
@@ -235,6 +238,8 @@
 		ACA139D1192364620054B80C /* data */ = {
 			isa = PBXGroup;
 			children = (
+				AC5B4FE41946F309000B5D87 /* TRNCoverParser.h */,
+				AC5B4FE51946F309000B5D87 /* TRNCoverParser.m */,
 				ACCD7132192F381100D96681 /* TRNCategoryParser.h */,
 				ACCD7133192F381100D96681 /* TRNCategoryParser.m */,
 				ACCD7136192F382800D96681 /* TRNBookParser.h */,
@@ -533,6 +538,7 @@
 				AC60C96C192356F2008D9C91 /* TRNBookCellConfigurator.m in Sources */,
 				AC60C969192356E9008D9C91 /* TRNBookListViewController.m in Sources */,
 				ACEE7F571945D1B600F6A005 /* TRNCoverObjectStore.m in Sources */,
+				AC5B4FE61946F309000B5D87 /* TRNCoverParser.m in Sources */,
 				AC83EDC9192F3D40008EAE74 /* TRNCategoryCellConfigurator.m in Sources */,
 				AC75C7E2192B70CD0065E671 /* example_spec.xcdatamodeld in Sources */,
 				ACEE7F561945D1B600F6A005 /* TRNCover.m in Sources */,

@@ -1,6 +1,6 @@
 {{#required}}
 // If required stop parsing
-*error = [NSError errorWithDomain:@"Parse" code:BMFErrorInvalidType userInfo:@{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Invalid type or missing key: %@ for property {{destination}}",value] }];
+*error = [NSError errorWithDomain:@"Parse" code:BMFErrorInvalidType userInfo:@{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Invalid type or missing key: %@ for property {{destination}} when parsing object: %@",value,self] }];
 return NO;
 {{/required}}
 {{^required}}

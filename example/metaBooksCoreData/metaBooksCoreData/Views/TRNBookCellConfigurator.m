@@ -9,6 +9,7 @@
 #import "TRNBookCellConfigurator.h"
 
 #import "TRNBook.h"
+#import "TRNCover.h"
 
 @implementation TRNBookCellConfigurator
 
@@ -32,7 +33,11 @@
 	cell.textLabel.text = book.title;
 	cell.detailTextLabel.text = book.author;
 	
-	DDLogInfo(@"%@",book);
+	[book.cover loadImage:^(UIImage *result, NSError *error) {
+		cell.imageView.image = result;
+	}];
+	
+//	DDLogInfo(@"%@",book);
 }
 
 @end
