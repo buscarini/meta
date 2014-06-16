@@ -3,3 +3,4 @@ TM_PROJECT_DIRECTORY = "$projectDirectory"
 
 [ "*" ]
 scopeAttributes = 'attr.project.meta'
+saveOnBlur = true

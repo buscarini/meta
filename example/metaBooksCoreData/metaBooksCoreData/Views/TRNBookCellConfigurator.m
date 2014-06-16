@@ -33,15 +33,16 @@
 	cell.textLabel.text = book.title;
 	cell.detailTextLabel.text = book.author;
 
-	[book.cover loadImage:^(UIImage *result, NSError *error) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			cell.imageView.image = result;
-		});
-//		[cell setNeedsDisplay];
-//		[containerView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationAutomatic];
-	}];
-
-//	DDLogInfo(@"%@",book);
+	UIImage *coverImage = book.cover.image;
+	
+	if (coverImage) {
+		cell.imageView.image = coverImage;
+	}
+	else {
+		[book.cover loadImage:^(UIImage *result, NSError *error) {
+			[containerView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+		}];
+	}
 }
 
 @end

@@ -12,7 +12,9 @@
 @property (nonatomic, assign) NSInteger id;
 @property (nonatomic, copy) NSString *imageUrl;
 @property (nonatomic, strong) NSData *imageData;
-@property (nonatomic, strong) BMFIXImage *image;
+
+@property (nonatomic, readonly) BMFIXImage *image;
+
 @property (nonatomic, strong) _TRNBook *book;
 
 - (void) loadImage: (BMFCompletionBlock) block;

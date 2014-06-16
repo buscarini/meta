@@ -65,7 +65,10 @@
 }
 
 - (void) load {
-	id<BMFTaskProtocol> task = [[BMFBase sharedInstance].factory dataLoadTask:@"http://localhost:3000/categories" parameters:nil sender:self];
+	
+//	id<BMFTaskProtocol> task = [[BMFBase sharedInstance].factory dataLoadTask:@"http://localhost:3000/categories" parameters:nil sender:self];
+	id<BMFTaskProtocol> task = [[BMFBase sharedInstance].factory dataLoadTask:@"http://192.168.1.135:3000/categories" parameters:nil sender:self];
+
 	
 	[self.loaderView.progress reset];
 	[self.loaderView.progress addChild:task.progress];
